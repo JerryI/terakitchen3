@@ -1,0 +1,61 @@
+<|
+    "before"->"fourier",
+    "after"->"background",
+    "dependencies"->{"fourier", "refs"},
+    
+    "description"-> "An algorithm for the complex refractive index extraction. It stores values into [\"nk\"] as pairs. See DOI: 10.1117/12.612946",
+    "parameters"-> {
+        <|
+            "symbol"->"iterations",
+            "desc"->"Number of iterations",
+            "value"-> 30,
+            "type"->"integer"
+        |>,
+        <|
+            "symbol"->"locutoff", 
+            "desc"->"lower cutoff frequency (cm-1)", 
+            "value"-> 10,
+            "type"->"symbol"
+        |>,
+        <|
+            "symbol"->"hicutoff", 
+            "desc"->"higer cutoff frequency (cm-1)", 
+            "value"-> 125,
+            "type"->"symbol"
+        |>,
+        <|
+            "symbol"->"numberFP", 
+            "desc"->"FP subtraction cycles", 
+            "value"-> 8,
+            "type"->"integer"
+        |>   
+        ,
+        <|
+            "symbol"->"thicknessCorrection", 
+            "desc"->"Thickness correction (yes or no)", 
+            "value"-> False,
+            "type"->"bool"
+        |>    
+        ,
+        <|
+            "symbol"->"deviation", 
+            "desc"->"variation in +-%", 
+            "value"-> 10,
+            "type"->"integer"
+        |>,        
+        <|
+            "symbol"->"recursionNumber", 
+            "desc"->"recursion number (accuracy)", 
+            "value"-> 2,
+            "type"->"integer"
+        |>,
+        <|
+            "symbol"->"debug", 
+            "desc"->"Debug information (yes or no)", 
+            "value"-> True,
+            "type"->"bool"
+        |>        
+                         
+    }
+
+|>

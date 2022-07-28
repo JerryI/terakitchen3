@@ -1,0 +1,10 @@
+<|
+   "before"->"nk",
+   "after"->"previewgenerator",
+   "dependencies"->{"nk"},
+
+    "description"-> "Interactive background subtractor",
+    "parameters"-> {       
+    }
+
+|>

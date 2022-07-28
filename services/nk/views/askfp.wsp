@@ -1,0 +1,105 @@
+
+
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Entscheidung erforderlich</h1>
+  
+          <p class="lead text-muted">Please select the region, where the FP oscillations are clear without significant absorption</p>
+    
+          <div id="plot"></div>
+      
+          <form action="window.wsp" method="post" id="dialog2">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+
+            <input id="points" type="hidden" class="form-control form-control" value="[]" name="points">          
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="dev">
+                    Deviation in %
+                </label>
+  
+                
+                <input id="dev" type="text" class="form-control form-control" value="<?wsp deviation ?>" name="dev">
+            </div>            
+            <small>The range for the thickness variation</small><br><br> 
+            <div class="form-group">
+  
+                <label class="form-group-label" for="recur">
+                    Recursion number
+                </label>
+  
+                
+                <input id="recur" type="text" class="form-control form-control" value="<?wsp recursionNumber ?>" name="recur">
+            </div>            
+            <small>Accuracy of the algorithm</small><br><br>                       
+            
+        </form>      
+
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog2">
+  
+     
+          <p class="lead text-muted">By clicking submit you will apply the same settings for all spectras.</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+    var id = '<?wsp $uid ?>';
+
+
+    var graphDiv = document.getElementById('plot');
+
+
+
+    var color1 = '#7b3294';
+
+    var color1Light = '#c2a5cf';
+    var colorX = '#ffa7b5';
+    var colorY = '#fdae61';
+
+    Plotly.plot(graphDiv, [{
+        type: 'scatter',
+        mode: 'markers',
+
+        x: <?wsp ExportString[alpha[[1]]//Re,"JSON"]   ?>,
+        y: <?wsp ExportString[alpha[[2]]//Re,"JSON"]   ?>,
+
+        xaxis: 'wavenumber, cm-1',
+        yaxis: 'absorption coefficient, cm-1',
+        zeroline: true,
+        showgrid: true,
+        marker: {color: color1, size: 3}
+    }], {
+  
+        dragmode:'select',
+        hovermode: false 
+    });
+
+ 
+
+    graphDiv.on('plotly_selected', function(eventData) {
+    var x = [];
+    var y = [];
+
+    var colors = [];
+
+    for(var i = 0; i < <?wsp alpha[[1]]//Length ?>; i++) colors.push(color1Light);
+        eventData.points.forEach(function(pt) {
+            x.push(pt.x);
+            y.push(pt.y);
+            colors[pt.pointNumber] = color1;
+        });
+
+        Plotly.restyle(graphDiv, {
+            x: [x, y],
+            xbins: {}
+        }, [1, 2]);
+
+        console.log(x);
+        document.getElementById('points').value = JSON.stringify(x);
+
+        Plotly.restyle(graphDiv, 'marker.color', [colors], [0]);
+    });
+  </script>

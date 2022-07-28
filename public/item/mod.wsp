@@ -1,0 +1,11 @@
+<?wsp
+    session["Redirect"] = "item/index.wsp?id="<>session["data"]["id"];
+
+    Module[{it = collection[session["data"]["id"]]},
+        ToExpression[session["data"]["expression"]]@Unevaluated[it];
+        collection[session["data"]["id"]] = it;
+    ];
+    
+    ""
+    
+?>

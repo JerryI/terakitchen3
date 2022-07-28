@@ -1,0 +1,78 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                <h4 class="panel-title">
+                    <button onclick="openField<?wspuid?>()" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                        Absorption
+                    </button>
+                </h4>
+                
+            </div>
+            <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                <div class="panel-body">
+                   
+                    <div id='plot<?wspuid?>'></div>
+                </div>
+                
+                <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('<?wspfieldname?>')">Add to the bucket</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+            </div>
+            
+        </div>
+
+        <script>
+            var fieldState<?wspuid?> = false;
+        
+            function openField<?wspuid?>() {
+                if(fieldState<?wspuid?> == false) {
+                    fieldState<?wspuid?> = true;
+
+                    
+                    loadField('ExportString[If[KeyExistsQ[data, "alpha-with-fp"],  Join[Transpose[data["alpha"]], {data["alpha-with-fp"]}], Transpose[data["alpha"]] ], "JSON"]', function(resp) {
+        
+                        var raw = JSON.parse(resp);
+
+                        
+                        
+                        if (raw.length > 2) {
+                            var data2 = {
+                                x: raw[0],
+                                y: raw[2],
+                                mode: 'lines',
+                                name: 'raw'
+                            };
+                        };
+
+                        let data = {
+                            x: raw[0],
+                            y: raw[1],
+                            mode: 'lines',
+                            name: 'alpha'
+                        };
+
+        
+                        let layout = {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'absorption coefficient, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            }
+                        };
+                        
+                        if (raw.length > 2) {
+                            Plotly.newPlot('plot<?wspuid?>', [data2, data], layout);
+                        } else {
+                            Plotly.newPlot('plot<?wspuid?>', [data], layout);
+                        }
+
+        
+                    });
+                }
+            }
+        
+        </script>

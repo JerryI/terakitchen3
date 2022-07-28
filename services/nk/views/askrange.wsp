@@ -1,0 +1,190 @@
+
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Entscheidung erforderlich</h1>
+  
+          <p class="lead text-muted">Please check the cutoff frequencies for the nk extraction.</p>
+    
+          <div id="plot"></div>
+
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="lo">
+                   Low-frequency cutoff
+                </label>
+  
+                <input id="lo" type="text" class="form-control form-control" value="<?wsplo?>" name="lo">
+                
+            </div>
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="hi">
+                    High-frequency cutoff
+                </label>
+  
+                
+                <input id="hi" type="text" class="form-control form-control" value="<?wsphi?>" name="hi">
+            </div> 
+            <small>Use cm<sup>-1</sup> units</small><br><br>            
+            <div class="form-group">
+  
+                <label class="form-group-label" for="fp">
+                    Number of FP cycles
+                </label>
+  
+                
+                <input id="fp" type="text" class="form-control form-control" value="<?wspfp?>" name="fp">
+            </div>            
+            <small>The number of interations for the alogorithm</small><br><br>    
+            <div class="form-group">
+  
+                <label class="form-group-label" for="amp">
+                    Amplification
+                </label>
+  
+                
+                <input id="amp" type="text" class="form-control form-control" value="<?wspamp?>" name="amp">
+            </div>            
+            <small>Use the multiplier to adjust the stength of the sample's signal.</small><br><br>            
+            <div class="form-group">
+  
+                <label class="form-group-label" for="ph">
+                    Phase correction
+                </label>
+  
+                
+                <input id="ph" type="text" class="form-control form-control" value="<?wspph?>" name="ph">
+            </div>            
+            <small>Add the constant value to the phase in radians</small><br><br>  
+            
+            <br><br>                        
+
+  
+            
+        </form>      
+
+     
+
+          <button class="btn btn-secondary" onclick="check()">Update preview</button>
+
+          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+  
+     
+          <p class="lead text-muted">By clicking submit you will apply the same settings for all spectras.</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+        let data1 = {
+            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[alpha[[2]],"JSON"] ?>,
+            mode: 'lines',
+            name: 'alpha'
+        };
+
+        let data2 = {
+            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[n,"JSON"] ?>,
+            mode: 'lines',
+            yaxis: 'y2',
+            name: 'n'
+        }; 
+
+        <?wsp If[fpnumber > 0 , ?>
+        
+        let data3 = {
+            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[alphanofp[[2]], "JSON"] ?>,
+            mode: 'lines',
+            name: 'alpha - with FP',
+            line: { opacity: 0.5 }
+        };     
+        
+        <?wsp , " "] ?>
+
+        let layout = {
+            xaxis: {
+                title: 'wavenumber, cm-1',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'absorption coefficient, cm-1',
+                showgrid: true,
+                zeroline: true,
+            },
+            yaxis2: {
+                title: 'n',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            }            
+        };
+
+        
+
+        var id = '<?wsp $uid ?>';
+
+        <?wsp If[fpnumber > 0 , ?>
+            Plotly.newPlot('plot', [data1, data3, data2 ], layout);
+        <?wsp, "" ] ?>
+
+        <?wsp If[fpnumber == 0 , ?>
+            Plotly.newPlot('plot', [data1, data2], layout);
+        <?wsp, "" ] ?>
+
+
+        core.UpdateGraph = function(args, env) {
+            let r = JSON.parse(interpretate(args[0]));
+
+            console.log("continue");
+                
+
+            console.log(r);
+
+                <?wsp If[fpnumber > 0 , ?>
+                    Plotly.deleteTraces('plot', [0,1,2]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[1], name: 'alpha'}, {x:r[0] , y: r[3], name: 'alpha - with FP', line: { opacity: 0.5 } }]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[2], name: 'n',  yaxis: 'y2'}]);
+                <?wsp , " "] ?>
+
+                <?wsp If[fpnumber == 0 , ?>
+                    Plotly.deleteTraces('plot', [-2, -1]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[1], name: 'alpha'}]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[2], yaxis: 'y2', name: 'n'}]);
+                <?wsp , " "] ?>                    
+            
+                document.getElementById('logoFlames').style = "display: none"; 
+                document.getElementById('bigFlames').style = "opacity: 0";
+        }
+
+        function check() {
+            var lo = document.getElementById('lo').value;
+            var hi = document.getElementById('hi').value;
+            var fp = document.getElementById('fp').value;
+            var ph = document.getElementById('ph').value;
+            var amp = document.getElementById('amp').value;
+            
+
+            var q = `
+                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi}, ${fp}, ${ph}, ${amp}}]
+                    `;
+
+            document.getElementById('logoFlames').style = "display: block";
+            document.getElementById('bigFlames').style = "opacity: 0.2"; 
+          
+            socket.send(q);
+            //
+        }
+  </script>

@@ -1,0 +1,10 @@
+<|
+   "before"->Null,
+   "after"->"fourier",
+   "dependencies"->{},
+
+
+    "description"-> "Automatic sample-referece matcher. Using field and temperature fields to match as close as possible.",
+    "parameters"-> {      
+    }
+|>

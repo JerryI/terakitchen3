@@ -1,0 +1,56 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                <h4 class="panel-title">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" onclick="openField<?wspuid?>()" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                        Refractive index
+                    </button>
+                </h4>
+            </div>
+            <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                <div class="panel-body">
+                   
+                    <div id='plot<?wspuid?>'></div>
+
+                </div>
+                <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('<?wspfieldname?>')">Add to the bucket</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+            </div>
+        </div>
+
+        <script>
+            var fieldState<?wspuid?> = false;
+        
+            function openField<?wspuid?>() {
+                if(fieldState<?wspuid?> == false) {
+                    fieldState<?wspuid?> = true;
+                    loadField('ExportString[Transpose[data["n"]], "JSON"]', function(resp) {
+        
+                        var raw = JSON.parse(resp);
+        
+                        let data = {
+                            x: raw[0],
+                            y: raw[1],
+                            mode: 'lines'
+                        };
+        
+                        let layout = {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'n',
+                                showgrid: true,
+                                zeroline: true
+                            }
+                        };
+        
+                        Plotly.newPlot('plot<?wspuid?>', [data], layout);
+        
+                    });
+                }
+            }
+        
+        </script>

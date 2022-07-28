@@ -1,0 +1,126 @@
+<!-- Modal -->
+<div class="modal fade" id="expModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add new experiment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!--<span aria-hidden="true">&times;</span>-->
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="experiment/expuploader.wsp" method="post" id="expform">
+            <div class="form-group">
+              <label for="samplename">Sample or experiment name</label>
+              <input id="samplename" type="text" class="form-control form-control-lg" placeholder="ATR?" name="sample">
+              <label for="desc">Describtion</label>
+              <input id="desc" type="textarea" class="form-control" placeholder="..." name="describtion">
+              <label for="user">User</label>
+              <input id="user" type="text" class="form-control" placeholder="JD" name="user">
+            </div>
+            <div class="form-group">
+              <label for="thickness">Thickness</label>
+              <input id="thickness" type="text" class="form-control" name="thickness" id="thickness" placeholder="XX mm">
+              <small>Use metric units "mm" or "cm". Or just leave it empty and specify for the each set of data.</small>
+            </div>
+            <div class="form-group" id="form-exp">
+              <label>Filename parser settings</label>
+              <small>Regular expressions for the fields</small>
+              
+              <?wsp Table[  
+
+                With[{var = settings["defaultparser"][[i]], uid = CreateUUID[]},  ?>
+  
+              <div class="row pb-3" id="<?wspuid?>">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Field name" name="field_<?wspi?>" value="<?wsp var[[1]] ?>">
+                </div> 
+                
+                <div class="col-lg-3">
+                  <input type="text" class="form-control" placeholder="Regexp" name="regexp_<?wspi?>" value="<?wsp var[[2]] ?>">
+                </div>
+                <div class="col-lg-5">
+                  <input type="text" class="form-control" placeholder="Epilog function" name="function_<?wspi?>" value="<?wsp ToString[var[[3]],InputForm]//StringFix ?>">
+                </div>
+
+                <div class="col">
+                  <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('<?wspuid?>').remove()">-</button>
+                </div>
+                   
+              </div> 
+              
+              
+              
+              
+              <?wsp ] , {i, 1, settings["defaultparser"]//Length}] ?>
+           </div>
+          <div class="form-group" id="form-button-exp">
+              <button type="button" class="btn btn-outline-info" onclick="addRow()">Add extra field</button>
+          </div>
+
+             <!--<div class="form-check">
+              <input class="form-check-input" name = "manual" type="checkbox" onclick="hidetoggle_exp(this)" id="hideshow">
+              <label class="form-check-label" for="manual">
+                I don't like regexp, do it manually
+              </label>
+             </div>-->
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#expModal').modal('hide')">Close</button>
+          <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Submit" form="expform">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+function hidetoggle_exp(ev) {
+
+  let div = document.querySelector("#form-exp");
+  let btn = document.querySelector("#form-button-exp");
+  console.log(ev.checked);
+  if (ev.checked) {
+    div.style = "display: none";
+    btn.style = "display: none";
+    console.log("hide");
+  } else {
+    div.style = "display: block";
+    btn.style = "display: block";
+    console.log("show");
+  }
+};
+
+
+function addRow() {
+  const div = document.createElement('div');
+  const uid = "id" + Math.random().toString(16).slice(2);
+
+  div.className = 'row pb-3';
+  div.id = uid;
+
+  div.innerHTML = `
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Field name" name="field_${uid}" >
+                </div> 
+                
+                <div class="col-lg-3">
+                  <input type="text" class="form-control" placeholder="Regexp" name="regexp_${uid}" >
+                </div>
+                <div class="col-lg-5">
+                  <input type="text" class="form-control" placeholder="Epilog function" name="function_${uid}" >
+                </div>
+
+                <div class="col">
+                  <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('${uid}').remove()">-</button>
+                </div>
+              
+  `;
+
+  document.getElementById('form-exp').appendChild(div);
+};
+  </script>

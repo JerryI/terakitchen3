@@ -1,0 +1,125 @@
+<?wsp
+
+Module[{fields=<||>},
+      
+With[{id = #},
+Map[
+
+Function[x, 
+    If[ByteCount[collection[id][x]] > 100,
+
+        fields[x]=False;
+    ,
+      If[!KeyExistsQ[fields, x],
+        fields[x]=True;
+      ];
+    ];
+    
+]
+
+, Keys[collection[id]]]]& /@ session["local_results"];
+
+
+(If[fields[#] == False, fields[#]=.])&/@(fields//Keys);
+
+If[KeyExistsQ[session, "exclude_fields"],
+    session["exclude_fields"] = Join[{"data", "id", "ref", "type", "description"}, session["exclude_fields"]],
+    session["exclude_fields"] = {"data", "id", "ref", "type", "description"}
+];
+
+session["local_fields"] = Complement[fields//Keys, session["exclude_fields"]];
+
+session["local_fields"] = Join[{"id", "type", "ref"}, session["local_fields"]];
+
+session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query", "sort"]//StringUnfix//ToExpression, {"temperature","field","polarization"}];
+
+
+
+
+];
+""
+?>
+
+<?wsp If[KeyExistsQ[session[ToString[Query]], ToString[sort]],  ?>
+<p class="fw-light">Sorting query</p>
+<div class="d-flex align-items-center">
+  <form class="w-100 mb-2" action="<?wsp session[ToString[rawurl]]?>" method="get" id="sorting">
+    <textarea class="form-control" id="sort" name="sort"><?wsp session[ToString[Query], ToString[sort]]//StringUnfix?></textarea>
+    <input name="id" value="<?wsp session[ToString[Query], ToString[id]]//ToString//StringFix?>" type="hidden">
+    <input name="q" value="<?wsp session[ToString[Query], ToString[q]]//ToString//StringFix?>" type="hidden">
+
+  </form>
+
+</div> 
+<?wsp , ""] ?>      
+<p class="fw-light">Uploaded data</p>
+<?wsp
+
+    session["local_table"] = CSort[session["local_sort"],session["local_results"]]//CFlatten;
+    ""
+  ?>
+
+    <table class="table table-striped">
+        <thead>
+      
+          <tr>
+            <?wsp Table[ ?>
+
+            <th scope="col">
+                <a class="link-dark rounded" href="<?wsp session[ToString[rawurl]] ?>&sort=<?wspToString[List[i],InputForm]//StringFix?>"><?wsp i ?></a></th>
+
+            <?wsp , {i, session["local_fields"]}] ?>
+          </tr>
+        </thead>
+        <tbody>
+            
+        <?wsp Table[ 
+        
+            With[{item = collection[key]},
+        ?>
+
+          <tr>
+            <?wsp Table[ ?>
+
+                <td>
+                  <?wsp If[KeyExistsQ[item,f],  ?>
+                    <?wsp If[f === "id" || f === "ref", ?>
+                      <a class="link-dark rounded" href="item/index.wsp?id=<?wspitem[f]//ToString?>"><?wsp item[f] ?></a>
+                    <?wsp , item[f] ]?>
+                  <?wsp , ""] ?>
+                </td> 
+
+
+            <?wsp , {f, session["local_fields"]}] ?>
+          </tr>
+
+        <?wsp 
+            ] 
+            , {key, session["local_table"]}] 
+        ?>   
+
+        </tbody>
+      </table>
+
+      <script>
+        CodeMirror.fromTextArea(document.getElementById("sort"), {
+          lineNumbers: false,
+          autoCloseTags: true,
+          setSize: (200,200),
+          mode:  "mathematica",
+          indentWithTabs: true,
+          theme: "default",   
+          lineWrapping: true,
+          extraKeys: {
+           "F11": function(cm) {
+             cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+           },
+           "Esc": function(cm) {
+            if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+          },
+          "Ctrl-Enter": function(instance) { 
+            $("#sorting").submit();
+          },
+        }     
+       });
+       </script>

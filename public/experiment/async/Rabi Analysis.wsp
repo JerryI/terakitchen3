@@ -1,0 +1,24 @@
+<?wsp
+
+  rabiplot = With[{dt = {
+    ReplaceAll[
+     collection[#]["thickness"] // ToExpression, {cm -> 10, 
+      mm -> 1}], collection[#]["data"]["rabi-analysis"]["gap"]
+    } & /@ 
+  Select[CQuery["experiment" -> Equal -> experiment],  Function[x, KeyExistsQ[collection[x]["data"], "rabi-analysis"] ]]
+},
+
+
+With[{ model = Fit[dt, { Sqrt[x]}, x]},
+
+ExportString[
+ Plot[model, {x, 0, 2}, 
+  Epilog -> {Red, PointSize[0.02], Point[dt]}], "SVG"]
+
+]
+
+]
+
+
+?> 
+

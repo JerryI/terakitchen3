@@ -1,0 +1,11 @@
+<div class="modal fade" id="waitingModal" tabindex="-1" role="dialog" aria-labelledby="waitingModalLabel"  aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="waitingModalLabel">The spectras are cooking</h5>
+
+
+        </div>
+    </div>
+  </div>  
+</div>  

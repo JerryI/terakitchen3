@@ -1,0 +1,27 @@
+<|
+    "before"->"background",
+    "after"->"rabi",
+    "dependencies"->{"nk"},
+
+    "description"-> "Preview generator for the front-page of the experiment",
+    "parameters"-> {
+        <|
+            "symbol"->"graphs",
+            "desc"->"Number of curves",
+            "value"-> 3,
+            "type"->"integer"
+        |>,
+        <|
+            "symbol"->"width",
+            "desc"->"Image width",
+            "value"-> 800,
+            "type"->"integer"
+        |>,
+        <|
+            "symbol"->"steps",
+            "desc"->"Number of skipped points to reduce size",
+            "value"-> 10,
+            "type"->"integer"
+        |>             
+    }
+|>

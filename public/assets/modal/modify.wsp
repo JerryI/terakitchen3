@@ -1,0 +1,35 @@
+  <!-- Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyModal"  aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modifyModal">Modify field</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!--<span aria-hidden="true">&times;</span>-->
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="modifyform" action="item/mod.wsp" method="post">
+            <?wsp With[{i = session["item"]["id"]}, ?>
+            <input name="id" value="<?wsp i ?>" type="hidden">
+            <?wsp ] ?>
+            <div class="form-group"> 
+              <label class="form-group-label" for="expression">
+                Write a function to modify
+              </label>
+              <textarea id="expression"  class="form-control form-control-lg" name="expression">( #["thickness"] = "0.72 mm" )&</textarea>
+            </div>             
+              
+          </form>          
+              
+        </div>
+              
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modifyModal').modal('hide')">Close</button>
+          <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Submit" form="modifyform">
+        </div>
+      </div>
+    </div>
+  </div>

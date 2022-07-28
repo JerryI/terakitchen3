@@ -1,0 +1,51 @@
+
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Refs connector</h1>
+  
+          <p class="lead text-muted">Please, connect them manually</p>
+    
+         
+
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+
+            <?wsp Table[ ?>
+
+            <div class="form-group">             
+                <label class="form-group-label" for="<?wsp i ?>">
+                    Sample \t <?wsp CGet[i, "filename"] ?>
+                </label>
+                <br>
+                <small>Select the reference file</small><br><br> 
+                <select name="<?wsp i ?>" id="<?wsp i ?>" form="dialog">
+
+                <?wsp Table[ ?>
+                    <option value="<?wsp j ?>" selected="selected"><?wsp CGet[j, "filename"] ?></option>  
+                <?wsp , {j, $data["list"]}] ?>  
+
+                    <option value="noref" selected="selected">this is a reference</option>  
+                </select>
+                <br><br>
+                  
+            </div>
+
+            <?wsp , {i, norefs}] ?>
+            
+        </form>      
+
+          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+  
+    </div>
+  </div>
+
+  <script>
+    function check() {
+      socket.send('PageEmitt["<?wsp $uid ?>"]["A random message"]');
+    }
+
+    core.UpdateField = function(args, env) {
+      document.getElementById("param").value = interpretate(args[0]);
+    }
+  </script>

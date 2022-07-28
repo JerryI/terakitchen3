@@ -1,0 +1,154 @@
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">TDS Surgery</h1>
+          <p class="lead text-muted">Please select the region to cut</p>
+
+          <div class="row">
+            <div class="col-xs-6">
+                <div id="tds"></div>
+            </div>
+            <div class="col-xs-6">
+                <div id="fft"></div>
+            </div>
+          </div>
+          
+          
+      
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+            <input type="number" step=any name="lpeak" value=0 id="lpeak">
+            <input type="number" step=any name="rpeak" value=0 id="rpeak">
+            <input id="points" type="hidden" class="form-control form-control" value="[]" name="points">                                 
+          </form>      
+
+          <button class="btn btn-secondary" onclick="check()">Update preview</button>
+
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog">
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Cancel" form="dialog">
+     
+          <p class="lead text-muted">By clicking update you will see the result of fourier transformation.</p>
+              
+    </div>
+  </div>
+ 
+  <script>
+    var tds = document.getElementById('tds');
+    var fft = document.getElementById('fft');
+
+    var color1      = '#7b3294';
+
+    var color1Light = '#c2a5cf';
+    var colorX      = '#ffa7b5';
+    var colorY      = '#fdae61';
+
+    let data = 
+            {
+                x: <?wsp ExportString[freq, "JSON"]   ?>,
+                y: <?wsp ExportString[(fft//Abs)^2, "JSON"]   ?>,
+                mode: 'lines'
+            };
+        
+    let layout = {
+        xaxis: {
+            title: 'wavenumber, cm-1',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+            title: 'intensity, a.u.',
+            showgrid: true,
+            zeroline: true
+        }
+    };
+        
+    Plotly.plot(fft, [data], layout);
+
+    Plotly.plot(tds, [{
+        type: 'scatter',
+        mode: 'markers',
+
+        x: <?wsp ExportString[tds[[All,1]], "JSON"]   ?>,
+        y: <?wsp ExportString[tds[[All,2]], "JSON"]   ?>,
+
+        xaxis: 't, ns',
+        yaxis: 'I, nA',
+        zeroline: true,
+        showgrid: true,
+        marker: {color: color1, size: 3}
+    }], {
+  
+        dragmode:'select',
+        hovermode: false 
+    });
+
+    tds.on('plotly_selected', function(eventData) {
+        var x = [];
+        var y = [];
+
+        var colors = [];
+
+        for(var i = 0; i < <?wsp tds//Length ?>; i++) colors.push(color1Light);
+
+        eventData.points.forEach(function(pt) {
+            x.push(pt.x);
+            y.push(pt.y);
+            colors[pt.pointNumber] = color1;
+        });
+
+        Plotly.restyle(tds, {
+            x: [x, y],
+            xbins: {}
+        }, [1, 2]);
+
+        console.log(x);
+        document.getElementById('points').value = JSON.stringify(x);
+
+        Plotly.restyle(tds, 'marker.color', [colors], [0]);
+    });
+
+    core.UpdateGraph = function(args, env) {
+        let r = JSON.parse(interpretate(args[0]));
+
+        let pt = JSON.parse(interpretate(args[1]));
+
+        document.getElementById('rpeak').value = pt[0][0];
+        document.getElementById('lpeak').value = pt[1][0];
+
+        Plotly.deleteTraces(fft, [0]);
+        Plotly.addTraces(fft, [{x:r[0] , y: r[1]}]);
+                
+        document.getElementById('logoFlames').style = "display: none"; 
+        document.getElementById('bigFlames').style = "opacity: 0";
+
+        Plotly.relayout(fft, {
+                'shapes': pt.map(function(el){
+                return({
+                type: 'line',
+                x0: el[0],
+                y0: 0,
+                x1: el[0],
+                y1: el[1],
+                line: {
+                  color: 'red',
+                  width: 1,
+                }
+            });
+            }
+            )
+            }
+        );        
+    }
+
+    function check() {
+        var points = document.getElementById('points').value;
+
+        var q = `
+                PageEmitt["<?wsp $uid ?>"]["${points}"]
+                `;
+
+        document.getElementById('logoFlames').style = "display: block";
+        document.getElementById('bigFlames').style = "opacity: 0.2"; 
+          
+        socket.send(q);
+    }
+  </script>

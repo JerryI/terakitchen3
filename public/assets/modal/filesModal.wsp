@@ -1,0 +1,226 @@
+  <!-- Modal -->
+<div class="modal fade" id="filesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Upload new data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!--<span aria-hidden="true">&times;</span>-->
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="experiment/fileuploader.wsp" method="post" enctype='multipart/form-data' id="filesform" >
+            <div class="form-group">
+              <label for="experiment">Choose the experiment</label>
+              <select name="experiment" id="experiment" form="filesform" onchange="getExp(this)">
+                
+              <?wsp If[ !StringQ[selectedExperiment],  ?>
+
+              <?wsp  With[{i = Last[experiments]["sample"]}, ?>
+                <option value="<?wspi?>" selected="selected"><?wspi?></option>  
+                <?wsp ] ?>
+
+                <?wsp Table[ ?>
+                  <option value="<?wspi?>"><?wspi?></option>    
+                <?wsp , {i,Drop[experiments//Keys//Reverse,1]}]  ?>
+                 
+                <?wsp , ""] ?>
+
+
+                <?wsp If[ StringQ[selectedExperiment],  ?>
+
+                  <option value="<?wspselectedExperiment?>" selected="selected"><?wspselectedExperiment?></option>  
+                  
+                <?wsp , ""] ?>
+         
+              </select>
+            </div>
+            <br>
+            <div class="form-group">
+              <label>Attach files</label>
+              <input type="file" name="files" multiple>
+            </div>
+            <br>
+            <div class="form-group">
+              <label>Choose the preprocessors to apply</label>
+              <?wsp 
+                Table[
+
+                With[{unit = Get["services/"<>i<>"/manifest"]},
+                
+                 ?>
+              
+              <div class="form-check">
+                <input class="form-check-input" name = "$service_<?wspi?>_allowed" type="checkbox" checked id="<?wspi?>">
+                <label class="form-check-label" for="<?wspi?>">
+                  <?wspi?>
+                </label>
+                <small><?wspunit["description"]?></small>
+                <div class="form-group">
+                  
+                  <?wsp Table[ ?>
+                  <label class="form-group-label" for="$service_<?wspi?>_<?wsp p[symbol//ToString] ?>">
+                    <?wspp["desc"]?>
+                  </label>
+                  <input id="$service_<?wspi?>_<?wsp p[symbol//ToString] ?>" <?wsp <|"symbol"->StringTemplate["type=\"text\" value=\"``\""][p["value"]], "real"->StringTemplate["type=\"number\" step=any value=\"``\""][p["value"]], "integer"->StringTemplate["type=\"number\" step=1 value=\"``\""][p["value"]], "text"->"type=\"text\" value=\""<>p["value"]<>"\"", "bool"->"class=\"form-check\" type=\"checkbox\" "<>If[p["value"], "checked", ""]|>@p["type"] ?> class="form-control form-control" name="$service_<?wspi?>_<?wsp p[symbol//ToString] ?>">
+
+                  <?wsp , {p, unit["parameters"]}] ?>
+                </div>
+              
+              </div>
+
+              <?wsp ] , {i, FileNameTake /@ FileNames[All, "services"]}] ?>              
+            </div>
+
+
+            <div class="form-group"> 
+              <label class="form-group-label" for="customtag">
+                Add the custom tag(s) to all files
+              </label>
+              <textarea id="customtag"  class="form-control form-control-lg" name="customtag"> "cut"->"ab"</textarea>
+            </div>  
+            <div class="form-group"> 
+              <label class="form-group-label" for="thickness">
+                Thickness
+              </label>
+              <input id="thickness" type="text" class="form-control form-control-lg" placeholder="XX mm" name="thickness">
+              <small>Use metric units "mm" or "cm". Or leave it empty and the thickness defined in the chosen experiment will be used.</small>
+            </div>    
+            <div class="form-group"> 
+              <label class="form-group-label" for="thickness">
+                Comment
+              </label>
+              <input id="comment" type="text" class="form-control form-control-lg" placeholder="this is a very beautiful crystal..." name="comment">
+              <small>Write a short describtion or leave it empty</small>
+            </div>   
+            <div class="form-group" id="form-exp-files">
+              <label>Filename parser settings</label>
+              <small>Regular expressions for the fields</small>
+              
+              <?wsp Table[  
+
+                With[{var = If[!StringQ[selectedExperiment], Last[experiments], experiments[selectedExperiment]]["parser"][[i]], uid = CreateUUID[]},  ?>
+  
+              <div class="row pb-3" id="<?wspuid?>">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Field name" name="parser_field_<?wspi?>" value="<?wsp var[[1]] ?>">
+                </div> 
+                
+                <div class="col-lg-3">
+                  <input type="text" class="form-control" placeholder="Regexp" name="parser_regexp_<?wspi?>" value="<?wsp var[[2]] ?>">
+                </div>
+                <div class="col-lg-5">
+                  <input type="text" class="form-control" placeholder="Epilog function" name="parser_function_<?wspi?>" value="<?wsp ToString[var[[3]],InputForm]//StringFix ?>">
+                </div>
+
+                <div class="col">
+                  <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('<?wspuid?>').remove()">-</button>
+                </div>
+                   
+              </div> 
+              
+              
+              
+              
+              <?wsp ] , {i, 1, If[!StringQ[selectedExperiment], Last[experiments], experiments[selectedExperiment]]["parser"]//Length}] ?>
+
+           </div>  
+           <div class="form-group" id="form-button-exp-files">
+            <button type="button" class="btn btn-outline-info" onclick="addRowData('','','')">Add extra field</button>
+           </div>                                       
+           <!--<div class="form-check">
+            <input class="form-check-input" name = "manual" type="checkbox" onclick="hidetoggle_files(this)" id="hideshowfile">
+            <label class="form-check-label" for="manual">
+              I don't like regexp, will do it manually
+            </label>
+           </div>-->                      
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#filesModal').modal('hide')">Close</button>
+          <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Submit" form="filesform">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+
+function hidetoggle_files(ev) {
+
+let div = document.querySelector("#form-exp-files");
+let btn = document.querySelector("#form-button-exp-files");
+console.log(ev.checked);
+if (ev.checked) {
+  div.style = "display: none";
+  btn.style = "display: none";
+  console.log("hide");
+} else {
+  div.style = "display: block";
+  btn.style = "display: block";
+  console.log("show");
+}
+};
+
+
+
+  function fillFields(input) {
+    var data = interpretate(input);
+    console.log(data);
+    document.getElementById('form-exp-files').innerHTML = "";
+
+    data.forEach(function callback(val) {
+      addRowData(val[0], val[1], val[2]);
+    });
+
+  };
+
+  function addRowData(field, regexp, func) {
+    const div = document.createElement('div');
+    const uid = "id" + Math.random().toString(16).slice(2);
+
+    div.className = 'row pb-3';
+    div.id = uid;
+
+    div.innerHTML = `
+                <div class="col">
+                  <input type="text" value="${field}" class="form-control" placeholder="Field name" name="parser_field_${uid}" >
+                </div> 
+                
+                <div class="col-lg-3">
+                  <input type="text" value="${regexp}" class="form-control" placeholder="Regexp" name="parser_regexp_${uid}" >
+                </div>
+                <div class="col-lg-5">
+                  <input type="text" value="${func}" class="form-control" placeholder="Epilog function" name="parser_function_${uid}" >
+                </div>
+
+                <div class="col">
+                  <button type="button" class="btn btn-outline-danger" onclick="document.getElementById('${uid}').remove()">-</button>
+                </div>
+              
+    `;
+
+    document.getElementById('form-exp-files').appendChild(div);
+  };  
+
+  function getExp(selectObject) {
+    var value = selectObject.value;  
+    console.log(value);
+    
+    WSPHttpQuery('Map[Function[x, {x[[1]], x[[2]], ToString[x[[3]],InputForm]//StringFix} ], experiments["' + value + '"]["parser"]]',fillFields, 'ExpressionJSON');
+  };
+
+  var cmtag = CodeMirror.fromTextArea(document.getElementById("customtag"), {
+    lineNumbers: false,
+    autoCloseTags: true,
+
+    mode:  "mathematica",
+    indentWithTabs: true,
+    theme: "default",   
+    lineWrapping: true     
+ });
+
+ 
+ </script>

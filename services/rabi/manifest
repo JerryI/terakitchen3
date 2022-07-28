@@ -1,0 +1,10 @@
+<|
+    "before"->"previewgenerator",
+    "after"->Null,
+    "dependencies"->{"fourier", "refs"},
+
+    "description"-> "Interactive Rabi analyser",
+    "parameters"-> {
+          
+    }
+|>

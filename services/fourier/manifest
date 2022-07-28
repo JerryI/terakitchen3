@@ -1,0 +1,10 @@
+<|
+   "before"->"refs",
+   "after"->"nk",
+   "dependencies"->{},
+
+    "description"-> "Basic descrete fourier transformation of the time-domain data. It stores complex coefficients in [\"fft\"] for the each frequency in [\"freqs\"].",
+    "parameters"-> {    
+ 
+    }
+|>

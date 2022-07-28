@@ -1,0 +1,78 @@
+<?wsp
+    If[session["method"] == "POST",
+        
+        session["dynID"] = session["data"]["id"];
+
+        session["Redirect"] = window[session["dynID"], "postRedirect"]@session["data"];
+
+        window[session["dynID"], "postHandler"]@@{Null, session["data"]};
+        
+        console["log", ">>>>>>>>>>>>>> redirecting to ``", session["Redirect"]];
+
+        window[session["dynID"]] = .;
+    ,
+        session["dynID"] =  session["Query", "id"]//StringUnfix;
+
+       
+    ];
+    ""
+?>
+
+<?wsp LoadPage["assets/header.wsp"] ?>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div class="container" style="margin-top:1em" >
+
+    <?wsp LoadPage["assets/navigation.wsp"] ?>
+
+    <?wsp If[KeyExistsQ[window, session["dynID"]], window[session["dynID"]]["content"], " "] ?>
+
+    <?wsp If[!KeyExistsQ[window, session["dynID"]], ?>
+
+    <div id = "<?wsp session[ToString[dynID]] ?>">
+        <div class="row py-lg-3">
+            <div class="col-lg-10 col-md-8 mx-left">
+              <h2 class="fw-light">Window is loading...</h2>
+            </div>
+        </div>    
+    </div>
+
+    <script>
+
+    function subscribeOnLoad() {
+        console.log("sub");
+        var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp session[ToString[dynID]] ?>", client]';
+
+        if (socket.readyState != 1) {
+            setTimeout(subscribeOnLoad, 500);
+        } else {
+            socket.send(q);
+            document.getElementById('logoFlames').style = "display: block";    
+            document.getElementById('bigFlames').style = "opacity: 0.2"; 
+        }
+    };
+
+    
+
+    core.LoadDynamicPage = function(args, env) {
+        clearTimeout(myTimeout);
+        setInnerHTML(document.getElementById('<?wsp session[ToString[dynID]] ?>'), interpretate(args[0]));
+        document.getElementById('logoFlames').style = "display: none";    
+        document.getElementById('bigFlames').style = "opacity: 0";    
+
+    };
+
+    function reload() {
+        location.reload();
+    };
+        
+    subscribeOnLoad();
+    var myTimeout = setTimeout(reload, 7000);
+    </script>    
+
+    <?wsp , " "] ?>
+</div>
+
+<?wsp LoadPage["assets/footer.wsp"] ?>
+

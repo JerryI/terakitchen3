@@ -1,0 +1,262 @@
+
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Live preview</h1>
+  
+          <p class="lead text-muted">Thickness correction</p>
+    
+          <div id="plot"></div>
+
+          <div id="debug"></div>
+
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">   
+  
+            <div style="display:none" class="form-group" id="thicknessField">
+  
+                <label class="form-group-label" for="thickness">
+                    New thickness
+                </label>
+
+
+                <input id="thickness" type="text" class="form-control form-control" value="<?wsp 10 thickness//N//DecimalForm ?> mm" name="thickness">
+
+                <label class="form-group-label" for="amp">
+                    Amplification (sample)
+                </label>
+
+
+                <input id="amp" type="text" class="form-control form-control" value="<?wsp amplify ?>" name="amp">
+
+                </div>              
+          </form>      
+
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Retry" form="dialog" >
+        <input id="continue3" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+
+        <input id="continue1" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="Continue without FP subtraction" form="dialog" >
+        <input id="continue2" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="Continue with a new thickness" form="dialog" >
+
+        <input id="more" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="More iterations" form="dialog" >
+
+      
+     
+          <p id="textField" class="lead text-muted">When it is finished, you will find the final spectra. By clicking "Ok" you will aply the same thickness and other settings to all samples.</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+    var graphDiv = document.getElementById('plot');
+
+
+
+    var color1 = '#7b3294';
+
+    var color1Light = '#c2a5cf';
+    var colorX = '#ffa7b5';
+    var colorY = '#fdae61';
+
+    Plotly.plot(graphDiv, [{
+        type: 'scatter',
+        mode: 'markers',
+
+        x: [],
+        y: [],
+
+        xaxis: 'thickness, cm',
+        yaxis: 'error (sharpness)',
+        zeroline: true,
+        showgrid: true,
+        marker: {color: color1, size: 3}
+    }], {
+
+        showlegend: false,
+        hovermode: false ,
+        xaxis: {
+                                title: 'thickness, cm',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'error (sharpness)',
+                                showgrid: true,
+                                zeroline: true,
+                            }
+    });
+
+    Plotly.newPlot('debug', [{x: [], y: [], mode: 'lines'}], {
+            xaxis: {
+                title: 'wavenumber, cm-1',
+                showgrid: true,
+                zeroline: true
+            },
+            shapes:[],
+            showlegend: false,
+            hovermode: false ,
+            yaxis: {
+                title: 'absorption coefficient, cm-1',
+                showgrid: true,
+                zeroline: true,
+            }});
+
+    var id = '<?wsp $uid ?>';
+
+    function onLoad() {
+        console.log("onload");
+        
+        var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp $uid ?>", client]; PageEmitt["<?wsp $uid ?>"][{}];';            
+
+        if (socket.readyState != 1) {
+            setTimeout(onLoad, 500);
+        } else {
+            socket.send(q);
+        }
+    };
+
+
+    core.NoMinima = function(args, env) {
+        document.getElementById("textField").innerHTML = "No minima was found. Please, enter a new thickness or continue without FP correction";
+        document.getElementById("continue1").style = "";
+        document.getElementById("continue2").style = "";
+        document.getElementById("thicknessField").style = "";
+   
+    };
+
+    core.PhaseError = function(args, env) {
+        document.getElementById("textField").innerHTML = "FP correction cannot be done due to the large phase error. It can be caused by a wrong thickness or the differences in the scaling of the time-domain spectrum of the reference/sample. You can tune it using amplification field in the beginning. Try to continue with a new thickness or press Retry to go back to the first step.";
+        document.getElementById("continue1").style = "";
+        document.getElementById("continue2").style = "";
+        document.getElementById("thicknessField").style = "";
+    };    
+
+    core.ItIsOK = function(args, env) {
+        document.getElementById("continue3").style = "";
+        document.getElementById("continue1").style = "";
+        document.getElementById("continue2").style = "";
+        document.getElementById("more").style = "";
+        
+    };
+    
+
+    core.UpdateFinalGraph = function(args, env) {
+        console.log("FINAL!");
+        let r = JSON.parse(interpretate(args[0]));
+        
+
+        let data1 = {
+                            x: r[0],
+                            y: r[1],
+                            mode: 'lines',
+                            name: 'alpha'
+                        };
+                    
+                        let data2 = {
+                            x: r[0],
+                            y: r[2],
+                            mode: 'lines',
+                            yaxis: 'y2',
+                            name: 'n'
+                        };  
+                        
+                        let data3 = {
+                            x: r[0],
+                            y: r[3],
+                            mode: 'lines',
+                            name: 'alpha - with FP',
+                            line: { opacity: 0.5 }
+                        }; 
+                    
+                        let layout = {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'absorption coefficient, cm-1',
+                                showgrid: true,
+                                zeroline: true,
+                            },
+                            yaxis2: {
+                                title: 'n',
+                                titlefont: {color: 'rgb(148, 103, 189)'},
+                            
+                                tickfont: {color: 'rgb(148, 103, 189)'},
+                            
+                                overlaying: 'y',
+                                side: 'right'
+                            
+                            }            
+                        };
+                    
+                        Plotly.newPlot('debug', [data1, data2, data3], layout);
+    };
+
+    core.UpdateGraph = function(args, env) {
+            let r = JSON.parse(interpretate(args[0]));
+            Plotly.addTraces(graphDiv, {
+                            y: [r[1]], x: [r[0]], mode: 'markers',
+                            marker: {
+                            size: [7*30],
+                            sizeref: 1,
+                            sizemode: 'area',
+                            color: r[2],
+                            opacity: 0.5
+                            }
+                        });
+    };
+
+    core.UpdateGraphMulti = function(args, env) {
+            let arr = interpretate(args[0]);
+            console.log(arr);
+
+            arr.forEach(m => {
+                var r = JSON.parse(m);
+                Plotly.addTraces(graphDiv, {
+                            y: [r[1]], x: [r[0]], mode: 'markers',
+                            marker: {
+                            size: [7*30],
+                            sizeref: 1,
+                            sizemode: 'area',
+                            color: r[2],
+                            opacity: 0.5
+                            }
+                        });               
+            });
+
+    };    
+
+    core.UpdateSamplingGraph = function(args, env) {
+            let r = JSON.parse(interpretate(args[0]));
+            Plotly.deleteTraces('debug', [0]);
+
+            Plotly.addTraces('debug', [{x: r[0] , y: r[1], name: 'alpha'}]);
+
+
+
+            Plotly.relayout('debug', {
+                'shapes': r[2].map(function(singleElement){
+                return({
+                type: 'line',
+                x0: singleElement,
+                y0: -5,
+                x1: singleElement,
+                y1: 25,
+                line: {
+                  color: 'red',
+                  width: 1,
+                }
+            });
+            }
+            )
+            }
+            );
+    };   
+
+    onLoad();
+
+
+  </script>

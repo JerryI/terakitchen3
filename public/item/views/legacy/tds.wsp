@@ -1,0 +1,42 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                <h4 class="panel-title">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                        Time trace
+                    </button>
+                </h4>
+            </div>
+            <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                <div class="panel-body">
+
+   
+                    <div id='plot<?wspuid?>'><!-- Plotly chart will be drawn inside this DIV --></div>
+
+                </div>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+            </div>
+        </div>
+
+        <script>
+            let data<?wspuid?> = {
+                x: <?wspExportString[data["tds"][[All,1]], "JSON"]?>,
+                y: <?wspExportString[data["tds"][[All,2]], "JSON"]?>,
+                mode: 'lines'
+            };
+
+            let layout<?wspuid?> = {
+                xaxis: {
+                    title: 'wavenumber, cm-1',
+                    showgrid: true,
+                    zeroline: true
+                },
+                yaxis: {
+                    title: 'I, nA',
+                    showgrid: true,
+                    zeroline: true
+                }
+            };
+
+            Plotly.newPlot('plot<?wspuid?>', [data<?wspuid?>], layout<?wspuid?>);
+        </script>

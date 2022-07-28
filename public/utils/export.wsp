@@ -1,0 +1,98 @@
+<?wsp
+    Module[{exportitem,exportdata, list, link = "unknown command", fields, q = session["Query"]},
+
+        fields = If[q["fields"] == "All", Null , q["fields"]//StringUnfix//ToExpression];
+
+        exportitem[id_, path_]:= Module[{name, data, maxheight, titles, extendedtitles},
+
+            If[NullQ[fields], 
+                data = collection[id]["data"][#]&/@Keys[collection[id]["data"]];
+                titles = Keys[collection[id]["data"]];
+            ,
+                data = collection[id]["data"][#]&/@fields;
+                titles = fields;
+            ];
+            
+            titles = Select[titles, KeyExistsQ[collection[id]["data"], #]&];
+
+            data = data // DeleteMissing;
+
+            maxheight = Max[Length /@ data];
+
+            extendedtitles={};
+
+            Do[
+                Do[ AppendTo[extendedtitles, titles[[i]]]; , {j, 1, If[ArrayQ[data[[i,1]]], Length[data[[i,1]]], 1] }]
+            , {i, Length[data]}];
+
+            data = If[Length[#] < maxheight, Join[#,
+                With[{f = # // Last},
+                 Table[f, {i, maxheight - Length[#]}]
+                 ]
+            
+                ]
+           
+            , #] & /@ data;
+
+            data = Flatten/@Transpose[data];
+
+            data = Join[{extendedtitles}, data];
+        
+
+            name = If[KeyExistsQ[collection[id], "filename"], collection[id]["filename"], id];
+
+            Export[path<>"/"<>name<>".dat", data];
+
+            name<>".dat"
+                    
+        ];
+
+        exportdata[id_, field_, path_]:= Module[{name},
+
+            name = If[KeyExistsQ[collection[id], "filename"], collection[id]["filename"], id] <> "_" <> field;
+            Export[path<>"/"<>name<>".dat", collection[id]["data"][field]];
+
+            name<>".dat"
+                    
+        ];        
+
+        Switch[q["command"],
+            "experiment",
+                DeleteDirectory["public/trashcan/"<>q["id"], DeleteContents->True];
+                CreateDirectory["public/trashcan/"<>q["id"]];
+
+                exportitem[#, "public/trashcan/"<>q["id"]]& /@ CQuery["experiment"->Equal->q["id"]];
+
+                link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>(CreateArchive["public/trashcan/"<>q["id"],"public/trashcan/", OverwriteTarget -> True] // FileNameTake);
+                 
+            ,
+            "item",
+                link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>exportitem[q["id"], "public/trashcan"];
+            ,
+            "query",
+                With[{uid = StringTake[Hash[q["query"], "SHA256", "HexString"],5]}, 
+                    DeleteDirectory["public/trashcan/"<>uid, DeleteContents->True];
+                    CreateDirectory["public/trashcan/"<>uid];
+
+                    exportitem[#, "public/trashcan/"<>uid]& /@ CQuery[ToExpression[StringUnfix[q["query"]]]];
+
+                    link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>(CreateArchive["public/trashcan/"<>uid,"public/trashcan/", OverwriteTarget -> True] // FileNameTake);
+                ];
+            ,
+            "list",
+                With[{uid = StringTake[Hash[q["list"], "SHA256", "HexString"],5]}, 
+                    DeleteDirectory["public/trashcan/"<>uid, DeleteContents->True];
+                    CreateDirectory["public/trashcan/"<>uid];
+
+                    exportitem[#, "public/trashcan/"<>uid]& /@ ToExpression[StringUnfix[q["list"]]];
+
+                    link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>(CreateArchive["public/trashcan/"<>uid,"public/trashcan/", OverwriteTarget -> True] // FileNameTake);                
+                ];
+            ,
+            "data", 
+                link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>exportdata[q["id"], q["field"], "public/trashcan"];
+        ];
+        
+        link
+    ]
+?>

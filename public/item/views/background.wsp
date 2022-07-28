@@ -1,0 +1,70 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                <h4 class="panel-title">
+                    <button onclick="openField<?wspuid?>()" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                        Background spectrum
+                    </button>
+                </h4>
+            </div>
+            <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                <div class="panel-body">
+
+                    <div id='plot<?wspuid?>'></div>
+
+                </div>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('subtracted')">Export</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('background')">Export the background only</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('subtracted')">Add to the bucket</button>
+            </div>
+        </div>
+
+        <script>
+            var fieldState<?wspuid?> = false;
+        
+            function openField<?wspuid?>() {
+                if(fieldState<?wspuid?> == false) {
+                    fieldState<?wspuid?> = true;
+                    loadField('ExportString[{data["alpha"][[All,1]],data["alpha"][[All,2]], data["background"], data["subtracted"][[All,2]]}, "JSON"]', function(resp) {
+        
+                        var raw = JSON.parse(resp);
+        
+                        let data1 = {
+                            x: raw[0],
+                            y: raw[1],
+                            mode: 'lines',
+                            name: 'alpha'
+                        };
+                        let data2 = {
+                            x: raw[0],
+                            y: raw[2],
+                            mode: 'lines',
+                            name: 'background'
+                        };
+                        let data3 = {
+                            x: raw[0],
+                            y: raw[3],
+                            mode: 'lines',
+                            name: 'subtracted'
+                        };                                                
+        
+                        let layout = {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'absorption coefficient, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            }
+                        };
+        
+                        Plotly.newPlot('plot<?wspuid?>', [data1, data2, data3], layout);
+        
+                    });
+                }
+            }
+        
+        </script>

@@ -1,0 +1,99 @@
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Semi-classical fitting</h1>
+          <p class="lead text-muted">Please wait until it is done</p>
+
+          <div class="col-xs-6">
+            <div id="tds"></div>
+          </div>
+          
+          
+      
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">                               
+          </form>      
+
+          <button id="more" style="display: none" class="btn btn-secondary" onclick="more()">More iterations</button>
+
+          <input style="display: none" id="ok" type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog">
+          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+          <p id="textField" class="lead text-muted"></p>
+            
+              
+    </div>
+  </div>
+ 
+  <script>
+
+    var tds = document.getElementById('tds');
+
+
+    var color1      = '#7b3294';
+
+    var color1Light = '#c2a5cf';
+    var colorX      = '#ffa7b5';
+    var colorY      = '#fdae61';
+
+    let data = 
+            {
+                x: <?wsp ExportString[sam["tds"][[All,1]], "JSON"]   ?>,
+                y: <?wsp ExportString[sam["tds"][[All,2]], "JSON"]   ?>,
+                mode: 'lines'
+            };
+
+    let data2 = 
+        {
+                x: [0],
+                y: [0],
+                mode: 'lines'
+    };            
+        
+    let layout = {
+        xaxis: {
+            title: 't, ps',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+            title: 'I, nA',
+            showgrid: true,
+            zeroline: true
+        }
+    };
+        
+    Plotly.plot(tds, [data, data2], layout);
+
+    core.UpdateGraph = function(args, env) {
+        let r = JSON.parse(interpretate(args[0]));
+
+        Plotly.deleteTraces(tds, [1]);
+        Plotly.addTraces(tds, [{x:r[0] , y: r[1]}]);
+    }
+
+    core.ItIsOK = function(args, env) {
+        document.getElementById("ok").style = "";
+        document.getElementById("more").style = "";
+        document.getElementById("textField").innerHTML = "Done! Fitted parameters will be stored in the sample data.";
+    
+        
+    };
+
+    function more() {
+        var q = 'PageEmitt["<?wsp $uid ?>"]["more"];';       
+        socket.send(q);
+    }
+
+    function onLoad() {
+        console.log("onload");
+        
+        var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp $uid ?>", client]; PageEmitt["<?wsp $uid ?>"][{}];';            
+
+        if (socket.readyState != 1) {
+            setTimeout(onLoad, 500);
+        } else {
+            socket.send(q);
+        }
+    };
+
+    onLoad();
+  </script>

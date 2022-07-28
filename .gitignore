@@ -1,0 +1,5 @@
+/logs.txt
+/db/*
+/running.lock
+/public/trashcan
+/nohup.out

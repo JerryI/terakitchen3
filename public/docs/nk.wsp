@@ -1,0 +1,270 @@
+<?wsp LoadPage["assets/header.wsp"] ?>
+<?wsp LoadPage["assets/svg.wsp"] ?>
+
+<div class="container" style="margin-top:1em">
+
+    <?wsp LoadPage["assets/navigation.wsp"] ?>
+
+    <div class="d-flex align-items-center">
+      <form class="w-100" action="../search.wsp" method="get" id="search-form">
+        <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"></textarea>
+      </form>
+
+    </div>
+    
+    <div class="container">
+  
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-3">
+            <div class="container">
+                
+                <div class="page-header">
+                  <h1>Tutorial on NK Service</h1>
+
+                  <p class="lead">An example how to clean up the spectrum from Fabry–Pérot echoes and extract materials parameters</p>
+                  
+                
+                  <div class="d-flex justify-content-between align-items-left mb-3">
+                
+                  
+
+                      <div class="align-items-sm-baseline align-items-left">
+                        <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#calendar3"></use></svg>
+                        <small class="text-muted"><?wsp TextString[ (DateObject[{2022, 3, 30, 12, 49, 28.4320447`9.206383006035523}, 
+                          "Instant", "Gregorian", 2.]) ] ?></small>
+                      </div>
+                    
+                    </div>
+                    
+
+                    <div class="d-flex justify-content-between align-items-left mb-3">
+                      <p>The <a class="link-dark rounded" href="/service.wsp?id=nk">nk</a> module requires the data, which was already processed using and <a class="btn-outline" href="/service.wsp?id=refs">refs</a> and <a class="btn-outline" href="/service.wsp?id=fourier">fourier</a> services.</p>
+
+                      <p>It allows the automatic thickness adjustment to efficiently remove FP echoes from the time-domain.</p>
+                    </div>
+
+                </div>
+                   
+                <div class="row">
+                  <div class="col">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                   
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false">
+                                    Initial settings
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                          <p>There are several initial parameters for the algorithm </p>  
+                            <div class="panel-body">
+            
+                                
+            
+                                <div class="col-lg-10 col-md-8 mx-left">
+                                  <h1 class="fw-light">nk</h1>
+                                  <p class="lead text-muted">An algorithm for the complex refractive index extraction. It stores values into ["nk"] as pairs. See DOI: 10.1117/12.612946</p>
+                                  <form action="" method="post" id="service">
+                                  <div class="form-group">
+                                   </div>
+                                  </form>
+                                </div>
+                              
+                            </div>
+                            <p>The reasonable interations for the extraction <b>n</b> and <b>k</b> are values lying around 10-30 - the first text area.</p> 
+                              <div class="panel-body">
+                                <div class="form-group">
+                                  <label class="form-group-label" for="iterations">Number of iterations</label>
+                                  <input id="iterations" type="text" class="form-control form-control" value="30" name="iterations">
+                                </div>
+                              </div>
+                            <p>The second important parameter is the frequency range defined by two cutoff values. Outside this range the k value will be set to 0, while n value to n<sub>0</sub> - the initial aproximation, derived from the delay time between the pulse and responce from the sample.</p>
+                            <div class="panel-body">
+                              <div class="form-group">
+                                <label class="form-group-label" for="locutoff">lower cutoff frequency (cm-1)</label>
+                                <input id="locutoff" type="text" class="form-control form-control" value="10" name="locutoff"><label class="form-group-label" for="hicutoff">higer cutoff frequency (cm-1)</label>
+                                <input id="hicutoff" type="text" class="form-control form-control" value="100" name="hicutoff">
+                              </div>
+                            </div>                              
+                            <p>One should not set the lower cutoff frequency too close to 0, because the SNR is very low there and can cause the large phase error, which anyway you can try to compensate on the further steps. This can be adjusted later again.</p>
+
+           
+                            <p>By default the FP cancellation procedure is on, and the number of cycles (basically - accuracy) is 8. However, one should pay the attention on the fact that FP subtraction is very sensitive to the phase errors caused by the innacurate thickness. If your sample is thick enough we would recommend you to set it to 0, otherwise you could expect to spent at least a half of on hour on the automatic procedure for the thickness correction.</p>
+                            <div class="panel-body">
+                              <div class="form-group">
+                                <label class="form-group-label" for="numberFP">FP subtraction cycles</label>
+                                <input id="numberFP" type="text" class="form-control form-control" value="8" name="numberFP">
+                              </div>
+                            </div>  
+                            <span class="btn-outline-danger">According to our experience the manually measured thickness of the sample is always off enough to cause a large phase error which could only amplify the echoes.</span>
+
+                            <p>For this reason if you want to spent extra time and efforts - try to use automatic adjustments</p>
+                            <div class="panel-body">
+                              <div class="form-group">
+                                <label class="form-group-label" for="thicknessCorrection">Thickness correction (yes or no)</label>
+                                <input id="thicknessCorrection" type="text" class="form-control form-control" value="no" name="thicknessCorrection"><label class="form-group-label" for="deviation">variation in +-%</label>
+                                <input id="deviation" type="text" class="form-control form-control" value="30" name="deviation"><label class="form-group-label" for="recursionNumber">recursion number (accuracy)</label>
+                                <input id="recursionNumber" type="text" class="form-control form-control" value="5" name="recursionNumber">
+                              </div>
+                            </div>
+                            
+                            <p>The first field is a binary thing: yes or no. If you type 'yes' it will try to vary the thickness of the sample (can be specified in the experiment settings or in 'thickness' field of the individual data; the last one has a priority) in the range of 'variation' in %. The algorithm divides the range into discrete points, finds the tickness value that provides the smallest FP echoes and it repeats the whole process again with the smaller steps near the value found in the previous iteration. The number of those repeats corresponds to the field 'recursion number'.</p>
+
+                            <p>Best results can be achieved with 'recursion number' = 5-8, when the region is about 30%. To estimate the absolute accuracy of the obtained thickness use the following formula: 2*variation*thickness/(15*recursion)</p>
+          
+                            
+                            <p>Once you submitted the form, the invitation box must appear on the left side in the notification column.</p>
+                            <div class="panel-body">
+                            <div class="toast-header">
+
+                              <strong class="mr-auto">NK</strong>
+                              <small class="text-muted">Time</small>
+                              <!--<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>-->
+                            </div>
+                            <div class="toast-body">Entscheidung erforderlich. Check the range <br><a class="btn btn-outline-info" href="#">open</a></div>
+                            </div>
+                            <p>And the window will pop up...</p>
+ 
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingTwo">
+                          <h4 class="panel-title">
+                              <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false">
+                                  The range settings dialog
+                              </button>
+                          </h4>
+                      </div>
+                      <div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                        <p>No matter what you have choosen on the previous step, the following windows will pop up. It takes the data from the random sample of your list and suggest to check all settings again allowing to see the effects of changing various parameters in a real time.</p>  
+                          <div class="panel-body">
+          
+
+                            <div class="col-lg-10 col-md-8 mx-left">
+                              <h1 class="fw-light">Entscheidung erforderlich</h1>
+                          
+                                  <p class="lead text-muted">Please check the cutoff frequencies for the nk extraction.</p>
+                            
+                                  
+                        
+                             
+                        
+                                 
+                                      
+                            </div>
+                                                   
+                          </div>
+   
+                          <p>It provides the same parameters to change as the initial settings page.</p>
+                          <div class="panel-body">
+                                <div class="form-group">
+                                
+                                  <label class="form-group-label" for="lo">
+                                     Low-frequency cutoff
+                                  </label>
+                                
+                                  <input id="lo" type="text" class="form-control form-control" value="10" name="lo">
+
+                              </div>
+                            
+                              <div class="form-group">
+                              
+                                  <label class="form-group-label" for="hi">
+                                      High-frequency cutoff
+                                  </label>
+                                
+
+                                  <input id="hi" type="text" class="form-control form-control" value="125" name="hi">
+                              </div> 
+                              <small>Use cm<sup>-1</sup> units</small><br><br>            
+                              <div class="form-group">
+                              
+                                  <label class="form-group-label" for="fp">
+                                      Number of FP cycles
+                                  </label>
+                                
+
+                                  <input id="fp" type="text" class="form-control form-control" value="8" name="fp">
+                              </div>            
+                              <small>The number of interations for the alogorithm</small><br><br>    
+                          </div>
+
+                          <p>You can apply these settings and see the result above by clicking the button</p>
+
+                          <button  class="btn btn-primary my-2" >Ok</button>
+                  
+                     
+                          <p class="lead text-muted">By clicking submit you will apply the same settings for all spectras.</p>
+                          <div class="panel-body">
+                            <button class="btn btn-secondary" >Update preview</button>
+                          </div>
+
+                          <p>However, there are additional parameters to check</p>
+                          
+
+                          <form>
+                            <input type="hidden" name="id" value="0005d6c9-417c-4f19-b19f-c78afda9c78f">
+                
+                            
+                            <div class="form-group">
+                  
+                                <label class="form-group-label" for="amp">
+                                    Amplification
+                                </label>
+                  
+                                
+                                <input id="amp" type="text" class="form-control form-control" value="1" name="amp">
+                            </div>            
+                            <small>Use the multiplier to adjust the stength of the sample's signal.</small><br><br>            
+                            <div class="form-group">
+                  
+                                <label class="form-group-label" for="ph">
+                                    Phase correction
+                                </label>
+                  
+                                
+                                <input id="ph" type="text" class="form-control form-control" value="0" name="ph">
+                            </div>            
+                            <small>Add the constant value to the phase in radians</small><br><br>  
+                            <div class="form-group">
+                  
+                                <label class="form-group-label" for="ep">
+                                    Extrapolate the phase to low-frequency
+                                </label>
+                  
+                                
+                                <input id="ep" type="text" class="form-control form-control" value="no" name="ep">
+                            </div>            
+                            <small>yes or no. Warning: can cause the global phase error, but you can fix it adding the phase correction.</small><br><br>                        
+                
+                  
+                            
+                        </form>      
+
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+                     
+            </div>
+          </div> 
+
+  
+        </div>
+
+        
+
+        
+
+
+    </div>
+
+</div>
+
+
+<?wsp LoadPage["assets/footer.wsp"] ?>

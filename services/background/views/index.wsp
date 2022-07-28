@@ -1,0 +1,164 @@
+
+
+<div class="row py-lg-3">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <h1 class="fw-light">Entscheidung erforderlich</h1>
+  
+          <p class="lead text-muted">Please select the regions, where the absorptions are presented</p>
+    
+          <div id="plot"></div>
+
+          <p class="lead text-muted">The live preview of the calculated background</p>
+
+          <div id="back"></div>
+
+          <form action="dynamic.wsp" method="post" id="dialog2">
+            <input type="hidden" name="id" value="<?wsp id ?>">
+
+            <input id="points" type="hidden" class="form-control form-control" value="[]" name="points">          
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="cut">
+                    cutoff frequency
+                </label>
+  
+                
+                <input id="cut" type="text" class="form-control form-control" value="<?wspcut?>" name="cut">
+            </div>            
+            <small>for the low-pass filter</small><br><br>                       
+            
+        </form>      
+
+        <button class="btn btn-secondary" onclick="check()">Update preview</button>
+
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog2" >
+        <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog2" >
+  
+     
+          <p class="lead text-muted">By clicking submit you will apply it only for this sample</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+    var id = '<?wsp id ?>';
+
+
+    var graphDiv = document.getElementById('plot');
+
+
+
+    var color1 = '#7b3294';
+
+    var color1Light = '#c2a5cf';
+    var colorX = '#ffa7b5';
+    var colorY = '#fdae61';
+
+    Plotly.plot(graphDiv, [{
+        type: 'scatter',
+        mode: 'markers',
+
+        x: <?wsp ExportString[alpha[[All,1]]//Re,"JSON"]   ?>,
+        y: <?wsp ExportString[alpha[[All,2]]//Re,"JSON"]   ?>,
+
+        xaxis: 'wavenumber, cm-1',
+        yaxis: 'absorption coefficient, cm-1',
+        zeroline: true,
+        showgrid: true,
+        marker: {color: color1, size: 3}
+    }], {
+  
+        dragmode:'select',
+        hovermode: false 
+    });
+
+ 
+
+    graphDiv.on('plotly_selected', function(eventData) {
+    var x = [];
+    var y = [];
+
+    var colors = [];
+
+    for(var i = 0; i < <?wsp alpha//Length ?>; i++) colors.push(color1Light);
+        eventData.points.forEach(function(pt) {
+            x.push(pt.x);
+            y.push(pt.y);
+            colors[pt.pointNumber] = color1;
+        });
+
+        Plotly.restyle(graphDiv, {
+            x: [x, y],
+            xbins: {}
+        }, [1, 2]);
+
+        console.log(x);
+        document.getElementById('points').value = JSON.stringify(x);
+
+        Plotly.restyle(graphDiv, 'marker.color', [colors], [0]);
+    });
+
+    var freqs = <?wsp ExportString[alpha[[All,1]],"JSON"]   ?>;
+
+    let data1 = {
+            x: freqs,
+            y: <?wsp ExportString[alpha[[All,2]],"JSON"] ?>,
+            mode: 'lines',
+            name: 'alpha'
+    };
+
+    let data2 = {
+            x: <?wsp ExportString[alpha[[All,1]],"JSON"]   ?>,
+            y: <?wsp ExportString[cutted,"JSON"] ?>,
+            mode: 'lines',
+            name: 'background'
+    }; 
+
+
+        let layout = {
+            xaxis: {
+                title: 'wavenumber, cm-1',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'absorption coefficient, cm-1',
+                showgrid: true,
+                zeroline: true,
+            }          
+        };
+
+
+        Plotly.newPlot('back', [data1, data2], layout);
+
+
+        core.UpdateGraph = function(args, env) {
+            let r = JSON.parse(interpretate(args[0]));
+        
+            Plotly.deleteTraces('back', [-1]);
+            Plotly.addTraces('back', [{x:freqs, y: r,  name: 'background'}]);              
+                
+            setTimeout(function() {document.getElementById('logoFlames').style = "display: none";}, 100);
+        };
+
+        function check() {
+            var cut = document.getElementById('cut').value;
+            var points = document.getElementById('points').value;
+            
+
+            var q = `
+                    window["${id}"]["socket"] = client;
+                    window["${id}"]["query"]["Push", {${cut},"${points}"}];
+                    `;
+            
+        
+
+            
+            document.getElementById('logoFlames').style = "display: block";
+            socket.send(q);
+            //
+        } 
+
+  </script>

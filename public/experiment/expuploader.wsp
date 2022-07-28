@@ -1,0 +1,18 @@
+<?wsp
+    session["Redirect"] = "index.wsp";
+    Module[{rawdata, parser},
+      If[session["method"] != "POST", Return[Null, Module]];
+
+      rawdata = <||>; 
+      Map[(rawdata[#]=session["data"][#])& ,(Select[Keys[session["data"]], !StringContainsQ[#, "_"] &])];
+
+      parser = (Partition[session["data"][#] & /@ (Select[Keys[session["data"]], StringContainsQ[#, "_"] &]), 3]);
+
+      rawdata = Join[rawdata, <|"parser" -> ({#[[1]], #[[2]], ToExpression[#[[3]]//StringUnfix]} & /@ parser)|>];
+      rawdata["date"] = Now;
+  
+      experiments[rawdata["sample"]] = rawdata; 
+    ];
+    
+    "OK"   
+?>

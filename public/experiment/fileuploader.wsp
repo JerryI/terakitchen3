@@ -1,0 +1,67 @@
+<?wsp
+  Module[{args, parser, servicesparameters, $experiment},
+    If[session["method"] != "POST", Return[Null, Module]];
+    With[{data = session["data"]},
+
+      session["Redirect"] = "experiment/index.wsp?id="<>data["experiment"];
+
+      servicesparameters = <||>;
+
+      Map[Function[x, 
+        Check[StringCases[x, 
+          RegularExpression["\$service_(.*)_(.*)"] :> (servicesparameters["$1"] = <||>;)][[1]], 
+          Missing[]]]
+      , data // Keys];
+
+      Map[Function[x, 
+        Check[StringCases[x, 
+          RegularExpression[
+            "\$service_(.*)_(.*)"] :> (servicesparameters["$1"]["$2"] = 
+              
+                data["$service_" <> "$1" <> "_" <> "$2"] )][[1]], Missing[]]]
+      , data // Keys] // DeleteMissing;
+
+
+      console["log", servicesparameters//Compress];
+
+      $experiment = data["experiment"];
+      files = If[ArrayQ[data["files"]], data["files"], {data["files"]}];
+
+      parser = (Partition[
+        session["data"][#] & /@ (Select[Keys[session["data"]], 
+        StringContainsQ[#, "parser_"] &]), 3]);
+
+      parser =  ({#[[1]], #[[2]], ToExpression[#[[3]]//StringUnfix]} & /@ parser);
+
+      experiments[$experiment]["date"] = Now;
+
+      args = <|
+        "exp" -> $experiment,
+        "files" -> files,
+        "parser" -> parser,
+        "services" -> servicesparameters
+      |>;
+
+      If[StringLength[data["thickness"]] > 0, args = Join[args, <| "thickness"->data["thickness"]  |>]];
+
+      If[StringLength[data["comment"]] > 0,
+
+      With[{descid = CreateUUID[]},
+          descriptions[descid] = data["comment"];
+          args = Join[args, <| "descid"->descid |>];
+        ];
+      ];
+
+      If[StringLength[data["customtag"]] > 0, args = Join[args, <|"customtag"->data["customtag"] |>]];
+
+
+      console["log", "UPDLOADED DATA ``", args//Compress];
+
+      LoopSubmit[ProcessFiles[args]];
+
+    ];
+
+  ];
+
+  "OK"
+?>

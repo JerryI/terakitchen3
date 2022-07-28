@@ -1,0 +1,50 @@
+<?wsp
+  session[ToString[q]] =  session["Query", "q"]//StringUnfix;
+  session["local_results"] = CQuery[session[ToString[q]]//ToExpression];
+
+    ""
+    
+?>
+<?wsp LoadPage["assets/header.wsp"] ?>
+<?wsp LoadPage["assets/modal/fields.wsp"] ?> 
+
+<div class="container" style="margin-top:1em">
+
+    <?wsp LoadPage["assets/navigation.wsp"] ?>
+
+      <div class="d-flex align-items-center">
+        <form class="w-100" action="search.wsp" method="get" id="search-form">
+          <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"><?wspsession[ToString[q]]?></textarea>
+        </form>
+
+      </div>
+    
+    <div class="container">
+  
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+         
+          <div class="col-md-6">
+            <br>
+            <button class="btn btn-sm btn-outline-secondary"  onclick="formFieldsOpen(exportPromise)">Export</button>
+            <br>
+
+            <?wspLoadPage["assets/tableofresults.wsp"]?>
+
+          </div>
+
+    </div>
+    </div>
+
+</div>
+
+<script>
+function exportPromise(e) {
+  console.log("export");
+  console.log(e);
+  WSPGet('utils/export.wsp', 'command=query&query=<?wspsession[ToString[q]]?>&fields='+e, window.open);
+
+}
+
+</script>
+
+<?wsp LoadPage["assets/footer.wsp"] ?>
