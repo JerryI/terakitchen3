@@ -8,6 +8,9 @@ lowpass[FilterEdge_, Q_, x_, sample_] :=
      2 - (Tanh[(x - Length[sample[[All, 2]]]/2 - FilterEdge)/Q] + 1)/
      2);
 
+RGBHtml[r_, g_, b_, a_ : 0.8] := 
+ StringTemplate["<div class=\"color-block\" style=\"background-color: rgba(``,``,``,``)\"></div>"][255 r // Floor, 255 g// Floor,255 b// Floor, a]     
+
 ShutDown := With[{}, 
     console["log", "stopping all tasks..."];
     TaskRemove/@Values@CronTasks["backup"]; 

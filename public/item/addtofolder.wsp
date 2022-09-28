@@ -1,0 +1,8 @@
+<?wsp
+    session["Redirect"] = "item/index.wsp?id="<>session["data"]["id"];
+
+    Map[(folders[#, "list"] = Flatten@{folders[#, "list"], session["data"]["id"]})&, Keys@Select[session["data"], Function[x, x === "on"]]];
+    
+    ""
+    
+?>

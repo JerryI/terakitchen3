@@ -1,24 +1,25 @@
 <?wsp
+  session["rabi-thickness-dependency"] = {};
+  session["rabi-samples"] = Select[CQuery["experiment" -> Equal -> experiment],  Function[x, KeyExistsQ[collection[x, "data"], "rabi-fft-abs"] ]];
 
-  rabiplot = With[{dt = {
-    ReplaceAll[
-     collection[#]["thickness"] // ToExpression, {cm -> 10, 
-      mm -> 1}], collection[#]["data"]["rabi-analysis"]["gap"]
-    } & /@ 
-  Select[CQuery["experiment" -> Equal -> experiment],  Function[x, KeyExistsQ[collection[x]["data"], "rabi-analysis"] ]]
-},
+  With[{},
+     With[
+      {
+        thickness = If[KeyExistsQ[collection[#], "thickness"],
+          collection[#, "thickness"]
+        ,
+          experiments[collection[#, "experiment"], "thickness"]
+        ]
+      },
+      session["rabi-thickness-dependency"] = {session["rabi-thickness-dependency"], {Block[{cm = 1, mm = 0.1, um = 10^{-4}}, ToExpression[thickness]], collection[#, "data", "rabi-splitting"]}};
+     ]   
+  ] &/@ session["rabi-samples"];
 
+  session["rabi-thickness-dependency"] = Flatten[session["rabi-thickness-dependency"]];
+  session["rabi-thickness-dependency"] = Partition[session["rabi-thickness-dependency"], 2];  
 
-With[{ model = Fit[dt, { Sqrt[x]}, x]},
-
-ExportString[
- Plot[model, {x, 0, 2}, 
-  Epilog -> {Red, PointSize[0.02], Point[dt]}], "SVG"]
-
-]
-
-]
-
-
+  ""
 ?> 
+<p>Thickness dependency</p>
+<?wsp ExportString[ Plot[Fit[session["rabi-thickness-dependency"], {Sqrt[x]}, x]//Evaluate, {x, 0, Max[session["rabi-thickness-dependency"][[All,1]]]}, Epilog->{Red, PointSize[0.04], Point@session["rabi-thickness-dependency"]}] , "SVG"] ?>
 

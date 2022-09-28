@@ -1,0 +1,30 @@
+<?wsp
+session["local_folders"] = If[origin === Null, Keys@folders, Select[Keys@folders, Function[x, folders[x, "origin"] === origin ]]];
+""
+?>
+
+
+    <table class="table table-striped">
+        <tbody>
+            
+        <?wsp Table[ 
+        
+            With[{folder = folders[key]},
+        ?>
+
+          <tr>
+            <td>
+              <a href="folder/index.wsp?id=<?wsp key ?>"><?wsp folder["name"] ?></a>
+            </td>
+          </tr>
+
+          
+
+        <?wsp 
+            ] 
+            , {key, session["local_folders"]}] 
+        ?>   
+
+        </tbody>
+      </table>
+      

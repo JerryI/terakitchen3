@@ -663,7 +663,7 @@
     "Ctrl-L": "selectLine",
     "Shift-Ctrl-L": "splitSelectionByLine",
     "Esc": "singleSelectionTop",
-    "Ctrl-Enter": "insertLineAfter",
+    "Shift-Enter": "insertLineAfter",
     "Shift-Ctrl-Enter": "insertLineBefore",
     "Ctrl-D": "selectNextOccurrence",
     "Shift-Ctrl-Space": "selectScope",

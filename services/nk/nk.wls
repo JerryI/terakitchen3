@@ -33,6 +33,7 @@ Do[
         ];
 
         {probesam, proberef} = {sam, ref};
+        samid = i;
 
         Break[];
     ]

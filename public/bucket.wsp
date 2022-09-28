@@ -1,99 +1,150 @@
-<?wsp LoadPage["assets/header.wsp"] ?>
-<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
+<?wsp
 
-<div class="container" style="margin-top:1em">
+    session["searchquery"] =  With[{r=session["Query", "q"]//StringUnfix}, If[!StringQ[r], "", r  ]  ];
 
-    <?wsp LoadPage["assets/navigation.wsp"] ?>
+    ""
+  ?>
+  <?wsp LoadPage["assets/header.wsp"] ?>
 
-
-    <div class="d-flex align-items-center">
-        <form class="w-100" action="../search.wsp" method="get" id="search-form">
-          <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"></textarea>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+  <div class="container" style="margin-top:1em">
+  
+      <?wsp LoadPage["assets/navigation.wsp"] ?>
+  
+      <div class="d-flex align-items-center">
+        <form class="w-100" action="bucket.wsp" method="get" id="search-form">
+          <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"><?wsp session["searchquery"] ?></textarea>
         </form>
 
       </div>
-    
-    <div class="container">
-  
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-3">
-            <div class="container">
-                
-                <div class="page-header">
-                  <h1>Plotter</h1>
-                  
-                    <p class="lead">Compare plots</p>
-                
-                </div>
+
+        <div class="d-flex align-items-center">
+            <div class="col-lg-12 col-md-8 mx-left">
+              <h1 class="fw-light">Plotter</h1>
+              <p class="lead text-muted">Enter the data for x- and y-axis</p>
+              <form id="plotter">
+                 <div class="form-group" id="form-exp-files">
+                    <label>Wolfram expression</label>
+              
+                    <div class="row pb-3">
+
+                        <div class="col-lg-6">
+                           
+                            <textarea id="xaxis"  class="form-control form-control-lg" > "data"/:"tds":>(Part[#, All, 1]&)</textarea>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <textarea id="yaxis"  class="form-control form-control-lg" > "data"/:"tds":>(Part[#, All, 2]&)</textarea>
+                        </div>
                    
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse2">
-                                            Bucket
-                                        </button>
-                                    </h4>
-                                </div>
-                                <div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                                    <div class="panel-body">
-                                        Taken from the bucket
-                            
-                                        <div class="panel-body">
-                                               
-                                            <div id='ploter'></div>
-                                        </div>
-                                        
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="cleanBucket()">Clean the bucket</button>
-                                    </div>
-                                </div>
-                            </div> 
+                    </div> 
+              
+                    <div class="form-group">
+                        <button type="button" class="btn btn-outline-info" onclick="plot()">Plot</button>
+                      
+                    </div>
 
+            
+              
+              
+             
                 </div>
+              </form>
+              <div id="plot"></div>
             </div>
-                </div>
+          </div>
 
-           
-          
-            </div>
-        </div>
+      <div class="d-flex align-items-center">
+    
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="table">
+  
 
-        
+            <?wsp With[{qq = session["searchquery"]}, LoadPage["assets/table.wsp", {q = qq, RGBColor:=RGBHtml}] ]?>
+  
+      </div>
+      </div>
+  
+  </div>
 
-        
+  <script>
+    var searchQ = '<?wsp session["searchquery"] ?>';
 
-
-    </div>
-
-</div>
-
-<script>
-   function cleanBucket(){
-    WSPHttpQuery(`settings["bucket"]={}; "cleaned"`, console.log, 'String');
-  }
-        
-    let layout = {
+  let layout = {
         xaxis: {
-            title: 'wavenumber, cm-1',
+            title: 'x, a.u.',
             showgrid: true,
             zeroline: true
         },
         yaxis: {
+            title: 'y, a.u.',
             showgrid: true,
             zeroline: true
         }
     };
-
-    Plotly.newPlot('ploter', [], layout);
-
-    <?wsp Table[ With[{data = collection[i[[1]]]["data"][i[[2]]] }, ?>
-    
-    
-        Plotly.addTraces('ploter', [{x: <?wsp ExportString[data[[All,1]], "JSON"] ?>, y: <?wsp ExportString[data[[All,2]] , "JSON"] ?> , name: '<?wsp i[[1]] ?> : (<?wsp i[[2]] ?>)'}]);
-
-    <?wsp ] , {i, settings["bucket"]} ] ?>
         
-</script>
+    Plotly.plot("plot", [], layout);
 
-<?wsp LoadPage["assets/footer.wsp"] ?>
+    function gotData(data) {
+      var arr = JSON.parse(data);
+      console.log(arr);
+      Plotly.newPlot("plot", [], layout);
+      
+      arr.forEach(r => (Plotly.addTraces("plot", [{type: 'scatter', x:r[0] , y: r[1], name: r[2]}]) ) );
+      
+    }
+
+    
+
+    function clearP() {
+      Plotly.newPlot("plot", [], layout);
+    }
+
+    function plot() {
+        WSPGet("utils/plot.wsp", 'xaxis=' + encodeURIComponent(xaxis.getValue()) + '&yaxis=' +encodeURIComponent(yaxis.getValue()) + '&q=' + encodeURIComponent(s.getValue()), gotData);
+    }
+
+    var xaxis = CodeMirror.fromTextArea(document.getElementById("xaxis"), {
+          lineNumbers: false,
+          autoCloseTags: true,
+          setSize: (200,100),
+          mode:  "mathematica",
+          indentWithTabs: true,
+          theme: "default",   
+          lineWrapping: true    
+       });
+
+    var yaxis = CodeMirror.fromTextArea(document.getElementById("yaxis"), {
+          lineNumbers: false,
+          autoCloseTags: true,
+          setSize: (200,100),
+          mode:  "mathematica",
+          indentWithTabs: true,
+          theme: "default",   
+          lineWrapping: true    
+       });
+
+    var s = CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          searchQ = instance.getValue()
+          WSPHttpQuery('LoadPage["assets/table.wsp", {q='+searchQ+', RGBColor:=RGBHtml}]', function(res) { document.getElementById("table").innerHTML = res; });
+        },
+      }      
+    });
+    </script>
+  
+  <?wsp LoadPage["assets/footer.wsp"] ?>

@@ -15,7 +15,7 @@
                 </div>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('subtracted')">Export</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('background')">Export the background only</button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('subtracted')">Add to the bucket</button>
+    
             </div>
         </div>
 

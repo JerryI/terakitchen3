@@ -11,7 +11,7 @@
         <div class="modal-body">
           <?wsp Table[ ?>
 
-          <?wsp LoadPage["assets/singletoast.wsp", {id = i, status = " "}] ?>
+          <?wsp LoadPage["assets/singletoast.wsp", {id = i, state = " "}] ?>
           
           <?wsp  , {i, settings["notifications"]//Keys//Reverse}] ?>                  
               

@@ -1,6 +1,8 @@
 (*stuff for indication progress*)
-GasWarmer := (settings["cpu"] = settings["cpu"] + 10; WebSocketBroadcast[SetSmoke[settings["cpu"]]];);
-GasColder := (settings["cpu"] = settings["cpu"] - 10; WebSocketBroadcast[SetSmoke[settings["cpu"]]];);
+settings["cpu"] = 0;
+
+GasWarmer := (settings["cpu"] = settings["cpu"] + 10; WebSocketBroadcast[SetSmoke[settings["cpu"] ] ];);
+GasColder := (settings["cpu"] = settings["cpu"] - 10; WebSocketBroadcast[SetSmoke[settings["cpu"] ] ];);
 
 GasCool := (WebSocketBroadcast[SetSmoke[0]]; settings["cpu"] = 0);
 

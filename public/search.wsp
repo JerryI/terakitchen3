@@ -19,7 +19,7 @@
 
       </div>
     
-    <div class="container">
+    <div class="d-flex align-items-center">
   
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
          
@@ -44,6 +44,27 @@ function exportPromise(e) {
   WSPGet('utils/export.wsp', 'command=query&query=<?wspsession[ToString[q]]?>&fields='+e, window.open);
 
 }
+
+var editor = CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          $("#search-form").submit();
+        },
+      }      
+    });
 
 </script>
 

@@ -38,7 +38,8 @@
         <div class="collapse show" id="home-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="index.wsp" class="link-dark rounded">Overview</a></li>
-            <li><a href="bucket.wsp" class="link-dark rounded">Plotter</a></li>
+            <li><a href="bucket.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Plotter</a></li>
+            <li><a href="folder/all.wsp" class="link-dark rounded">Folders</a></li>
             <li><a href="map.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Map</a></li>
             <li><a href="console.wsp" class="link-dark rounded">Console</a></li>
           </ul>

@@ -22,7 +22,7 @@
 
       </div>
     
-    <div class="container">
+    <div class="d-flex align-items-center">
   
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-3">
             <div class="container">
@@ -46,6 +46,8 @@
                       </div>
                       <button class="btn btn-sm btn-outline-secondary" onclick="formFieldsOpen(exportPromise)">Export</button>
                       <button class="btn btn-primary my-2" onclick="openFilesWindow(); setTimeout(function(){cmtag.refresh();}, 1500);">Upload</button>
+
+                      <button class="btn btn-secondary my-2" onclick="$('#addFolder').modal('show')">New folder</button>
                     </div>
 
                     <p class="lead"><?wsp session["experiment"]["describtion"] ?></p>
@@ -56,13 +58,13 @@
                     <div class="col-md-6">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <?wsp Table[ 
-                        Block[{uid = StringTake[CreateUUID[],4]}, 
+                       Block[{exp = session["experiment"]["sample"], uid = StringTake[CreateUUID[],4]},
                     ?>
                 
                     <?wsp LoadPage["experiment/components/"<>FileNameTake[i]] ?>
                             
                    
-                    <?wsp ] ,{i, FileNames[All, $publicpath<>"/experiment/components"]}] ?>
+                    <?wsp ] ,{i, SortBy[FileNames[All, $publicpath<>"/experiment/components"], StringPart[#,-5]&]}] ?>
 
 
 
@@ -149,9 +151,30 @@
       }
 
 
-
+    CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          $("#search-form").submit();
+        },
+      }      
+    });
 
 </script>
 
 <?wsp LoadPage["assets/footer.wsp"] ?>
 <?wsp LoadPage["assets/modal/fields.wsp"] ?> 
+
+<?wsp LoadPage["assets/modal/addFolder.wsp"] ?> 

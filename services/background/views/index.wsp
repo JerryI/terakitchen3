@@ -1,7 +1,8 @@
 
 
-<div class="row py-lg-3">
+<div class="d-flex align-items-center">
     <div class="col-lg-10 col-md-8 mx-left">
+        <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
       <h1 class="fw-light">Entscheidung erforderlich</h1>
   
           <p class="lead text-muted">Please select the regions, where the absorptions are presented</p>
@@ -12,8 +13,8 @@
 
           <div id="back"></div>
 
-          <form action="dynamic.wsp" method="post" id="dialog2">
-            <input type="hidden" name="id" value="<?wsp id ?>">
+          <form action="window.wsp" method="post" id="dialog2">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
 
             <input id="points" type="hidden" class="form-control form-control" value="[]" name="points">          
 
@@ -24,7 +25,7 @@
                 </label>
   
                 
-                <input id="cut" type="text" class="form-control form-control" value="<?wspcut?>" name="cut">
+                <input id="cut" type="text" class="form-control form-control" value="<?wsp cutoff ?>" name="cut">
             </div>            
             <small>for the low-pass filter</small><br><br>                       
             
@@ -43,9 +44,6 @@
 
 
   <script>
-    var id = '<?wsp id ?>';
-
-
     var graphDiv = document.getElementById('plot');
 
 
@@ -56,12 +54,14 @@
     var colorX = '#ffa7b5';
     var colorY = '#fdae61';
 
+    var freqs = <?wsp ExportString[freqs, "JSON"]   ?>;
+
     Plotly.plot(graphDiv, [{
         type: 'scatter',
         mode: 'markers',
 
-        x: <?wsp ExportString[alpha[[All,1]]//Re,"JSON"]   ?>,
-        y: <?wsp ExportString[alpha[[All,2]]//Re,"JSON"]   ?>,
+        x: freqs,
+        y: <?wsp ExportString[alpha, "JSON"]   ?>,
 
         xaxis: 'wavenumber, cm-1',
         yaxis: 'absorption coefficient, cm-1',
@@ -100,17 +100,17 @@
         Plotly.restyle(graphDiv, 'marker.color', [colors], [0]);
     });
 
-    var freqs = <?wsp ExportString[alpha[[All,1]],"JSON"]   ?>;
+    
 
     let data1 = {
             x: freqs,
-            y: <?wsp ExportString[alpha[[All,2]],"JSON"] ?>,
+            y: <?wsp ExportString[alpha,"JSON"] ?>,
             mode: 'lines',
             name: 'alpha'
     };
 
     let data2 = {
-            x: <?wsp ExportString[alpha[[All,1]],"JSON"]   ?>,
+            x: <?wsp ExportString[freqs,"JSON"]   ?>,
             y: <?wsp ExportString[cutted,"JSON"] ?>,
             mode: 'lines',
             name: 'background'
@@ -140,7 +140,8 @@
             Plotly.deleteTraces('back', [-1]);
             Plotly.addTraces('back', [{x:freqs, y: r,  name: 'background'}]);              
                 
-            setTimeout(function() {document.getElementById('logoFlames').style = "display: none";}, 100);
+            document.getElementById('logoFlames').style = "display: none";
+            document.getElementById('bigFlames').style = "opacity: 0"; 
         };
 
         function check() {
@@ -149,14 +150,14 @@
             
 
             var q = `
-                    window["${id}"]["socket"] = client;
-                    window["${id}"]["query"]["Push", {${cut},"${points}"}];
+                    PageEmitt["<?wsp $uid ?>"][{${cut}, "${points}"}]
                     `;
             
         
 
             
             document.getElementById('logoFlames').style = "display: block";
+            document.getElementById('bigFlames').style = "opacity: 0.2"; 
             socket.send(q);
             //
         } 

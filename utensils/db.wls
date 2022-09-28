@@ -21,6 +21,7 @@ console["log", "openning ``", dbbases ];
 Get[dbbases["filename"]];
 
 (*db operations*)
+InList[x_, y_] := MemberQ[y, x];
 Exist[f_] := ExistHolder[f];
 ExistOuter[f_] := Hold[ToString[Evaluate[f][[0]]] != "Missing"];
 
@@ -28,7 +29,7 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
     console["log", "backing up..."];
     Put[name<>".lock"];
 
-    DumpSave[name, {collection, experiments, settings, descriptions, folders}];
+    DumpSave[name, {collection, experiments, settings, descriptions, folders, notebooks}];
     console["log", "...done!"];
 
     DeleteFile[name<>".lock"];
@@ -50,7 +51,11 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
 CQuery[q_, lst_:"null"] := Module[{list},
    If[TrueQ[lst=="null"],list=collection//Keys;, list=lst];
 
-   $$$q = q /. {RuleDelayed :> Rr} // Evaluate;
+  If[ListQ[q],
+
+   If[Length[q] == 3 , list = folders[q[[3]], "list"]; ];
+
+   $$$q = q[[1]] /. {RuleDelayed :> Rr} // Evaluate;
    $$$q = $$$q /. {Rr :> RuleDelayed};
    $$$q = $$$q //. {RuleDelayed[x_, y_] :> 
        If[! ListQ[x], 
@@ -59,13 +64,39 @@ CQuery[q_, lst_:"null"] := Module[{list},
        If[ToString[y[[2, 0]]] == "List", y[[1]] @@ y[[2]], 
         y[[1]][If[StringQ[x], Hold[$[x]], x], y[[2]]]]};
    
+    
     Select[
         list
      ,
      Function[$$, (Function[$, $$$q // ReleaseHold // Evaluate // 
              ReleaseHold // Evaluate]@collection[$$]) /. {ExistHolder :> 
           ExistOuter} // ReleaseHold]
-     ]
+     , q[[2]]]
+     
+
+  ,
+
+  $$$q = q /. {RuleDelayed :> Rr} // Evaluate;
+   $$$q = $$$q /. {Rr :> RuleDelayed};
+   $$$q = $$$q //. {RuleDelayed[x_, y_] :> 
+       If[! ListQ[x], 
+        Rule[y[[1]][If[StringQ[x], Hold[$[x]], x]], y[[2]]], y @@ x], 
+      Rule[x_, y_] :> 
+       If[ToString[y[[2, 0]]] == "List", y[[1]] @@ y[[2]], 
+        y[[1]][If[StringQ[x], Hold[$[x]], x], y[[2]]]]};
+   
+    
+    Select[
+        list
+     ,
+     Function[$$, (Function[$, $$$q // ReleaseHold // Evaluate // 
+             ReleaseHold // Evaluate]@collection[$$]) /. {ExistHolder :> 
+          ExistOuter} // ReleaseHold]
+     ] 
+  
+  ]
+
+
 ];
 
 SortGroup[$$$s_, l_] :=

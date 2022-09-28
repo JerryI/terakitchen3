@@ -163,12 +163,16 @@
                     </div>                    
 
                 </div>
-                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('rabi-fft-abs')">Export FFT</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="customExport<?wspuid?>()">Export FFT</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('rabi-rabi-fit-trace')">Export SIM</button>
             </div>
         </div>
 
         <script>
+            function customExport<?wspuid?>() {
+                exportPromise('{"rabi-fft-freq", "rabi-fft-abs"}');
+            };
+
             var fieldState<?wspuid?> = false;
         
             function openField<?wspuid?>() {

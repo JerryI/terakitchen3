@@ -1,5 +1,5 @@
 
-<div class="row py-lg-3">
+<div class="d-flex align-items-center">
     <div class="col-lg-10 col-md-8 mx-left">
       <h1 class="fw-light">Refs connector</h1>
   

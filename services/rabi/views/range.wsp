@@ -1,8 +1,9 @@
-<div class="row py-lg-3">
+<div class="d-flex align-items-center">
     <div class="col-lg-10 col-md-8 mx-left">
+        <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
       <h1 class="fw-light">TDS Surgery</h1>
           <p class="lead text-muted">Please select the region to cut</p>
-
+          
           <div class="row">
             <div class="col-xs-6">
                 <div id="tds"></div>

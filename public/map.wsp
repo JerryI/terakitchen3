@@ -24,13 +24,8 @@
         session[function]=session["data"]["function"]//StringUnfix;
     
 
-        Check[
-        
-            function/@session["local_results"];
-            PushNotification["Map", ToString[session["local_results"]//Length]<>" rows affected"];
-        ,
-            PushNotification["Map", "Failed. 😒"];
-        ];
+        function/@session["local_results"];
+        PushNotification["Map", ToString[session["local_results"]//Length]<>" rows affected"];
     
     
 
@@ -55,7 +50,7 @@
 
       </div>
 
-        <div class="row py-lg-3">
+        <div class="d-flex align-items-center">
             <div class="col-lg-10 col-md-8 mx-left">
               <h1 class="fw-light">Map</h1>
               <p class="lead text-muted">Customized one-time handler using anonymous function</p>
@@ -74,7 +69,7 @@
             </div>
           </div>
 
-      <div class="container">
+      <div class="d-flex align-items-center">
     
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
   
@@ -87,7 +82,7 @@
   </div>
 
   <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("function"), {
+    CodeMirror.fromTextArea(document.getElementById("function"), {
        lineNumbers: false,
        autoCloseTags: true,
        setSize: (200,200),
@@ -102,8 +97,29 @@
          "Esc": function(cm) {
           if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
         },
-        "Ctrl-Enter": function(instance) { 
+        "Shift-Enter": function(instance) { 
           $("#service").submit();
+        },
+      }      
+    });
+
+    CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          $("#search-form").submit();
         },
       }      
     });

@@ -1,11 +1,15 @@
-(*cutoff = 0.2;
+cutoff = 0.2;
 iterator = 1; 
 globalpoints = {};
 
-        wsp = Get["webserver/wsp.wls"];
-        wsp["install"];
 
-        $host = CEval[$host];
+If[Length[$data["list"]] == 0, PushNotification["Background","nothing to do..."]; $Die];
+
+
+Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
+
+samples = CQuery[{"type"->Equal->"sample"}:>And, $data["list"]];
+console["log", "number: "<>ToString[samples//Length]];
 
 cutRegion[regions_, in_, round_ : 2] := 
     Module[{l, r, data = in, delta, reg},
@@ -24,139 +28,93 @@ cutRegion[regions_, in_, round_ : 2] :=
         cutRegion[Drop[regions, 1], data, round]
     ];
 
-        SubBack[regions_, in_]:= With[{cutted =  cutRegion[regions, in] }, LowpassFilter[cutted[[All, 2]], cutoff]];
+SubBack[regions_, in_]:= With[{cutted =  cutRegion[regions, in] }, LowpassFilter[cutted[[All, 2]], cutoff]];
 
-        PopupAskCheckRegion[sam_, ref_, thickness_, uuid_ : CreateUUID[], next_:"index.wsp"] := Module[{page=<||>, probe, points, resp, subglobalpoints=globalpoints}, 
-           
-            logWrite["ASK"];
-            page["content"] = 
-                Block[{id = uuid, cut = cutoff, alpha = Map[ {#[[1]], (((#[[1]] 4 \[Pi]  10^12 #[[3]])/(33.356 2.9979 10^10)))} &, Transpose[Join[{sam["freqs"]}, Transpose[sam["nk"]]]]], cutted = SubBack[globalpoints, Map[ {#[[1]], (((#[[1]] 4 \[Pi]  10^12 #[[3]])/(33.356 2.9979 10^10)))} &, Transpose[Join[{sam["freqs"]}, Transpose[sam["nk"]]]]]]}, 
-                 StringJoin[
-                    Map[
-                        If[#[[1]] == "HTML", 
-                            #[[2]], 
-                            ToExpression[#[[2]]] /. {Null -> ""}
-                        ] &, 
-                        WSP[OpenRead["services/background/views/index.wsp"]]
-                    ]
-                  ]
+startDialog[uuid_, ssam_, ssamid_] := (
+    $uid = uuid;
+    sam = ssam;
+    samid = ssamid;
+
+    $next = CreateUUID[];
+
+    If[Length[samples] > 1,
+        postRedirect[next_] := Function[d, If[d["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"]]; 
+    ,
+        postRedirect[next_] := Function[d, If[d["action"] === "Ok", "index.wsp", "index.wsp"]]; 
+    ];
+
+    alpha  = With[{id = samid}, CEval[ collection[id, "data", "alpha"][[All,2]] ]];
+    freqs  = sam["freqs"];
+    cutted = SubBack[globalpoints, Transpose[{freqs, alpha}]];
+    
+
+    content =   Block[{}, 
+                    LoadPage["services/background/views/index.wsp"]
                 ];
 
-            page["handler"] = Function[
-                x,
-                Module[{id = CreateUUID[], resp = x},
-                    If[x["action"] == "Retry",
-                        session["Redirect"] = "dynamic.wsp?id="<>id;
-                        resp = Join[resp, <|"next"->id|>];
-                    ];
-                    If[x["action"] == "Cancel",
-                        session["Redirect"] = "index.wsp";
-                    ];                        
+    WebSocketPublish[LoadDynamicPage[content], $uid];            
+
+    CreatePage[
+        content,
+        "id"           -> $uid,
+        "postRedirect" -> postRedirect[$next],
+        "postHandler"  -> ProcessEventEmitt[$id],
+        "eventHandler" -> ProcessEventEmitt[$id, "event"]
+    ];
+
+    EventBind["submit", Function[{cli, data}, 
+        If[data["action"] != "Ok", $Die];
+
+        globalpoints = With[{new = ImportString[data["points"],"JSON"]},  If[Length[new] == 0, globalpoints,  (MinMax /@ FindClusters[new, CriterionFunction -> "CalinskiHarabasz"])]];
+        cutoff = ToExpression[data["cut"]];
+
+        cutted = SubBack[globalpoints, Transpose[{freqs, alpha}]];
+
+        With[{uid = samid, r = cutted},
+            CEval[ 
+                collection[uid, "data", "background"] = r;  
+
+                collection[uid, "data", "subtracted"] := With[{id = uid}, 
+                                            With[{alpha = collection[id, "data", "alpha"]},
+                                                Transpose[{alpha[[All, 1]], alpha[[All, 2]] - collection[id, "data", "background"]}]
+                                            ] 
+                                        ];        
                         
-                    resp
-                ]
+            
+            
             ];
-
-            page["redirect"] = next;  
-
-            With[{page = page}, CEval[ 
-                    
-                window[uuid] = page; 
-                window[uuid]["query"] = CreateDataStructure["Queue"];
-
-                WebSocketPublish[LoadDynamicPage[window[uuid]["content"]], uuid];
-                    
-            ]];
-
-            PushNotification["Background", "Entscheidung erforderlich. Select the range to cut the modes <br>"<>"<a class=\"btn btn-outline-info\" href=\"http://"<>$host<>"/dynamic.wsp?id="<>uuid<>"\">open</a>"];
-            
-            While[CEval[!KeyExistsQ[window[uuid],"result"]],
-
-                If[CEval[!window[uuid]["query"]["EmptyQ"]],
-                    probe = CEval[window[uuid]["query"]["Pop"]];
-                    
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    logWrite["PPPPPPPPPPPPPUUSHH"];
-                    Module[{pts, result},
-                        cutoff = probe[[1]];
-
-                        subglobalpoints = With[{new = ImportString[probe[[2]],"JSON"]},  If[Length[new] == 0, globalpoints,  (MinMax /@ FindClusters[new, CriterionFunction -> "CalinskiHarabasz"])]];
-                        
-                        With[{dt = SubBack[subglobalpoints, Map[ {#[[1]], (((#[[1]] 4 \[Pi]  10^12 #[[3]])/(33.356 2.9979 10^10)))} &, Transpose[Join[{sam["freqs"]}, Transpose[sam["nk"]]]]] ]},
-                            CEval[ WebSocketSend[window[uuid]["socket"], UpdateGraph[ExportString[dt,"JSON"]] ];  ];
-                        ];
-                        
-                    ];
-                ];        
-                Pause[0.2];
-            ];
-            
-            points = CEval[ImportString[window[uuid]["result"]["points"],"JSON"]];
-            
-            cutoff = CEval[window[uuid]["result"]["cut"]//ToExpression];
-            
-            resp = CEval[window[uuid]["result"]];
-
-            CEval[window[uuid] = .;];
-           
-           
-            
-            <|"points"-> points, "responce"->resp|>
+                           
         ];
 
-        samples = CQuery[{"type"->Equal->"sample"}:>And, input];
-        logWrite["number: "<>ToString[samples//Length]];   
-
-            (*ask about the range*)
-        nxt = CreateUUID[];
-
-        iterator = 1;
-       
-        While[iterator <= Length[samples],
-
-            With[{sam = CGet[#], ref = With[{uid = #}, CEval[collection[collection[uid]["ref"]]]]},
-                Module[{reply},
-                    
-                    reply = PopupAskCheckRegion[sam["data"], ref["data"], Null, nxt, If[iterator == Length[samples], "index.wsp", "dynamic.wsp?id="<>(nxt =  CreateUUID[]) ]]; 
-
-                    logWrite[reply["responce"]]
-                    Switch[reply["responce"]["action"],
-                        "Ok",
-                            logWrite["ok good"];
-                            iterator = iterator + 1;
-                            globalpoints = With[{new = reply["points"]},  If[Length[new] == 0, globalpoints,  (MinMax /@ FindClusters[new, CriterionFunction -> "CalinskiHarabasz"])]];
-                        
-                            With[{r = SubBack[globalpoints, Map[ {#[[1]], (((#[[1]] 4 \[Pi]  10^12 #[[3]])/(33.356 2.9979 10^10)))} &, Transpose[Join[{sam["data"]["freqs"]}, Transpose[sam["data"]["nk"]]]]]], uid = #},
-                                CEval[
-                                    collection[uid]["data"]["background"] = r;
-                                    collection[uid]["data"]["subtracted"] := With[{id = uid}, Transpose[{collection[id]["data"]["freqs"],collection[id]["data"]["alpha"][[All,2]] - collection[id]["data"]["background"]}]];
-                                ];
-                            ]
-                        ,
-                        "Retry",
-                            logWrite["try again"];
-                            nxt = reply["responce"]["next"];
-                        ,
-                        "Cancel",
-                            iterator = Length[samples] + 1;
-                            logWrite["cennceld"];
-                    ]
-                    logWrite["DONE"];
-                ]
-
-            ]&@samples[[iterator]];
         
-        ];        
+
+        If[Length[samples] == 0,
+            PushNotification["Background", "Done"];
+            $Die;
+        ];
+
+        startDialog[$next, CGet[samples//First, "data"], samples//First];
+        samples = Drop[samples, 1];
 
 
-    
-    ]
+    ]];   
 
-]*)
-PushNotification["Background", "indev.. skipped"];
+    EventBind["event", Function[{cli, data}, 
+        cutoff = ToExpression[data[[1]]];
+        globalpoints = With[{new = ImportString[data[[2]],"JSON"]},  If[Length[new] == 0, globalpoints,  (MinMax /@ FindClusters[new, CriterionFunction -> "CalinskiHarabasz"])]];
 
-$Die;
+        cutted = SubBack[globalpoints, Transpose[{freqs, alpha}]];     
+
+        WebSocketSend[cli, UpdateGraph[ExportString[cutted, "JSON"]] ];
+    ]];
+
+
+);
+
+startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
+samples = Drop[samples, 1];
+
+PushNotification["Background", "Open an editor <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+
+
+            

@@ -31,7 +31,7 @@ session["local_fields"] = Complement[fields//Keys, session["exclude_fields"]];
 
 session["local_fields"] = Join[{"id", "type", "ref"}, session["local_fields"]];
 
-session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query", "sort"]//StringUnfix//ToExpression, {"date":>Function[x,DayRound[Now-x]], "temperature", "field":>Abs}];
+session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query", "sort"]//StringUnfix//ToExpression, {"temperature","field","polarization"}];
 
 
 
@@ -63,6 +63,7 @@ session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query"
         <thead>
       
           <tr>
+            <th scope="col">RM</th>
             <?wsp Table[ ?>
 
             <th scope="col">
@@ -82,6 +83,11 @@ session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query"
 
           
           <tr>
+
+            <td>
+              <div class="link-dark rounded" onclick="del('<?wsp key ?>')" style="cursor: pointer;">X</div>
+            </td>
+
             <?wsp Table[ ?>
 
                 <td>
@@ -109,7 +115,15 @@ session["local_sort"] = If[KeyExistsQ[session["Query"], "sort"], session["Query"
 
         </tbody>
       </table>
-      
+ 
+<script>
+  function delItem(id) {
+    const element = document.getElementById(id);
+    element.remove(); // Removes the div with the 'div-02' id
+
+  }
+</script>      
+
 <?wsp If[KeyExistsQ[session[ToString[Query]], ToString[sort]],  ?>
       <script>
         CodeMirror.fromTextArea(document.getElementById("sort"), {

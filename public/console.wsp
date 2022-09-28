@@ -19,7 +19,7 @@
 
   
         </div>
-        <div class="row py-lg-3">
+        <div class="d-flex align-items-center">
             <div class="col-lg-10 col-md-8 mx-left">
               <h1 class="fw-light">Console</h1>
               <p class="lead text-muted">Direct commands to WF Engine</p>
@@ -41,7 +41,7 @@
         
 
 
-        <div id="res">
+        <div class="d-flex align-items-center" id="res">
 
         </div>
 
@@ -66,6 +66,7 @@
 
       socket.send(data);
       document.getElementById('logoFlames').style = "display: block";
+      document.getElementById('bigFlames').style = "opacity: 0.2"; 
 
 
 
@@ -89,6 +90,7 @@
       `;
       document.getElementById("res").insertAdjacentHTML('afterbegin', html);
       document.getElementById('logoFlames').style = "display: none";
+      document.getElementById('bigFlames').style = "opacity: 0"; 
 
     };
 
@@ -107,7 +109,7 @@
          "Esc": function(cm) {
           if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
         },
-        "Ctrl-Enter": function(instance) { 
+        "Shift-Enter": function(instance) { 
           calculate(instance.getValue());
         },
       }      

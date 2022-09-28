@@ -1,0 +1,28 @@
+<?wsp
+    With[{},
+        Module[{getFunction, data, xfunction, yfunction, xkey},
+
+            getFunction[s_] := Module[{str = s, brackets},
+                brackets = StringCases[str, "/:"];
+                str = StringReplace[str, {"/:" -> ")@", ":>" -> "//"}];
+                str = "x @" <> str;
+                Do[str = "(" <> str;, {i, Length[brackets]}];
+                "Function[x, (" <> str <> ")//List//Flatten]" // ToExpression
+            ];
+
+            xfunction = getFunction[session["Query", "xaxis"]//URLDecode];
+            yfunction = getFunction[session["Query", "yaxis"]//URLDecode];
+            xkey = Function[x, x["id"]];
+
+        
+
+            data = Function[i,Through[{xfunction, yfunction, xkey}[ collection[i] ] ] ] /@ CQuery[session["Query", "q"]//URLDecode//StringUnfix//ToExpression];
+            data = (If[FreeQ[#, Missing], #, Missing[] ])& /@ data;
+            data = data // DeleteMissing;
+            
+            ExportString[data, "JSON"]
+        ]
+
+    
+    ]
+?>

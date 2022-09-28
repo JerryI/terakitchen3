@@ -63,7 +63,7 @@ function WSPHttpQuery(command, promise, type = "String") {
   if (type == "ExpressionJSON" || type == "JSON") {
     http.onreadystatechange = function() {//Call a function when the state changes.
       if(http.readyState == 4 && http.status == 200) {
-        
+        console.log("RESP: " + http.responseText);
         // http.responseText will be anything that the server return
         promise(JSON.parse(http.responseText));
         document.getElementById('logoFlames').style = "display: none";
@@ -74,6 +74,7 @@ function WSPHttpQuery(command, promise, type = "String") {
   } else {
     http.onreadystatechange = function() {//Call a function when the state changes.
       if(http.readyState == 4 && http.status == 200) {
+        console.log("RESP: " + http.responseText);
   
         // http.responseText will be anything that the server return
         promise(http.responseText);
@@ -122,7 +123,7 @@ function WSPGet(path, params, promise) {
   http.send(null);
 }
 
-function WSPPost(path, command, promise) {
+function WSPPost(path, payload, promise) {
 
   var http = new XMLHttpRequest();
   var url = 'http://'+WSPHost+'/'+path;
@@ -139,13 +140,16 @@ function WSPPost(path, command, promise) {
       promise(http.responseText);
       document.getElementById('logoFlames').style = "display: none";
       document.getElementById('bigFlames').style = "opacity: 0";
+    } else {
+      console.log(http.readyState + ': code' + 'status: ' + http.status);
     }
   };
 
   document.getElementById('logoFlames').style = "display: block";
   document.getElementById('bigFlames').style = "opacity: 0.1";
   var data = new FormData();
-  data.append('command', data);
+  data.append('user', 'person');
+  data.append('pwd', 'password');
 
   http.send(data);
 }

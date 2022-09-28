@@ -6,12 +6,12 @@
         
         <div class="d-flex align-items-center">
           <form class="w-100" action="search.wsp" method="get" id="search-form">
-            <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q">"type"->Equal->"sample"</textarea>
+            <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q">{"type"->Equal->"sample", 10}</textarea>
           </form>
   
         </div>
 
-        <div class="row py-lg-3">
+        <div class="d-flex align-items-center">
           <div class="col-lg-10 col-md-8 mx-left">
             <h1 class="fw-light">Getting started</h1>
             <p class="lead text-muted">Upload files and assign them to the selected experiment or create one.</p>
@@ -25,15 +25,15 @@
 
         
       
-        <div class="container">
+        <div class="d-flex align-items-center">
   
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <?wsp Table[ ?>
             <div class="col">
               <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title><?wsp i ?></title>
+                <svg style="background: #55595c" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title><?wsp i ?></title>
                   
-                  <rect width="100%" height="100%" fill="#55595c"></rect>
+                  
                   <?wsp experiments[i]["preview"] ?>
                   
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em"><?wsp i ?></text>
@@ -84,6 +84,27 @@
         WSPGet('utils/export.wsp', 'command=experiment&id='+ id +'&fields='+e, window.open);
     
       }
+
+      CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          $("#search-form").submit();
+        },
+      }      
+    });
     </script>
 
 <?wsp LoadPage["assets/footer.wsp"] ?>

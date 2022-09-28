@@ -1,0 +1,34 @@
+  <!-- Modal -->
+<div class="modal fade" id="addFolder" tabindex="-1" role="dialog" aria-labelledby="addFolder"  aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addFolderH5">Add folder to the experiment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!--<span aria-hidden="true">&times;</span>-->
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="addFolderform" action="experiment/addfolder.wsp" method="post">
+            <?wsp With[{i = session["experiment", "sample"]}, ?>
+              <input name="id" value="<?wsp i ?>" type="hidden">
+            <?wsp ] ?>
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" type="text" class="form-control" name="name" id="name" placeholder="Type a name">
+            </div>
+              
+          </form>          
+              
+        </div>
+              
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#addFolder').modal('hide')">Close</button>
+          <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Submit" form="addFolderform">
+        </div>
+      </div>
+    </div>
+  </div>

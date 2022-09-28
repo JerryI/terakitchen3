@@ -12,9 +12,9 @@ With[{exp = #, graphs = ToExpression@graphs, steps = ToExpression@steps, width =
             
             ListLinePlot[
 
-                With[{c = collection[#]["data"]["alpha"][[;; ;; steps]]}, If[ArrayQ[c], c, {{0,0}}]] &/@ If[Length[lst] < graphs, lst, lst[[1 ;; graphs]] ]
+                With[{c = collection[#]["data"]["alpha"][[;; ;; steps]]}, If[ArrayQ[c], c, {{0,0}} ] ] &/@ If[Length[lst] < graphs, lst, lst[[1 ;; graphs]] ]
             
-            , Axes -> {True, False}, ImageSize -> width], "SVG"]   
+            , Axes -> False, ImageSize -> width, AspectRatio->0.7], "SVG"]   
 
         ];
 

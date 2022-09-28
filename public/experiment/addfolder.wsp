@@ -1,0 +1,8 @@
+<?wsp
+    session["Redirect"] = "experiment/index.wsp?id="<>session["data"]["id"];
+
+    folders[CreateUUID[]] = <|"origin"->session["data", "id"], "name"->session["data", "name"], "list"->{}|>;
+    
+    ""
+    
+?>

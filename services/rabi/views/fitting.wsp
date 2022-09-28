@@ -1,21 +1,67 @@
-<div class="row py-lg-3">
+<div class="d-flex align-items-center">
     <div class="col-lg-10 col-md-8 mx-left">
-      <h1 class="fw-light">Semi-classical fitting</h1>
-          <p class="lead text-muted">Please wait until it is done</p>
+      <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
+      <h1 class="fw-light">Semi-classical fitting of</h1>
+          
 
           <div class="col-xs-6">
             <div id="tds"></div>
           </div>
           
-          
-      
+        
           <form action="window.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">                               
           </form>      
 
-          <button id="more" style="display: none" class="btn btn-secondary" onclick="more()">More iterations</button>
+          <div class="form-group">
+  
+                <label class="form-group-label" for="epsinf">
+                   epsilon infinite
+                </label>
 
-          <input style="display: none" id="ok" type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog">
+                <input id="epsinf" type="text" class="form-control form-control" value="<?wsp \[Epsilon]\[Infinity] ?>" name="epsinf">
+            
+          </div>
+
+          <div class="form-group">
+  
+            <label class="form-group-label" for="omegap">
+               plasma frequency
+            </label>
+
+            <input id="omegap" type="text" class="form-control form-control" value="<?wsp \[Omega]p ?>" name="omegap">
+        
+          </div> 
+
+          <div class="form-group">
+  
+            <label class="form-group-label" for="omega0">
+               central frequency
+            </label>
+
+            <input id="omega0" type="text" class="form-control form-control" value="<?wsp \[Omega]0 ?>" name="omega0">
+        
+          </div>          
+
+          <div class="form-group">
+  
+            <label class="form-group-label" for="gamma">
+               damphing (gamma)
+            </label>
+
+            <input id="gamma" type="text" class="form-control form-control" value="<?wsp \[Gamma] ?>" name="gamma">
+        
+          </div> 
+          
+          
+
+          <button id="more"  class="btn btn-secondary" onclick="more()">Autofit</button>
+          
+          <button id="correct" class="btn btn-secondary" onclick="correct()">Autocorrect</button>
+          <button id="update" class="btn btn-secondary" onclick="update()">Update</button>
+
+
+          <input id="ok" type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog">
           <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
           <p id="textField" class="lead text-muted"></p>
             
@@ -24,6 +70,20 @@
   </div>
  
   <script>
+    function correct() {
+      var q = `PageEmitt["<?wsp $uid ?>"][{"correct"}];`;   
+
+      socket.send(q);      
+    }
+
+    function update() {
+        var q = `PageEmitt["<?wsp $uid ?>"][{"update", ${document.getElementById("epsinf").value}, ${document.getElementById("omegap").value}, ${document.getElementById("omega0").value}, ${document.getElementById("gamma").value}}];`;   
+
+        socket.send(q);
+
+        document.getElementById('logoFlames').style = "display: block";
+        document.getElementById('bigFlames').style = "opacity: 0.2"; 
+    }
 
     var tds = document.getElementById('tds');
 
@@ -38,7 +98,8 @@
             {
                 x: <?wsp ExportString[sam["tds"][[All,1]], "JSON"]   ?>,
                 y: <?wsp ExportString[sam["tds"][[All,2]], "JSON"]   ?>,
-                mode: 'lines'
+                mode: 'lines',
+                name: 'exp'
             };
 
     let data2 = 
@@ -66,8 +127,20 @@
     core.UpdateGraph = function(args, env) {
         let r = JSON.parse(interpretate(args[0]));
 
+        let jr = JSON.parse(interpretate(args[1]));
+
         Plotly.deleteTraces(tds, [1]);
-        Plotly.addTraces(tds, [{x:r[0] , y: r[1]}]);
+        Plotly.addTraces(tds, [{x:r[0] , y: r[1], name: 'sim'}]);
+
+        document.getElementById("epsinf").value = jr[0];
+        document.getElementById("omegap").value = jr[1];
+        document.getElementById("omega0").value = jr[2];
+        document.getElementById("gamma").value  = jr[3];
+
+        document.getElementById('logoFlames').style = "display: none";
+        document.getElementById('bigFlames').style = "opacity: 0"; 
+
+
     }
 
     core.ItIsOK = function(args, env) {
@@ -79,14 +152,14 @@
     };
 
     function more() {
-        var q = 'PageEmitt["<?wsp $uid ?>"]["more"];';       
+        var q = 'PageEmitt["<?wsp $uid ?>"][{"more"}];';       
         socket.send(q);
     }
 
     function onLoad() {
         console.log("onload");
         
-        var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp $uid ?>", client]; PageEmitt["<?wsp $uid ?>"][{}];';            
+        var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp $uid ?>", client]; ';            
 
         if (socket.readyState != 1) {
             setTimeout(onLoad, 500);

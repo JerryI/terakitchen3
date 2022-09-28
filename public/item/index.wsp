@@ -23,7 +23,7 @@
 
     </div>
     
-    <div class="container">
+    <div class="d-flex align-items-center">
   
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-3">
             <div class="container">
@@ -43,6 +43,7 @@
                         <small class="text-muted"><?wsp TextString[ (Now - session["item"]["date"])//Round ] ?></small>
                         <button class="btn btn-sm btn-outline-secondary" onclick="formFieldsOpen(exportPromise)">Export</button>
                         <button class="btn btn-secondary my-2" onclick="$('#modifyModal').modal('show')">Modify</button>
+                        <button class="btn btn-secondary my-2" onclick="$('#addToFolder').modal('show')">Add to the folder</button>
                       </div>
                     
                     
@@ -163,6 +164,26 @@
     
   }
 
+  CodeMirror.fromTextArea(document.getElementById("search"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       mode:  "mathematica",
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+          $("#search-form").submit();
+        },
+      }      
+    });
 
 </script>
 
@@ -171,3 +192,5 @@
 <?wsp LoadPage["assets/modal/fields.wsp"] ?> 
 
 <?wsp LoadPage["assets/modal/modify.wsp"] ?> 
+
+<?wsp LoadPage["assets/modal/addToFolder.wsp"] ?> 

@@ -4,7 +4,7 @@
    "dependencies"->{},
 
 
-    "description"-> "Automatic sample-referece matcher. Using field and temperature fields to match as close as possible.",
+    "description"-> "Automatic sample-referece matcher. It relies on simmilarities between the filenames of a reference and a sample files, however, in a case of troubles it will ask user to connect them manually.",
     "parameters"-> {      
     }
 |>
