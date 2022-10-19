@@ -137,6 +137,7 @@
         document.getElementById("continue3").style = "";
         document.getElementById("continue1").style = "";
         document.getElementById("continue2").style = "";
+        document.getElementById("thicknessField").style = "";
         document.getElementById("more").style = "";
         
     };

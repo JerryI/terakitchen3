@@ -1,6 +1,6 @@
 <|
-    "before"->"previewgenerator",
-    "after"->Null,
+    "before"->"filter",
+    "after"->"signalmodeling",
     "dependencies"->{"fourier", "refs"},
 
     "description"-> "Interactive Rabi analyser",

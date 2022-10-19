@@ -1,0 +1,51 @@
+<?wsp
+    central = 44.0;
+    width   = 10.0;
+    amp     = 100.0;
+    lowpass = True;
+
+    (* Tricky cache technic *)
+    sourcename = "bandpass";
+    source[id_] := (
+      If[lowpass,
+        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]]},
+            Table[Exp[I (2 \[Pi] (1/33.356) t0 x)] amp (1/2 + Erf[(central - x)/(Sqrt[2]*width)]/2), {x, sample["freqs"]}]//Quiet
+        ]
+      ,
+        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]]},
+          Table[Exp[I (2 \[Pi] (1/33.356) t0 x)] amp (1/2 - Erf[(central - x)/(Sqrt[2]*width)]/2), {x, sample["freqs"]}]//Quiet
+        ]
+      ]
+    );
+    ""
+?>
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Central FQ (in cm)
+  </label>
+  <input class="form-control form-control" type="number" step=any value=44 name="central" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Width (in cm)
+  </label>
+  <input class="form-control form-control" type="number" step=any value=10 name="width" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Amp
+  </label>
+  <input class="form-control form-control" type="number" step=any value=100 name="amp" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="lowpass">
+      Lowpass/Highpass
+  </label>
+  <input class="form-control form-control" type="checkbox" name="lowpass" form="dialog" checked>
+</div> 
+
+

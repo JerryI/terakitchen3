@@ -6,7 +6,7 @@ With[{id = #},
 Map[
 
 Function[x, 
-    If[ByteCount[collection[id][x]] > 100,
+    If[ByteCount[collection[id][x]] > 10000,
 
         fields[x]=False;
     ,
@@ -23,8 +23,8 @@ Function[x,
 (If[fields[#] == False, fields[#]=.])&/@(fields//Keys);
 
 If[KeyExistsQ[session, "exclude_fields"],
-    session["exclude_fields"] = Join[{"data","date", "id", "ref", "type", "description", "color-tag"}, session["exclude_fields"]],
-    session["exclude_fields"] = {"data","date", "id", "ref", "type", "description", "color-tag"}
+    session["exclude_fields"] = Join[{"data","date", "id", "ref", "type", "description"}, session["exclude_fields"]],
+    session["exclude_fields"] = {"data","date", "id", "ref", "type", "description"}
 ];
 
 session["local_fields"] = Complement[fields//Keys, session["exclude_fields"]];

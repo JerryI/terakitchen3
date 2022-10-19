@@ -30,10 +30,53 @@ cutRegion[regions_, in_, round_ : 2] :=
 
 SubBack[regions_, in_]:= With[{cutted =  cutRegion[regions, in] }, LowpassFilter[cutted[[All, 2]], cutoff]];
 
+
+GenTDS[cutted_] := Module[{nk = sam["nk"], thickness},
+    thickness = CGet[samid, "thickness"];
+
+    If[MissingQ[ thickness ] || !StringQ[thickness], 
+        thickness = With[{id = CGet[samid, "experiment"]}, CEval[ experiments[id, "thickness"] ] ];
+    ];
+
+    thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression[thickness] ];
+
+    With[{transm = Table[
+        With[
+            {
+                L = thickness, \[Omega] = 2 \[Pi]  10^12 ((freqs[[i]]/33.356)) , c = 2.9979 10^10 , 
+                nair = 1,
+                n = nk[[i, 1]], k = nk[[i, 2]] - If[freqs[[i]] > 0.0001, (0.0795758 cutted[[i]]/freqs[[i]]), 0.]
+            },
+     
+             (4 (n - I k) nair)/((n - I k) + 
+                nair)^2 Exp[-I ((n - I k) - nair) (\[Omega] L)/c] (*1/(
+              1 - (((n - I k) - nair)/((n - I k) + 
+                  nair))^2 Exp[-2 I (n - I k) (\[Omega] L)/c])*)
+
+        ], {i, 1, Length[freqs]}]
+    },    
+
+
+        With[{sim = ref["fft"] Conjugate[transm]}, InverseFourier[Join[sim, {0}, Drop[Reverse[Conjugate[sim] ], -1] ] ] // Re]
+
+    
+    ]
+
+];
+
 startDialog[uuid_, ssam_, ssamid_] := (
     $uid = uuid;
     sam = ssam;
     samid = ssamid;
+
+    If[tdswrite,
+    
+        ref = CGet[samid, "ref"];
+        If[!StringQ[ref], PushNotification["Background", "No refs found! 🛠"]; tdswrite = False; ];
+        ref = CGet[ref, "data"];
+
+        If[!AssociationQ[ref],  PushNotification["Background", "No refs found! 🛠"]; tdswrite = False; ];
+    ];
 
     $next = CreateUUID[];
 
@@ -106,6 +149,10 @@ startDialog[uuid_, ssam_, ssamid_] := (
         cutted = SubBack[globalpoints, Transpose[{freqs, alpha}]];     
 
         WebSocketSend[cli, UpdateGraph[ExportString[cutted, "JSON"]] ];
+
+        If[tdswrite,
+            WebSocketSend[cli, UpdateTDS[ExportString[GenTDS[cutted], "JSON"]] ];
+        ];
     ]];
 
 

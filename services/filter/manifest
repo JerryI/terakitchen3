@@ -1,0 +1,10 @@
+<|
+   "before"->"background",
+   "after"->"rabi",
+   "dependencies"->{"fourier", "refs"},
+
+    "description"-> "Interactive filter (in dev)",
+    "parameters"-> {                          
+    }
+
+|>

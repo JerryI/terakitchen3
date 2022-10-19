@@ -1,0 +1,322 @@
+
+
+<div class="d-flex align-items-center">
+    <div class="col-lg-12 col-md-8 mx-left">
+    <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
+      <h1 class="fw-light">Signal modeling</h1>
+  
+          <p class="lead text-muted">Please select the type of reference</p>
+
+          <div class="form-group">
+              <label for="experiment">Choose the source type</label>
+              <select name="srcname" id="srcname" form="dialog" onchange="getSource(this)">
+                
+                <option value="ref" selected="selected">ref</option>  
+
+                <?wsp Table[ ?>
+                  <option value="<?wsp src ?>"><?wsp src ?></option>  
+                <?wsp , {src, Complement[FileBaseName /@ FileNames[All, "services/signalmodeling/views/sources"], {"ref"}]}] ?>
+
+         
+              </select>
+          </div>  
+          
+          <div id="src"><?wsp LoadPage["services/signalmodeling/views/sources/ref.wsp"] ?></div>
+
+          <div class="row">
+            <div class="col-sm">
+              <div id="ref-tds"></div>         
+            </div>
+
+            <div class="col-sm">
+              <div id="ref-fft"></div>            
+            </div>
+          </div>
+
+          <p class="lead text-muted">Modelled signal</p>        
+
+      
+            <div id="sam-tds"></div>         
+ 
+            <div id="sam-fft"></div>            
+    
+
+          <div class="form-group">
+            <small>Include FP reflections</small><br>
+          
+            <input name="fpmodel" type="checkbox" form="dialog" checked>
+          </div> 
+
+
+
+
+        <form action="window.wsp" method="post" id="dialog">
+          <input type="hidden" name="id" value="<?wsp $uid ?>">
+                  
+            
+        </form>      
+
+        <button class="btn btn-secondary" onclick="update()">Update preview</button>
+
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+        <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+              
+    </div>
+  </div>
+
+
+  <script>
+
+    let origFFTx = <?wsp ExportString[reference["freqs"], "JSON"] ?>;
+    let origFFTy = <?wsp ExportString[reference["fft"]//Abs, "JSON"] ?>;
+
+    let origTDSx = <?wsp ExportString[reference["tds"][[All,1]], "JSON"] ?>;
+    let origTDSy = <?wsp ExportString[reference["tds"][[All,2]], "JSON"] ?>;
+
+
+    let dataSrcFFT = 
+            {
+                x: origFFTx,
+                y: origFFTy,
+                mode: 'lines',
+                name: 'model',
+                marker: {
+                  color: '#d62728'
+                }
+
+
+            };     
+            
+    let dataSrcFFTO = 
+            {
+                x: origFFTx,
+                y: origFFTy,
+                mode: 'lines',
+                name: 'exp',
+                marker: {
+                  color: '#2ca02c'
+                }
+
+                
+            };            
+        
+    let layoutSrcFFT = {
+        xaxis: {
+            title: 'wavenumber, cm-1',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+                title: 'intensity, a.u.',
+                showgrid: true,
+                zeroline: true
+        }
+    };
+
+    let dataSrcTDS = 
+            {
+              x: origTDSx,
+              y: origTDSy,
+                mode: 'lines',
+                name: 'model',
+                marker: {
+                  color: '#ff7f0e'
+                }
+            };     
+            
+    let dataSrcTDSO = 
+            {
+              x: origTDSx,
+              y: origTDSy,
+                mode: 'lines',
+                name: 'exp',
+                marker: {
+                  color: '#1f77b4'
+                }
+            };            
+        
+    let layoutSrcTDS = {
+        xaxis: {
+            title: 't, ns',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+                title: 'intensity, a.u.',
+                showgrid: true,
+                zeroline: true
+        }
+    };    
+        
+    Plotly.plot("ref-fft", [dataSrcFFTO, dataSrcFFT], layoutSrcFFT);
+    Plotly.plot("ref-tds", [dataSrcTDSO, dataSrcTDS], layoutSrcTDS);
+
+    let sorigFFTx = <?wsp ExportString[sample["freqs"], "JSON"] ?>;
+    let sorigFFTy = <?wsp ExportString[sample["fft"]//Abs, "JSON"] ?>;
+
+    let sorigTDSx = <?wsp ExportString[sample["tds"][[All,1]], "JSON"] ?>;
+    let sorigTDSy = <?wsp ExportString[sample["tds"][[All,2]], "JSON"] ?>;    
+
+    let dataSamFFT = 
+            {
+              x: sorigFFTx,
+              y: sorigFFTy,
+                mode: 'lines',
+                name: 'model',
+                marker: {
+                  color: '#8c564b'
+                }
+            }; 
+            
+    let dataSamFFTO = 
+            {
+              x: sorigFFTx,
+              y: sorigFFTy,
+                mode: 'lines',
+                name: 'exp',
+                marker: {
+                  color: '#9467bd'
+                }
+
+
+                
+            };            
+        
+    let layoutSamFFT = {
+        xaxis: {
+            title: 'wavenumber, cm-1',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+                title: 'intensity, a.u.',
+                showgrid: true,
+                zeroline: true
+        }
+    };
+
+    let dataSamTDS = 
+            {
+                x: sorigTDSx,
+                y: sorigTDSy,
+                mode: 'lines',
+                name: 'model',
+                marker: {
+                  color: '#17becf' 
+                }
+            };  
+            
+    let dataSamTDSO = 
+            {
+              x: sorigTDSx,
+              y: sorigTDSy,
+                mode: 'lines',
+                name: 'exp',
+                marker: {
+                  color: '#e377c2'
+                }
+            };            
+        
+    let layoutSamTDS = {
+        xaxis: {
+            title: 't, ns',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+                title: 'intensity, a.u.',
+                showgrid: true,
+                zeroline: true
+        }
+    };    
+        
+    Plotly.plot("sam-fft", [dataSamFFTO, dataSamFFT], layoutSamFFT);
+    Plotly.plot("sam-tds", [dataSamTDSO, dataSamTDS], layoutSamTDS);    
+
+    function getSource(name) {
+        var dc = document.getElementById("src");
+
+
+        var q = 'PageEmitt["<?wsp $uid ?>"][{"srcLoad", "'+name.value+'"}];';
+        socket.send(q);
+
+    }
+
+    core.UpdateSource = function(args, env) {
+      document.getElementById("src").innerHTML = interpretate(args[0]);
+    }
+
+    core.UpdateSourceData = function(args, env) {
+      
+      var ft = JSON.parse(interpretate(args[0]));
+      var td = JSON.parse(interpretate(args[1]));
+
+      Plotly.deleteTraces("ref-fft", [-1]);
+      Plotly.addTraces("ref-fft", [{x:ft[0] , y: ft[1], name:"model",
+                marker: {
+                  color: '#d62728'
+                }}]);
+      
+      Plotly.deleteTraces("ref-tds", [-1]);
+      Plotly.addTraces("ref-tds", [{x:td[0] , y: td[1], name:"model", marker: {
+                  color: '#ff7f0e'
+                }}]);
+
+
+    }    
+
+    core.UpdateSampleData = function(args, env) {
+      
+      var ft = JSON.parse(interpretate(args[0]));
+      var td = JSON.parse(interpretate(args[1]));
+
+      Plotly.deleteTraces("sam-fft", [-1]);
+      Plotly.addTraces("sam-fft", [{x:ft[0] , y: ft[1], name:"model",
+                marker: {
+                  color: '#8c564b'
+                }}]);
+      
+      Plotly.deleteTraces("sam-tds", [-1]);
+      Plotly.addTraces("sam-tds", [{x:td[0] , y: td[1], name:"model",
+                marker: {
+                  color: '#17becf'
+                }}]);
+
+
+    }    
+
+    
+
+    function update() {
+
+      var form = document.getElementById("dialog");
+      var formElements = Array.from(form.elements);
+      var str = "Hold[";
+
+      formElements.forEach(element => {
+        if (element.type == "checkbox") {
+          if (element.checked) {
+            str = str + element.name + '= True;';
+          } else {
+            str = str + element.name + '= False;';
+          } 
+        } else {
+          if (element.type == "number") {
+            str = str + element.name + '=' + element.value + ';';
+          } else {
+            str = str + element.name + '="' + element.value + '";';
+          }
+          
+        }
+        
+      });
+
+      str = str + "]";
+
+      console.log(str);
+
+      var q = 'PageEmitt["<?wsp $uid ?>"][{"update", '+str+'}];';
+      socket.send(q);
+    }  
+
+  </script>

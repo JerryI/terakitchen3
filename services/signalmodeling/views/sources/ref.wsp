@@ -1,0 +1,14 @@
+<?wsp
+    (* Tricky cache technic *)
+    sourcename = "original";
+    source[id_] := (
+        With[{fft = With[{refid = CGet[id, "ref"]}, CEval[ collection[refid, "data", "fft"] ] ]},
+            fft       
+        ]
+    );
+    ""
+?>
+
+<p class="lead text-muted">Reference <a class="btn-outline-id" href="item/index.wsp?id=<?wsp refid ?>"><?wsp refid ?></a></p>
+
+

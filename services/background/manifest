@@ -3,8 +3,14 @@
    "after"->"previewgenerator",
    "dependencies"->{"nk"},
 
-    "description"-> "Interactive background subtractor",
-    "parameters"-> {       
+    "description"-> "Interactive background subtractor and filter",
+    "parameters"-> {  
+        <|
+            "symbol"->"tdswrite", 
+            "desc"->"Generate a new time-domain signal", 
+            "value"-> False,
+            "type"->"bool"
+        |>      
     }
 
 |>

@@ -31,7 +31,7 @@
     <?wsp If[!KeyExistsQ[window, session["dynID"]], ?>
 
     <div id = "<?wsp session[ToString[dynID]] ?>">
-        <div class="row py-lg-3">
+        <div class="d-flex align-items-center">
             <div class="col-lg-10 col-md-8 mx-left">
               <h2 class="fw-light">Window is loading...</h2>
             </div>

@@ -46,8 +46,18 @@
             {
                 x: <?wsp ExportString[freq, "JSON"]   ?>,
                 y: <?wsp ExportString[(fft//Abs)^2, "JSON"]   ?>,
-                mode: 'lines'
+                mode: 'lines',
+                name: 'cut'
             };
+
+    let dataO = 
+            {
+                x: <?wsp ExportString[freq, "JSON"]   ?>,
+                y: <?wsp ExportString[(fft//Abs)^2, "JSON"]   ?>,
+                mode: 'lines',
+                name: 'full',
+                yaxis: 'y2'
+            };            
         
     let layout = {
         xaxis: {
@@ -56,13 +66,23 @@
             zeroline: true
         },
         yaxis: {
-            title: 'intensity, a.u.',
-            showgrid: true,
-            zeroline: true
-        }
+                title: 'intensity, a.u.',
+                showgrid: true,
+                zeroline: true,
+            },
+            yaxis2: {
+                title: 'intensity, a.u.',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            } 
     };
         
-    Plotly.plot(fft, [data], layout);
+    Plotly.plot(fft, [dataO, data], layout);
 
     Plotly.plot(tds, [{
         type: 'scatter',
@@ -115,8 +135,8 @@
         document.getElementById('rpeak').value = pt[0][0];
         document.getElementById('lpeak').value = pt[1][0];
 
-        Plotly.deleteTraces(fft, [0]);
-        Plotly.addTraces(fft, [{x:r[0] , y: r[1]}]);
+        Plotly.deleteTraces(fft, [-1]);
+        Plotly.addTraces(fft, [{x:r[0] , y: r[1], name:"cut"}]);
                 
         document.getElementById('logoFlames').style = "display: none"; 
         document.getElementById('bigFlames').style = "opacity: 0";

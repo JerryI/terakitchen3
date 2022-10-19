@@ -5,18 +5,16 @@
         <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
       <h1 class="fw-light">Entscheidung erforderlich</h1>
   
-          <p class="lead text-muted">Please select the regions, where the absorptions are presented</p>
+          <p class="lead text-muted">Please select the regions to block</p>
     
           <div id="plot"></div>
 
-          <p class="lead text-muted">The live preview of the calculated background</p>
+          <p class="lead text-muted">The live preview of the calculated transmission</p>
 
           <div id="back"></div>
 
-          <?wsp If[tdswrite, ?>
-            <p class="lead text-muted">The live preview of the filtered signal</p>
+          <p class="lead text-muted">The live preview of the filtered signal</p>
             <div id="tds"></div>
-          <?wsp , ""] ?>
 
           <form action="window.wsp" method="post" id="dialog2">
             <input type="hidden" name="id" value="<?wsp $uid ?>">
@@ -26,7 +24,7 @@
             <div class="form-group">
   
                 <label class="form-group-label" for="cut">
-                    cutoff frequency
+                    cutoff frequency (unused)
                 </label>
   
                 
@@ -61,7 +59,7 @@
 
     var freqs = <?wsp ExportString[freqs, "JSON"]   ?>;
 
-    <?wsp If[tdswrite, ?>
+
         var time = <?wsp ExportString[Drop[ref["tds"][[All,1]], -1], "JSON"]   ?>;
         
 
@@ -96,17 +94,16 @@
 
         Plotly.newPlot('tds', [datatds1, datatds2], layouttds);        
 
-    <?wsp , "" ] ?>
 
     Plotly.plot(graphDiv, [{
         type: 'scatter',
         mode: 'markers',
 
         x: freqs,
-        y: <?wsp ExportString[alpha, "JSON"]   ?>,
+        y: <?wsp ExportString[transm//Abs, "JSON"]   ?>,
 
         xaxis: 'wavenumber, cm-1',
-        yaxis: 'absorption coefficient, cm-1',
+        yaxis: 'T',
         zeroline: true,
         showgrid: true,
         marker: {color: color1, size: 3}
@@ -146,16 +143,16 @@
 
     let data1 = {
             x: freqs,
-            y: <?wsp ExportString[alpha,"JSON"] ?>,
+            y: <?wsp ExportString[transm//Abs,"JSON"] ?>,
             mode: 'lines',
-            name: 'alpha'
+            name: 'measured'
     };
 
     let data2 = {
-            x: <?wsp ExportString[freqs,"JSON"]   ?>,
-            y: <?wsp ExportString[cutted,"JSON"] ?>,
+            x: freqs,
+            y: <?wsp ExportString[cutted//Abs,"JSON"] ?>,
             mode: 'lines',
-            name: 'background'
+            name: 'modified'
     }; 
 
 
@@ -166,7 +163,7 @@
                 zeroline: true
             },
             yaxis: {
-                title: 'absorption coefficient, cm-1',
+                title: 'T',
                 showgrid: true,
                 zeroline: true,
             }          
@@ -180,7 +177,7 @@
             let r = JSON.parse(interpretate(args[0]));
         
             Plotly.deleteTraces('back', [-1]);
-            Plotly.addTraces('back', [{x:freqs, y: r,  name: 'background'}]);              
+            Plotly.addTraces('back', [{x:freqs, y: r,  name: 'modified'}]);              
                 
             document.getElementById('logoFlames').style = "display: none";
             document.getElementById('bigFlames').style = "opacity: 0"; 

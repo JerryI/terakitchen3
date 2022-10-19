@@ -53,13 +53,13 @@
                     
 
                     <div class="d-flex justify-content-between align-items-left mb-3">
-                      <?wsp  Table[ ?>  
+                      <?wsp  Table[ Block[{RGBColor:=RGBHtml},  ?>  
                         <div class="align-items-sm-baseline align-items-left">
                           <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#tools"></use></svg>
                           <small class="text-muted"><?wspkey?></small><br>
                           <small class="text-muted"><?wspsession["item"][key]?></small>
                         </div>
-                      <?wsp, {key, Complement[session["item"]//Keys, {"data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                      <?wsp ], {key, Complement[session["item"]//Keys, {"data","date", "id", "description", "ref", "experiment"}]   }]  ?>
                     </div>
 
 

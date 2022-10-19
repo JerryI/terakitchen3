@@ -1,0 +1,11 @@
+<|
+   "before"->"rabi",
+   "after"->Null,
+   "dependencies"->{"nk"},
+
+    "description"-> "Interactive signal modeller based on extracted material parameters",
+    "parameters"-> {                
+
+    }
+
+|>

@@ -53,7 +53,7 @@
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <?wsp Table[   ?>
               <li><a href="service.wsp?id=<?wspi?>&q=<?wsp session[urlExtend] ?>" class="link-dark rounded"><?wspi?></a></li>
-            <?wsp , {i, FileNameTake /@ FileNames[All, "services"]}] ?>       
+            <?wsp , {i, SortBy[FileNameTake /@ FileNames[All, "services"], StringLength]}] ?>       
           </ul>
         </div>
       </li>

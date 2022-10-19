@@ -20,7 +20,7 @@
       <div class="panel-body">
         
 
-        <?wspLoadPage["assets/tableofresults.wsp"]?>
+        <?wspLoadPage["assets/tableofresults.wsp",{RGBColor:=RGBHtml}]?>
 
 
 

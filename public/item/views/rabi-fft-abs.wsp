@@ -179,7 +179,7 @@
                 if(fieldState<?wspuid?> == false) {
                     fieldState<?wspuid?> = true;
 
-                    loadField('ExportString[{data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 1]], data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 2]], data["tds"][[ ;; data["rabi-reg"][[1]], 1]], data["tds"][[ ;; data["rabi-reg"][[1]], 2]], data["rabi-fft-freq"], data["rabi-fft-abs"]}, "JSON"]', function(resp) {
+                    loadField('ExportString[{data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 1]], data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 2]], data["tds"][[ ;; data["rabi-reg"][[1]], 1]], data["tds"][[ ;; data["rabi-reg"][[1]], 2]], data["rabi-fft-freq"], data["rabi-fft-abs"], data["freqs"], data["fft"]//Abs}, "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
         
@@ -201,8 +201,17 @@
                         let data3 = {
                             x: raw[4],
                             y: raw[5],
-                            mode: 'lines'
-                        };                        
+                            mode: 'lines',
+                            name: 'rabi'
+                        };    
+                        
+                        let originalfft = {
+                            x: raw[6],
+                            y: raw[7],
+                            mode: 'lines',
+                            yaxis: 'y2',
+                            name: 'spectrum'
+                        }
 
         
                         Plotly.newPlot('tds<?wspuid?>', [data2, data1], {
@@ -217,7 +226,7 @@
                                 zeroline: true
                             }});
 
-                        Plotly.newPlot('fft<?wspuid?>', [data3], {
+                        Plotly.newPlot('fft<?wspuid?>', [originalfft, data3], {
                             xaxis: {
                                 title: 'wavenumber, cm-1',
                                 showgrid: true,
@@ -227,7 +236,16 @@
                                 title: 'modulus, a.u.',
                                 showgrid: true,
                                 zeroline: true
-                            }});
+                            },
+                            yaxis2: {
+                                title: 'modulus, a.u.',
+                                titlefont: {color: 'rgb(148, 103, 189)'},
+                                tickfont: {color: 'rgb(148, 103, 189)'},
+                                overlaying: 'y',
+                                side: 'right'
+                            }                     
+                        
+                        });
                             
                         
                         loadField('ExportString[{data["tds"][[ ;; data["rabi-reg"][[2]], 1]], data["tds"][[ ;; data["rabi-reg"][[2]], 2]], data["rabi-fit-trace"]}, "JSON"]', function(resp2) {

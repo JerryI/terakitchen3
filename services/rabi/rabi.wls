@@ -33,7 +33,14 @@ startDialog[uuid_, ssam_, ssamid_] := (
 
     postRedirect[next_] := Function[data, If[data["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"]];
 
+    If[KeyExistsQ[sam, "alpha-with-fp"], 
+        sam["tds"] = Transpose[{Drop[sam["tds"][[All,1]], Length[sam["tds-no-fp"] ] - Length[sam["tds"] ] ], sam["tds-no-fp"]} ];
+    ];
+
     fourier[sam["tds"]];
+
+    dfreq   = freq;
+    dfft    = fft // Abs;
 
     content =   Block[{}, 
                     LoadPage["services/rabi/views/range.wsp"]
