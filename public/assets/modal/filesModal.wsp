@@ -51,7 +51,7 @@
                  ?>
               
               <div class="form-check">
-                <input class="form-check-input" name = "$service_<?wspi?>_allowed" type="checkbox" checked id="<?wspi?>">
+                <input class="form-check-input" name = "$service_<?wspi?>_allowed" type="checkbox" id="<?wspi?>">
                 <label class="form-check-label" for="<?wspi?>">
                   <?wspi?>
                 </label>
@@ -128,12 +128,12 @@
            <div class="form-group" id="form-button-exp-files">
             <button type="button" class="btn btn-outline-info" onclick="addRowData('','','')">Add extra field</button>
            </div>                                       
-           <!--<div class="form-check">
-            <input class="form-check-input" name = "manual" type="checkbox" onclick="hidetoggle_files(this)" id="hideshowfile">
+           <div class="form-check">
+            <input class="form-check-input" name = "manual" type="checkbox" onclick="hidetoggle_files(this)" id="hideshowfile" form="filesform" checked>
             <label class="form-check-label" for="manual">
-              I don't like regexp, will do it manually
+              I don't like RegExp, will do it manually
             </label>
-           </div>-->                      
+           </div>                 
           </form>
         </div>
         <div class="modal-footer">
@@ -221,6 +221,8 @@ if (ev.checked) {
     theme: "default",   
     lineWrapping: true     
  });
+
+ hidetoggle_files(document.getElementById("hideshowfile"));
 
  
  </script>

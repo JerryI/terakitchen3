@@ -277,7 +277,7 @@ ExtractNK[in1_, in2_, L_, trustreg_, checkregions_] := Module[
     
       With[{err = (estimateOscillations[first[[ #[[1]] ;; #[[2]] ]], FPperiod] &/@ regions )},
        
-        variants = {variants, <|"thickness" -> L, "first" -> first, "iteration" -> interation,
+        variants = {variants, <|"thickness" -> L, "first" -> first, "iteration" -> interation, "amplitude" -> amplify,
                               "error" ->  Total[err],
                               "sampling"-> {}
        
@@ -320,6 +320,18 @@ ExtractNK[in1_, in2_, L_, trustreg_, checkregions_] := Module[
      {variants//Flatten, first}
     ];
 
+ProcessNKQuet[calculated_] := With[
+    {
+      
+    },
+    
+    (*add points to the plot*)
+    (
+        (*add to the big collection*)
+        variants = {variants, #}; 
+        
+    ) & /@ calculated;  
+];    
 
 ProcessNK[calculated_] := With[
     {

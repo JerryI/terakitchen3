@@ -28,6 +28,7 @@
 
 
                 <input id="amp" type="text" class="form-control form-control" value="<?wsp amplify ?>" name="amp">
+            
 
                 </div>              
           </form>      
@@ -40,6 +41,7 @@
         <input id="continue2" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="Continue with a new thickness" form="dialog" >
 
         <input id="more" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="More iterations" form="dialog" >
+        <input id="more2" style="display:none" type="submit" name="action" class="btn btn-primary my-2" value="Optimize amplitude" form="dialog" >
 
       
      
@@ -123,6 +125,7 @@
         document.getElementById("continue1").style = "";
         document.getElementById("continue2").style = "";
         document.getElementById("thicknessField").style = "";
+        
    
     };
 
@@ -134,11 +137,15 @@
     };    
 
     core.ItIsOK = function(args, env) {
+        document.getElementById("amp").value = interpretate(args[1]);
+        document.getElementById("thickness").value = interpretate(args[0]);
+
         document.getElementById("continue3").style = "";
         document.getElementById("continue1").style = "";
         document.getElementById("continue2").style = "";
         document.getElementById("thicknessField").style = "";
         document.getElementById("more").style = "";
+        document.getElementById("more2").style = "";
         
     };
     

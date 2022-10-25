@@ -36,18 +36,15 @@
           <tr>
             <th scope="col"><a class="link-dark rounded">id</a></th>
             <th scope="col"><a class="link-dark rounded">ref</a></th>
-
-           
-              <th scope="col"><a class="link-dark rounded"></a></th>
+            <th scope="col"><a class="link-dark rounded"></a></th>
 
 
             <?wsp Table[ ?>
-
-            <th scope="col">
+              <th scope="col">
                 <a class="link-dark rounded"><?wsp i ?></a>
               </th>
-
             <?wsp , {i, session["tfields"]}] ?>
+
             <th scope="col"><a class="link-dark rounded">Date</a></th>
           </tr>
         </thead>

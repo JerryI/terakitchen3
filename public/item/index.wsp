@@ -4,6 +4,7 @@
     session["q"] = {"experiment"->Equal->session["item"]["experiment"], "id"->Equal->session["item"]["id"]}; 
     session["q"] = ToString[With[{q=session["q"]}, q:>And], InputForm];
 
+
     ""   
 ?>
 
@@ -35,8 +36,6 @@
                   
                 
                   <div class="d-flex justify-content-between align-items-left mb-3">
-                
-                  
 
                       <div class="align-items-sm-baseline align-items-left">
                         <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#calendar3"></use></svg>
@@ -45,21 +44,15 @@
                         <button class="btn btn-secondary my-2" onclick="$('#modifyModal').modal('show')">Modify</button>
                         <button class="btn btn-secondary my-2" onclick="$('#addToFolder').modal('show')">Add to the folder</button>
                       </div>
-                    
-                    
 
                     <p class="lead"><?wsp If[session["item"]["type"] == "sample", "The signal from the sample", "The signal from the reference"] ?></p>
                     </div>
                     
 
                     <div class="d-flex justify-content-between align-items-left mb-3">
-                      <?wsp  Table[ Block[{RGBColor:=RGBHtml},  ?>  
-                        <div class="align-items-sm-baseline align-items-left">
-                          <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#tools"></use></svg>
-                          <small class="text-muted"><?wspkey?></small><br>
-                          <small class="text-muted"><?wspsession["item"][key]?></small>
-                        </div>
-                      <?wsp ], {key, Complement[session["item"]//Keys, {"data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                      <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, ?>
+                        <div style="cursor: pointer;" onclick="editorLoad('<?wsp key ?>')"> <?wsp CKey[key]["view"] ?> </div>
+                      <?wsp ], {key, Complement[session["item"]//Keys, {"type", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
                     </div>
 
 
@@ -184,6 +177,35 @@
         },
       }      
     });
+
+    var editorsLoaded = [];
+    
+    function editorLoad (id, params = "{}") {
+      if(!editorsLoaded.includes(id)) {
+        console.log("loading editors...");
+        var itemid = '<?wsp session["item"]["id"] ?>';
+
+        WSPHttpQuery('Block[{redirect = "item/index.wsp?id='+itemid+'", itemid = "'+itemid+'", key = "'+id+'"}, Block['+params+', CKey["'+id+'"]["editor"] ] ]', function(r) {
+    
+          var container = document.createElement("div");
+          var uid = uuidv4()
+          container.id = uid;
+          document.getElementById('modals').appendChild(container);
+    
+          setInnerHTML(document.getElementById(uid), r);
+    
+    
+          $('#editor'+id).modal('show');
+        });
+    
+        modalsLoaded.push(id);
+      } else {
+        $('#editor'+id).modal('show');
+      }
+    
+      
+    
+    };    
 
 </script>
 

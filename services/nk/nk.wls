@@ -198,7 +198,18 @@ startVisor[uuuid_, ll_, rr_, st_] := (
 
                 variants = {};
 
-                startVisor[$next, thickness (1 - deviation/100), thickness (1 + deviation/100), thickness (2 deviation/100 )/15];                 
+                startVisor[$next, thickness (1 - deviation/100), thickness (1 + deviation/100), thickness (2 deviation/100 )/15];,
+
+            "Optimize amplitude",
+                thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression[data["thickness"]]];
+                amplify = ToExpression[data["amp"]];
+                
+                (*check for errors*)
+                (If[!NumberQ[#//N], Throw[StringTemplate["`` is not a number. thickness"][#]]]) &/@ {thickness, amplify};
+
+                variants = {};
+
+                startVisor[$next, thickness, thickness, thickness];
         ];
     ]];
 
@@ -223,6 +234,32 @@ correctThickness[left_, right_, istep_] := (
 
     Switch[
     Module[{},
+      If[lL == rL,
+
+        If[This["status"] != "running", Return["skip", Module]];
+
+        Do[
+            If[This["status"] != "running", Break[]];
+
+            amplify = scale;
+
+            ProcessNK@First@ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, checkregion];
+
+        , {scale, amplify 0.5, 1.5 amplify, 0.05 amplify}];
+        
+        variants = variants // Flatten;
+
+        sorted = SortBy[Select[({#["amplitude"], #["iteration"], #["error"]}) & /@ Flatten[variants], #[[2]] == (numberFP) &], First];
+        errorWithFP = (First@MinimalBy[Select[({#["amplitude"], #["iteration"], #["error"]}) & /@ Flatten[variants], #[[2]] == 0 &], Last])[[3]];
+        minimal = First @ First @ Position[#, MinimalBy[#, Last] // First] &@ sorted;
+        amplify = sorted[[minimal, 1]];  
+
+        Return["done", Module];
+
+
+
+      
+      ,
         (*go recursively*)
         Do[
             trials = 0;
@@ -295,6 +332,7 @@ correctThickness[left_, right_, istep_] := (
         thicknessAccuracy = ToString[10 step/2 //N// DecimalForm]<>" mm";
         thickness = L;
         Return["done", Module];
+      ];
 
     ]   
     ,
@@ -311,7 +349,7 @@ correctThickness[left_, right_, istep_] := (
     
     "done",
         EventBind["event", Function[{cli, data}, Null;]];
-        WebSocketPublish[ItIsOK[], $uid];
+        WebSocketPublish[ItIsOK[ToString[10 L //N//DecimalForm]<>" mm", amplify], $uid];
 
         With[{min = MinimalBy[ 
                     Select[({#["thickness"], #["iteration"], #["first"], #["error"]}) & /@ 
@@ -326,12 +364,12 @@ correctThickness[left_, right_, istep_] := (
             ];
             (*client asked for the previous data*)
             EventBind["event", Function[{cli, data},
-                WebSocketSend[cli, ItIsOK[]];
-                WebSocketSend[cli, UpdateFinalGraph[storage]];
+                WebSocketSend[cli, ItIsOK[ToString[10 L //N//DecimalForm]<>" mm", amplify] ];
+                WebSocketSend[cli, UpdateFinalGraph[storage] ];
             ]];
         ];  
 
-        PushNotification["NK", "Optimal thickness is "<>ToString[10 L //N//DecimalForm]<>" mm.<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
+        PushNotification["NK", "Optimal thickness is "<>ToString[10 L //N//DecimalForm]<>" mm. TDS scaling is "<>ToString[amplify//N//DecimalForm]<>"<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
     "skip",
         PushNotification["NK", "Stopped"];   

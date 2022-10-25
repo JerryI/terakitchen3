@@ -24,7 +24,7 @@
                     <option value="<?wsp j ?>" selected="selected"><?wsp CGet[j, "filename"] ?></option>  
                 <?wsp , {j, $data["list"]}] ?>  
 
-                    <option value="noref" selected="selected">this is a reference</option>  
+                    <option value="itsref" selected="selected">this is a reference</option>  
                 </select>
                 <br><br>
                   

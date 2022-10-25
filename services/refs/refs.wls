@@ -2,10 +2,12 @@ Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/
 
 $host = CEval[$ev]["addr"];
 $uid = CreateUUID[];
-  
+
+manualsamples = CQuery["$manual" :> Exist -> Equal -> True, $data["list"] ];
+
 samples = CQuery["type" -> Equal -> "sample", $data["list"]];
 
-If[Length[samples] == 0, PushNotification["Ref","nothing to do..."]; $Die];
+If[Length[samples] == 0 && Length[manualsamples] == 0, PushNotification["Ref","nothing to do..."]; $Die];
 
 Module[{refs, sm}, 
   sm = CGet[#]; 
@@ -31,6 +33,7 @@ Module[{refs, sm},
 (*fetching for the rest*)
 
 norefs = CQuery[{"ref" -> Equal -> "noref"} :> And, samples]; 
+norefs = Join[norefs, manualsamples];
 
 If[Length[norefs] == 0, PushNotification["Ref", StringTemplate["`` samples and references are connected"][samples//Length]]; $Die];
 
@@ -55,14 +58,14 @@ ConnectRest[input_] := Module[{data = input},
     console["log", "applied manual"];
 
     With[{id = #, ref = data[#]},
-      CEval[collection[id, "ref"] = ref;];
+      CEval[collection[id, "ref"] = ref; collection[id, "type"] = "sample"; collection[id, "$manual"] = .; ];
     ]&/@Keys[data];
 
-    norefs = CQuery[{"ref" -> Equal -> "noref"} :> And, samples]; 
+    itsref = CQuery[{"ref" -> Equal -> "itsref"} :> And, Join[samples, manualsamples] ]; 
 
     With[{id = #},
-      CEval[collection[id, "type"] = "ref";];
-    ]&/@norefs;    
+      CEval[collection[id, "type"] = "ref"; collection[id, "ref"] = .; collection[id, "$manual"] = .;];
+    ]&/@itsref;    
   , 
     console["log", "discarded manual"];
 

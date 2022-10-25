@@ -1,0 +1,5 @@
+<div class="align-items-sm-baseline align-items-left">
+    <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#tools"></use></svg>
+    <small class="text-muted"><?wsp key ?></small><br>
+    <small class="text-muted"><?wsp keydata ?></small>
+</div>

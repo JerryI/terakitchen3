@@ -186,7 +186,12 @@ ImportFile[file_, args_] := Module[{input, fields, TransferField, TransferTheRes
      
       If[KeyExistsQ[args, "descid"], record["description"] = args["descid"]];
       
-      record = (TransferTheRest @@ TransferField[record, FileBaseName[file["filename"]], fields])//Quiet; 
+      If[args["manual"] === True,
+        record["$manual"] = True;
+      ,
+        record = (TransferTheRest @@ TransferField[record, FileBaseName[file["filename"]], fields])//Quiet; 
+      ];
+      
          
       With[{tds = Drop[ ImportString[ByteArrayToString[file["data"]], "CSV"],  1]},
 

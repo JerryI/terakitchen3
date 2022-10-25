@@ -147,3 +147,6 @@ CFlatten[l_] := l //. {Rule[x_, y_] :> y, Association :> List} // Flatten;
 
 CGet := name |-> collection[name];
 CPut := content |-> collection[content["id"]]=content;
+
+(*caching trick*)
+CKey[tag_][whatever_] := (With[{path = "assets/keys/"<>tag<>"/"<>whatever<>".wsp"}, If[FileExistsQ["public/"<>path]//TrueQ, CKey[tag][whatever] := LoadPage[path], With[{newpath = "assets/keys/"<>whatever<>".wsp"}, CKey[tag][whatever] := LoadPage[newpath] ] ] ]; CKey[tag][whatever]);

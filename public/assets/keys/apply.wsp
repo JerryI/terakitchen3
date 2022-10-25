@@ -1,0 +1,18 @@
+<?wsp
+    session["Redirect"] = session["data"]["redirect"];
+
+    With[{path = "assets/keys/"<>session["data", "key"]<>"/post.wsp"},
+        If[FileExistsQ["public/"<>path],
+            Block[{data = session["data"]},
+                session["data", "newvalue"] = LoadPage[path];
+            ]
+        ]
+    ];
+
+    With[{it = If[session["data", "interpretate"] === "True", ToExpression[session["data", "newvalue"]], session["data", "newvalue"]]},
+        collection[session["data", "id"], session["data", "key"]] = it;
+    ];
+    
+    ""
+    
+?>

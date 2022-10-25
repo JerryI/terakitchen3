@@ -39,7 +39,8 @@
         "exp" -> $experiment,
         "files" -> files,
         "parser" -> parser,
-        "services" -> servicesparameters
+        "services" -> servicesparameters,
+        "manual" -> If[data["manual"]==="on", True, False]
       |>;
 
       If[StringLength[data["thickness"]] > 0, args = Join[args, <| "thickness"->data["thickness"]  |>]];

@@ -32,7 +32,13 @@
         ,
         <|
             "symbol"->"thicknessCorrection", 
-            "desc"->"Thickness correction (yes or no)", 
+            "desc"->"Thickness correction", 
+            "value"-> False,
+            "type"->"bool"
+        |>,
+        <|
+            "symbol"->"autocorrect", 
+            "desc"->"Apply weak correction for other samples (usually requires more time)", 
             "value"-> False,
             "type"->"bool"
         |>    
@@ -51,7 +57,7 @@
         |>,
         <|
             "symbol"->"debug", 
-            "desc"->"Debug information (yes or no)", 
+            "desc"->"Debug information", 
             "value"-> True,
             "type"->"bool"
         |>        
