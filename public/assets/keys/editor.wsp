@@ -15,12 +15,21 @@
             <input name="interpretate" value="False" type="hidden">
             <input name="redirect" value="<?wsp redirect ?>" type="hidden">
 
+            <?wsp If[BooleanQ[collection[itemid][key]], With[{checked = <|True->"checked", False->""|>[collection[itemid][key]]}, ?>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="newvalue" <?wsp checked ?>>
+              <input name="checkbox" value="True" type="hidden">
+            </div>  
+            <?wsp ], ""] ?> 
+
+            <?wsp If[!BooleanQ[collection[itemid][key]], ?>
             <div class="form-group"> 
               <label class="form-group-label" for="expression">
                 The field value
               </label>
               <textarea class="form-control form-control-lg" name="newvalue"><?wsp collection[itemid][key] ?></textarea>
-            </div>             
+            </div>     
+            <?wsp , "" ] ?>        
               
           </form>          
               

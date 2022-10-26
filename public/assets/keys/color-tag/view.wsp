@@ -1,1 +1,2 @@
-<div class="color-block" style="background-color: <?wsp keydata ?>"></div>
+<button type="button" class="btn btn-outline-dark mb-1 mr-2" style="padding: 3px 6px 3px 6px; border-radius: 2em; background-color: <?wsp keydata ?>; height: 1.7rem; width: 1.7rem; border: 0;" onclick="editorLoad('color-tag')"><span></span>
+</button>

@@ -17,7 +17,7 @@
               <label class="form-group-label" for="expression">
                 Write a function to modify
               </label>
-              <textarea id="expression"  class="form-control form-control-lg" name="expression">( #["thickness"] = "0.72 mm" )&</textarea>
+              <textarea id="expression"  class="form-control form-control-lg" name="expression">( #["anyfield"] = "anything" )&</textarea>
             </div>             
               
           </form>          

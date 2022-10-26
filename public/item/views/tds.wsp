@@ -47,7 +47,7 @@
 
                 let layout = {
                     xaxis: {
-                        title: 't, ns',
+                        title: 't, ps',
                         showgrid: true,
                         zeroline: true
                     },

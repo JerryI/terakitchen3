@@ -1,5 +1,12 @@
-<div class="align-items-sm-baseline align-items-left">
-    <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#tools"></use></svg>
-    <small class="text-muted"><?wsp key ?></small><br>
-    <small class="text-muted"><?wsp keydata ?></small>
-</div>
+<?wsp If[(keydata === False || keydata === True), With[{state = <|True->"success", False->"secondary"|>[keydata]}, ?>
+<button type="button" class="btn btn-outline-dark mb-1 mr-1" style="padding: 3px 6px 3px 6px;" onclick="editorLoad('<?wsp key ?>')"> 
+<span class="badge badge-pill badge-<?wsp state ?>"><?wsp key ?></span>
+</button>
+<?wsp ], "" ] ?>
+
+<?wsp If[!(keydata === False || keydata === True), ?>
+<button type="button" class="btn btn-outline-dark mb-1 mr-1" style="padding: 3px 6px 3px 6px;" onclick="editorLoad('<?wsp key ?>')"> 
+<?wsp key ?> <span> </span><span class="badge badge-light"><?wsp keydata ?></span>
+  <span class="sr-only">value</span>
+</button>
+<?wsp , "" ] ?>

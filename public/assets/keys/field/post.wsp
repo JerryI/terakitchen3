@@ -1,0 +1,9 @@
+<?wsp With[{val = ToExpression[StringReplace[data["newvalue"], ","->"."]]},
+    If[!NumberQ[val],
+        PushNotification["Server", "<b>Error</b>. Typed value "<>ToString[data["newvalue"]]<>" is not a number!"];
+        $Failed
+    ,
+        val
+    ]
+]
+?>

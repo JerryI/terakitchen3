@@ -41,8 +41,8 @@
                         <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#calendar3"></use></svg>
                         <small class="text-muted"><?wsp TextString[ (Now - session["item"]["date"])//Round ] ?></small>
                         <button class="btn btn-sm btn-outline-secondary" onclick="formFieldsOpen(exportPromise)">Export</button>
-                        <button class="btn btn-secondary my-2" onclick="$('#modifyModal').modal('show')">Modify</button>
-                        <button class="btn btn-secondary my-2" onclick="$('#addToFolder').modal('show')">Add to the folder</button>
+                        <button class="btn btn-sm my-2" style="cursor: pointer" onclick="$('#modifyModal').modal('show')">Modify</button>
+                        <button class="btn btn-sm my-2" style="cursor: pointer" onclick="$('#addToFolder').modal('show')">Add to the folder</button>
                       </div>
 
                     <p class="lead"><?wsp If[session["item"]["type"] == "sample", "The signal from the sample", "The signal from the reference"] ?></p>
@@ -50,9 +50,9 @@
                     
 
                     <div class="d-flex justify-content-between align-items-left mb-3">
-                      <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, ?>
-                        <div style="cursor: pointer;" onclick="editorLoad('<?wsp key ?>')"> <?wsp CKey[key]["view"] ?> </div>
-                      <?wsp ], {key, Complement[session["item"]//Keys, {"type", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                     <div class="align-items-sm-baseline align-items-left">
+                        <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, CKey[key]["view"] ], {key, Complement[session["item"]//Keys, {"type", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                      </div>
                     </div>
 
 
@@ -63,15 +63,14 @@
                   <p>
                   <span>Experiment </span>
                   <a href="/experiment/index.wsp?id=<?wspsession[ToString[item]][ToString[experiment]]?>"><?wspsession["item"]["experiment"]?></a>
-                  </p>
+                  <span> </span>
                   <?wsp  If[ session["item"]["type"] == "sample", ?>
                
-                  <p>
-                    <span >Ref </span>
+                    <span >Reference </span>
                     <a href="/item/index.wsp?id=<?wspsession[ToString[item]][ToString[ref]]?>"><?wspsession["item"]["ref"]?></a>
-                  </p>
+                  
                   <?wsp , "" ] ?>
-                
+                  </p>
             
                 </div>
                    
