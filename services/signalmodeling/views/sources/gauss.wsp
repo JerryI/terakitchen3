@@ -1,15 +1,19 @@
 <?wsp
-    central = 44.0;
-    width   = 10.0;
-    amp     = 100.0;
+    central = 37.0;
+    width   = 13.0;
+    amp     = 12.0;
+    phaseShift = 0;
+    delay = 0;
 
     (* Tricky cache technic *)
     sourcename = "gauss";
     source[id_] := (
-        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]]},
-            Table[Exp[I (2 \[Pi] (1/33.356) t0 x)] amp/(E^((x - central)^2/(2*width^2))*Sqrt[2*Pi]*width), {x, sample["freqs"]}]//Quiet
+        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]] + delay},
+            Table[Exp[I (2 \[Pi] (1/33.356) t0 x)] amp*E^(((-I phaseShift)*amp*(-central + x))/(E^((-central + x)^2/(2*width^2))*width^2) - 
+            (-central + x)^2/(2*width^2)), {x, sample["freqs"]}]//Quiet
         ]
     );
+    src["phase"] := GetPhase[src];
     ""
 ?>
 
@@ -17,21 +21,35 @@
   <label class="form-group-label" for="central">
       Central FQ (in cm)
   </label>
-  <input class="form-control form-control" type="number" step=any value=44 name="central" form="dialog">
+  <input class="form-control form-control" type="number" step=any value=37 name="central" form="dialog">
 </div> 
 
 <div class="form-group">
   <label class="form-group-label" for="central">
       Width (in cm)
   </label>
-  <input class="form-control form-control" type="number" step=any value=10 name="width" form="dialog">
+  <input class="form-control form-control" type="number" step=any value=13 name="width" form="dialog">
 </div> 
 
 <div class="form-group">
   <label class="form-group-label" for="central">
       Amp
   </label>
-  <input class="form-control form-control" type="number" step=any value=100 name="amp" form="dialog">
+  <input class="form-control form-control" type="number" step=any value=12 name="amp" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+  Phase shift
+  </label>
+  <input class="form-control form-control" type="number" step=any value=0 name="phaseShift" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+  Extra delay time
+  </label>
+  <input class="form-control form-control" type="number" step=any value=0 name="delay" form="dialog">
 </div> 
 
 

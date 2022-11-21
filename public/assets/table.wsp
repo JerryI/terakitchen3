@@ -5,47 +5,61 @@
   (*If[StringQ[sort],     sort = ToExpression[sort]];*)
   (*If[StringQ[exclude],  exclude = ToExpression[exclude]];*)
 
+  session["cleanurl"] = StringDelete[session["rawurl"], RegularExpression["&page=[[:digit:]]+"]];
+
   If[ListQ[exclude],
-    session["texclude"] = Join[{"data","date", "id", "ref", "type", "description", "color-tag"}, exclude];
+    session["texclude"] = Join[{"data","date", "id", "ref", "type", "descid", "description"}, exclude];
   ,
-    session["texclude"] = {"data","date", "id", "ref", "type", "description", "color-tag"};
+    session["texclude"] = {"data","date", "id", "ref", "type", "descid", "description"};
   ];
 
-  If[q[[0]] === List || q[[0]] === Rule,
-    session["tresults"] = CQuery[q];
-  ,
-    session["tresults"] = CQuery[{"type"->Equal->"sample", 1}];
-  ];
+
+  session["tresults"] = CQuery[q];
+ 
+
+
 
   session["tfields"] = <||>;
 
-  Function[x, Map[(session["tfields", #] = True)& , Keys[collection[x] ] ] ] /@ session["tresults"];
+  Function[x, Map[(session["tfields", #] = BooleanQ[collection[x, #]])& , Keys[collection[x] ] ] ] /@ session["tresults"];
   session["rfields"] = session["tfields"]//Keys;
-  session["tfields"] = Complement[session["rfields"], session["texclude"] ];
+  session["bfields"] = Select[session["tfields"], Part]//Keys;
+
+  session["tfields"] = Complement[session["rfields"], Join[session["texclude"], session["bfields"]] ];
 
 
   session["tsort"] = If[StringQ[sort] || ListQ[sort], If[StringQ[sort], {sort}, sort], {"date"}];
 
+  session["tresults"] = CSort[session["tsort"],session["tresults"]]//CFlatten//Reverse;
+
+  session["tpages"] = Length[session["tresults"]]/50 // Ceiling;
+
+  session["tresults"] = Drop[session["tresults"], 50 (ToExpression[If[KeyExistsQ[session["Query"], "page"], session["Query", "page"], 1]] - 1)];
+
+  session["tresults"] = Take[session["tresults"], Min[{session["tresults"]//Length, 50}]];  
+
   ""
 ?>
 
-<p class="fw-light">Uploaded data</p>
+<p class="fw-light"></p>
     <table class="table table-striped">
         <thead>
       
           <tr>
             <th scope="col"><a class="link-dark rounded">id</a></th>
             <th scope="col"><a class="link-dark rounded">ref</a></th>
-            <th scope="col"><a class="link-dark rounded"></a></th>
+            
 
 
             <?wsp Table[ ?>
-              <th scope="col">
-                <a class="link-dark rounded"><?wsp i ?></a>
+              <th scope="col" style="white-space: nowrap;">
+              <?wsp Block[{key = i}, CKey[i]["title"] ] ?>
               </th>
             <?wsp , {i, session["tfields"]}] ?>
 
-            <th scope="col"><a class="link-dark rounded">Date</a></th>
+            <th></th>
+
+            <th scope="col"><svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#calendar3"></use></svg><a class="link-dark rounded">Date</a></th>
           </tr>
         </thead>
         <tbody>
@@ -56,25 +70,27 @@
         ?>
 
           
-          <tr>
+          <tr <?wsp If[item["type"]==="ref", " class = \"reference\"", ""] ?>>
             
-            <td><a class="link-dark rounded" href="item/index.wsp?id=<?wsp key ?>"><?wsp key?></a></td>
-            <td><a class="link-dark rounded" href="item/index.wsp?id=<?wsp ref ?>"><?wsp ref ?></a></td>
+            <td><a class="badge badge-light" href="item/index.wsp?id=<?wsp key ?>"><?wsp key?></a></td>
+            <td><a class="badge badge-light" href="item/index.wsp?id=<?wsp ref ?>"><?wsp ref ?></a></td>
 
-            <?wsp If[KeyExistsQ[item, "color-tag"], ?>
-              <td ><?wsp item["color-tag"] ?></td>
-            <?wsp , "<td></td>"] ?>
+
 
             <?wsp Table[ ?>
 
                 <td>
-                  <?wsp If[KeyExistsQ[item, f], item[f], "" ]?>               
+                  <?wsp If[KeyExistsQ[item, f], (CKey[f]["short"])@@{f, item[f]} , "" ]?>               
                 </td> 
 
             <?wsp , {f, session["tfields"]}] ?>
+
+            <td>
+                <?wsp Table[ If[KeyExistsQ[item, f], (CKey[f]["short"])@@{f, item[f]} , "" ] , {f, session["bfields"]}] ?>              
+            </td>
           
             <td>
-              <?wsp "<div class=\"date\">" <> DateString@DayRound[item["date"]] <> "</div>" ?>
+              <?wsp "<div class=\"badge date\">" <> DateString@DayRound[item["date"]] <> "</div>" ?>
             </td>
           </tr>
 
@@ -82,8 +98,16 @@
 
         <?wsp 
             ] 
-          , {key, CSort[session["tsort"],session["tresults"]]//CFlatten}] 
+          , {key, session["tresults"]}] 
         ?>   
 
         </tbody>
       </table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <?wsp Table[ With[{url = session["cleanurl"]<>"&page="<>ToString[i]}, ?>
+    <li class="page-item<?wsp If[i === If[KeyExistsQ[session["Query"], "page"], session["Query", "page"]//ToExpression, 1], " active", ""] ?>"><a class="page-link" href="<?wsp url ?>"><?wsp i ?></a></li>
+    <?wsp ], {i, session["tpages"]}] ?>
+  </ul>
+</nav>

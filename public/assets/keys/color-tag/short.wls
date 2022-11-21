@@ -1,0 +1,1 @@
+("<button type=\"button\" class=\"btn btn-outline-dark mb-1 mr-2\" style=\"padding: 0px 0px 0px 0px; opacity: 0.8; border-radius: 2em; background-color:"<> #2 <> "; height: 1rem; width: 1rem; margin-top: 6px; border: 0;\"><span></span></button>")&

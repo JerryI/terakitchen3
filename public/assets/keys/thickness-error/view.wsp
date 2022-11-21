@@ -1,0 +1,4 @@
+<button type="button" class="btn btn-outline-dark mb-1 mr-1" style="padding: 3px 6px 3px 6px;" onclick="editorLoad('<?wsp key ?>')"> 
+&plusmn; <span> </span><span class="badge badge-light"><?wsp keydata ?></span>
+  <span class="sr-only">value</span>
+</button>

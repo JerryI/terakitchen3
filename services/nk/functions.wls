@@ -2,12 +2,12 @@ DifferencesNormalized[arr_] := Differences[arr];
 
 ClusterPhase = 
   Compile[{{input, _Real, 1}, {low, _Integer, 0}, {high, _Integer, 
-     0}}, Module[{phase = input, delta = 0.0},
+     0}, {PhaseTrashhold, _Real, 0}}, Module[{phase = input, delta = 0.0},
     
-    Do[If[phase[[i + 1]] - phase[[i]] > \[Pi], 
+    Do[If[phase[[i + 1]] - phase[[i]] > PhaseTrashhold, 
        Do[phase[[j]] = phase[[j]] - 2 \[Pi];, {j, i + 1, 
           Length[phase]}];, 
-       If[phase[[i + 1]] - phase[[i]] < -\[Pi], 
+       If[phase[[i + 1]] - phase[[i]] < -PhaseTrashhold, 
          Do[phase[[j]] = phase[[j]] + 2 \[Pi];, {j, i + 1, 
             Length[phase]}];];];, {i, low, high}];
     If[low > 1,
@@ -140,7 +140,7 @@ TDSwithoutFP[in1_, in2_, L_, trustreg_, checkregions_, first_] :=
 
   slog = nsam["phase"]; rlog = nref["phase"];
 
-  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right];
+  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
   slog = transm[[All, 2]];
 
   transm[[All, 2]] = transm[[All, 2]];
@@ -242,7 +242,7 @@ ExtractNK[in1_, in2_, L_, trustreg_, checkregions_] := Module[
 
   slog = nsam["phase"]; rlog = nref["phase"];
 
-  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right];
+  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
   slog = transm[[All, 2]];
  
 

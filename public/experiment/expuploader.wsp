@@ -10,6 +10,8 @@
 
       rawdata = Join[rawdata, <|"parser" -> ({#[[1]], #[[2]], ToExpression[#[[3]]//StringUnfix]} & /@ parser)|>];
       rawdata["date"] = Now;
+
+      rawdata["folders"] = <||>;
   
       experiments[rawdata["sample"]] = rawdata; 
     ];

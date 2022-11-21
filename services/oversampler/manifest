@@ -1,0 +1,28 @@
+<|
+   "before"->"refs",
+   "after"->"fourier",
+   "dependencies"->{},
+
+    "description"-> "Matches TD signals with different sampling rates and sampling windows.",
+    "parameters"-> {    
+        <|
+            "symbol"->"oversampling", 
+            "desc"->"Double the maximal sample rate", 
+            "value"-> False,
+            "type"->"bool"
+        |>,
+
+        <|
+            "symbol"->"method", 
+            "desc"->"Method of interpolation. Either \"Spline\" or \"Piecewise\"", 
+            "value"-> "Spline",
+            "type"->"text"
+        |>,
+        <|
+            "symbol"->"order", 
+            "desc"->"Interpolation order", 
+            "value"-> 1,
+            "type"->"integer"
+        |>                   
+    }
+|>

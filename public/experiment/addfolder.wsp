@@ -1,7 +1,13 @@
 <?wsp
     session["Redirect"] = "experiment/index.wsp?id="<>session["data"]["id"];
 
-    folders[CreateUUID[]] = <|"origin"->session["data", "id"], "name"->session["data", "name"], "list"->{}|>;
+    With[{id = CreateUUID[]},
+        folders[id] = <|"origin"->session["data", "id"], "name"->session["data", "name"], "list"->{}|>;
+
+        If[!KeyExistsQ[experiments[session["data", "id"]], "folders"], experiments[session["data", "id"], "folders"] = <||>; ];
+        experiments[session["data", "id"], "folders", id] = True;
+    ];
+    
     
     ""
     

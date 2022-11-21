@@ -39,12 +39,44 @@
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="index.wsp" class="link-dark rounded">Overview</a></li>
             <li><a href="bucket.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Plotter</a></li>
-            <li><a href="folder/all.wsp" class="link-dark rounded">Folders</a></li>
             <li><a href="map.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Map</a></li>
             <li><a href="console.wsp" class="link-dark rounded">Console</a></li>
           </ul>
         </div>
       </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#folders-collapse" aria-expanded="false">
+          Folders
+        </button>
+        <div class="collapse" id="folders-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">    
+            
+            <?wsp Table[ With[{uid = RandomString[7]}, ?>
+              <li>
+                <button class="btn btn-toggle align-items-center rounded collapsed ml-3"  data-bs-toggle="collapse"  data-bs-target="#<?wsp uid ?>" data-bs-parent="#folders-collapse"  aria-expanded="false">
+                  <?wsp exp ?>
+                </button>    
+
+                  <div class="collapse" id="<?wsp uid?>">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">    
+                      <li><a href="experiment/index.wsp?id=<?wsp exp ?>" class="link-dark rounded">Workbook</a></li>  
+                      <?wsp Table[ With[{uid = RandomString[7]}, ?>
+                      <li><a href="folder/index.wsp?id=<?wsp folder ?>" class="link-dark rounded"><?wsp folders[folder, "name"] ?></a></li>  
+               
+                      <?wsp ], {folder,  experiments[exp, "folders"]//Keys}]?>
+                    </ul>
+                  </div>                
+                
+              </li>
+            <?wsp ], {exp, experiments//Keys}]?>
+          </ul>
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <?wsp Table[  ?>
+            <li><a href="folder/index.wsp?id=<?wsp folder ?>" class="link-dark rounded"><?wsp folders[folder, "name"] ?></a></li>
+          <?wsp , {folder, folders["root"]//Keys}]?>
+          </ul>
+        </div>
+      </li>       
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
           Services
@@ -57,6 +89,7 @@
           </ul>
         </div>
       </li>
+     
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#docs-collapse" aria-expanded="false">
           Docs

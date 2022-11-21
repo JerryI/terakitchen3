@@ -299,6 +299,7 @@ a:hover,a:focus{
 .card.shadow-sm {
   min-width: 200px;
   height: 95%;
+
 }
 
 #logoico {
@@ -712,6 +713,7 @@ a:hover,a:focus{
     padding: 0.75rem;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
+    line-height: 1rem;
 }
 
 .color-block {
@@ -720,6 +722,23 @@ a:hover,a:focus{
   border-radius: 1em;
 }
 
+.page-item.active .page-link {
+  background-color: #fd0d0d91;
+  border-color: #ff757591;
+}
+
+.page-link {
+  color: #000000;
+}
+
+.page-link:hover {
+  color: #ff6262;
+}
+
+.reference {
+  color: gray;
+  opacity: 0.4;
+}
 
 
   

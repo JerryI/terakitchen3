@@ -1,0 +1,81 @@
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                <h4 class="panel-title">
+                    <button onclick="openField<?wspuid?>()" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                        Absorbance
+                    </button>
+                </h4>
+                
+            </div>
+            <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                <div class="panel-body">
+                   
+                    <div id='plot<?wspuid?>'></div>
+                </div>
+                
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+            </div>
+            
+        </div>
+
+        <script>
+            var fieldState<?wspuid?> = false;
+        
+            function openField<?wspuid?>() {
+                if(fieldState<?wspuid?> == false) {
+                    fieldState<?wspuid?> = true;
+
+                    
+                    loadField('ExportString[ With[{t = Transpose[data["transmission"]]}, {data["freqs"], 2.0 - Log10[t[[1]]], t[[2]]}], "JSON"]', function(resp) {
+        
+                        var raw = JSON.parse(resp);
+
+                        let data = {
+                            x: raw[0],
+                            y: raw[1],
+                            mode: 'lines',
+                            name: '2-log10(T)'
+                        };
+
+                        let phase = {
+                            x: raw[0],
+                            y: raw[2],
+                            mode: 'lines',
+                            name: 'phase',
+                            yaxis: 'y2'
+                        };                        
+
+        
+                        let layout = {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'absorbance',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis2: {
+                title: 'phase shift, rad.',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            } 
+                        };
+
+                        Plotly.newPlot('plot<?wspuid?>', [data, phase], layout);
+
+
+        
+                    });
+                }
+            }
+        
+        </script>

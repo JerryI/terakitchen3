@@ -14,6 +14,7 @@ NullQ[x_]:=TrueQ[x == Null];
 
 CronTasks = <||>;
 
+Print[">> TERAKITCHEN V3 2022"];
 Print[">> AUTOLAUNCH"];
 console["log", message_, args___] := Print[StringTemplate[message][args]];
 

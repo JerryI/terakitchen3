@@ -21,6 +21,7 @@
 <?wsp LoadPage["assets/header.wsp"] ?>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link href="http://<?wsp  $env["storagehost"] ?>/dino.css" rel="stylesheet">
 
 <div class="container" style="margin-top:1em" >
 
@@ -31,9 +32,56 @@
     <?wsp If[!KeyExistsQ[window, session["dynID"]], ?>
 
     <div id = "<?wsp session[ToString[dynID]] ?>">
+        
         <div class="d-flex align-items-center">
             <div class="col-lg-10 col-md-8 mx-left">
               <h2 class="fw-light">Window is loading...</h2>
+              <!--<div class="dino">
+
+                <div class="dino__head">
+                  <div class="dino__head__back"></div>
+                  <div class="dino__head__topfront"></div>
+                  <div class="dino__head__mouth"></div>
+                  <div class="dino__head__throat"></div>
+                  <div class="dino__head__eye"></div>
+                </div>
+
+                <div class="dino__body">
+                  <div class="dino__body__mid"></div>
+                  <div class="dino__arm"></div>
+                </div>
+
+                <div class="dino__back-leg"></div>
+
+                <div class="dino__tail"></div>
+
+                <div class="dino__bottom"></div>
+                <div class="dino__bottom__shadow"></div>
+
+                <div class="dino__front-leg"></div>
+
+                <div>
+
+                <div class="floor"></div>
+            -->
+
+            <div id="cooking">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div id=area>
+            <div id="sides">
+                <div id="pan"></div>
+                <div id="handle"></div>
+            </div>
+            <div id="pancake">
+                <div id="pastry"><img height="88" id="logoico" src="http://<?wsp  $env["storagehost"] ?>/mathematicaIcon.svg" /></div>
+            </div>
+        </div>
+    </div>
+
             </div>
         </div>    
     </div>
@@ -68,7 +116,7 @@
     };
         
     subscribeOnLoad();
-    var myTimeout = setTimeout(reload, 7000);
+    var myTimeout = setTimeout(reload, 4000);
     </script>    
 
     <?wsp , " "] ?>

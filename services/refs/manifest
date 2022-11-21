@@ -1,6 +1,6 @@
 <|
    "before"->Null,
-   "after"->"fourier",
+   "after"->"oversampler",
    "dependencies"->{},
 
 

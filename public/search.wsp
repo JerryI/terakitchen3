@@ -1,9 +1,6 @@
-<?wsp
-  session[ToString[q]] =  session["Query", "q"]//StringUnfix;
-  session["local_results"] = CQuery[session[ToString[q]]//ToExpression];
-
-    ""
-    
+<?wsp 
+  session[ToString[q]] = session["Query", "q"];
+  ""
 ?>
 <?wsp LoadPage["assets/header.wsp"] ?>
 <?wsp LoadPage["assets/modal/fields.wsp"] ?> 
@@ -14,7 +11,7 @@
 
       <div class="d-flex align-items-center">
         <form class="w-100" action="search.wsp" method="get" id="search-form">
-          <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"><?wspsession[ToString[q]]?></textarea>
+          <textarea type="search" id="search"  class="form-control" placeholder="Query..." aria-label="Search" name="q"><?wspsession[ToString[q]]//StringUnfix?></textarea>
         </form>
 
       </div>
@@ -28,7 +25,7 @@
             <button class="btn btn-sm btn-outline-secondary"  onclick="formFieldsOpen(exportPromise)">Export</button>
             <br>
 
-            <?wspLoadPage["assets/tableofresults.wsp"]?>
+            <?wsp With[{qq = session["Query", "q"]//StringUnfix//ToExpression}, LoadPage["assets/table.wsp", {q = qq, exclude = {}}] ]?>
 
           </div>
 

@@ -12,7 +12,7 @@
         </div>
 
         <div class="d-flex align-items-center">
-          <div class="col-lg-10 col-md-8 mx-left">
+          <div class="mt-2">
             <h1 class="fw-light">Getting started</h1>
             <p class="lead text-muted">Upload files and assign them to the selected experiment or create one.</p>
             <p>
@@ -30,8 +30,8 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <?wsp Table[ ?>
             <div class="col">
-              <div class="card shadow-sm">
-                <svg style="background: #55595c" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title><?wsp i ?></title>
+              <div class="card shadow-sm" >
+                <svg onclick="window.open('experiment/index.wsp?id=<?wspi//URLEncode?>','_self')" style="background: #55595c; cursor: pointer;" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title><?wsp i ?></title>
                   
                   
                   <?wsp experiments[i]["preview"] ?>

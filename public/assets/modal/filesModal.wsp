@@ -42,7 +42,21 @@
             </div>
             <br>
             <div class="form-group">
-              <label>Choose the preprocessors to apply</label>
+              <label for="experiment">Choose the routine</label>
+              <select name="preset" id="presetlist" form="filesform" onchange="getPreset(this)">
+                  <option value="expert" selected="selected">Expert</option>  
+                  <?wsp Table[ ?>
+                    <option value="<?wsp preset ?>"><?wsp preset ?></option> 
+                  <?wsp , {preset, settings["presets"]//Keys}] ?>
+              </select><br>
+              <small>You can choose the default presets for the settings of the preprocessors.</small><br>
+              <button type="button" class="btn btn-outline-secondary" onclick="removePreset()">Remove preset</button>
+              <button type="button" onclick="modalLoad('savePreset')" class="btn btn-outline-info">Save as a preset</button>
+              
+            </div> 
+
+            <div class="form-group" id="routine">
+              <label>Choose the preprocessors to apply to the uploaded data</label>
               <?wsp 
                 Table[
 
@@ -50,8 +64,8 @@
                 
                  ?>
               
-              <div class="form-check">
-                <input class="form-check-input" name = "$service_<?wspi?>_allowed" type="checkbox" id="<?wspi?>">
+              <div class="form-check form-switch">
+                <input class="form-check-input" name = "$service_<?wspi?>_allowed" type="checkbox" id="$service_<?wspi?>">
                 <label class="form-check-label" for="<?wspi?>">
                   <?wspi?>
                 </label>
@@ -177,6 +191,10 @@ if (ev.checked) {
 
   };
 
+
+
+  
+
   function addRowData(field, regexp, func) {
     const div = document.createElement('div');
     const uid = "id" + Math.random().toString(16).slice(2);
@@ -212,6 +230,118 @@ if (ev.checked) {
     WSPHttpQuery('Map[Function[x, {x[[1]], x[[2]], ToString[x[[3]],InputForm]//StringFix} ], experiments["' + value + '"]["parser"]]',fillFields, 'ExpressionJSON');
   };
 
+  function loadState(s) {
+    var input = s;
+    if (typeof s === "string") {
+      input = JSON.parse(atob(s));
+    };
+
+    console.log(input);
+
+    input.forEach(function(el) {
+        if(el.type !== "checkbox") {
+          document.getElementById(el.id).value = el.value;
+        } else {
+          document.getElementById(el.id).checked = el.value;
+        }
+        
+    });
+  }
+
+  function ripState() {
+    const inputs = document.getElementById("filesform").elements;
+    var preset = [];
+    // Iterate over the form controls
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].nodeName === "INPUT" && inputs[i].id.includes("$service")) {
+        // Update text input
+        if(inputs[i].type !== "checkbox") {
+            preset.push({id: inputs[i].id, value: inputs[i].value, type: "ok"});
+        } else {
+            preset.push({id: inputs[i].id, value: inputs[i].checked, type: "checkbox"});
+        }
+        
+      }
+    }
+
+    console.log(preset);
+
+    return(preset);
+  }
+
+  function removePreset() {
+    var e = document.getElementById("presetlist");
+    
+    var value = e.options[e.selectedIndex].text;  
+
+    if(value == "expert") {
+      loadState(copyPreset);
+    } else {
+      WSPHttpQuery('settings["presets", "' + value + '"]=.; "ok"', function(el) {
+        var pt = document.getElementById("presetlist").children;
+
+        for (let i=0; i < pt.length; i++) {
+          pt[i].selected = "";
+          if (pt[i].value === value) {
+            pt[i].remove();
+            break;
+          }
+        };
+
+
+        loadState(copyPreset);
+
+
+      }, 'String');
+    }    
+  }
+
+  function getPreset(selectObject) {
+    var value = selectObject.value;  
+    console.log(value);
+
+    if(value == "expert") {
+      loadState(copyPreset);
+    } else {
+      WSPHttpQuery('settings["presets", "' + value + '"]', loadState, 'String');
+    }
+  };  
+
+
+  function savePreset(input) {
+    var bb = ripState();
+    bb = btoa(JSON.stringify(bb));
+
+    console.log(bb);
+
+    if(input.length === 0) {
+      alert("Name is empty");
+    } else {
+      WSPHttpBigQuery('settings[\"presets\", \"' + input + '\"] = \"'+bb+'\";', function(el) {
+        var pt = document.getElementById("presetlist").children;
+
+        for (let i=0; i < pt.length; i++) {
+          pt[i].selected = "";
+        }
+
+        const div = document.createElement('option');
+        
+        div.value = input;
+        div.innerHTML = input;
+        div.selected = "selected";
+
+        document.getElementById("presetlist").appendChild(div);
+        pt = document.getElementById("presetlist").children;
+
+        
+
+      }
+      
+      , 'String');
+
+    }  
+  }  
+
   var cmtag = CodeMirror.fromTextArea(document.getElementById("customtag"), {
     lineNumbers: false,
     autoCloseTags: true,
@@ -223,6 +353,8 @@ if (ev.checked) {
  });
 
  hidetoggle_files(document.getElementById("hideshowfile"));
+
+ var copyPreset = ripState();
 
  
  </script>

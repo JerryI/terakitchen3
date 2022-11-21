@@ -51,7 +51,8 @@
 
                     <div class="d-flex justify-content-between align-items-left mb-3">
                      <div class="align-items-sm-baseline align-items-left">
-                        <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, CKey[key]["view"] ], {key, Complement[session["item"]//Keys, {"type", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                        <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, CKey[key]["view"] ], {key, Complement[session["item"]//Keys, {"type","descid", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                        <?wsp  Table[  Block[{key = key, keydata = Missing[]}, CKey[key]["view"] ], {key, Complement[Part[#,-2]&@StringSplit[#,"/"]&/@Select[FileNames["*","public/assets/keys", 3], Function[x, FileBaseName[x]=="suggested"]], session["item"]//Keys]   }]  ?>
                       </div>
                     </div>
 
@@ -71,6 +72,8 @@
                   
                   <?wsp , "" ] ?>
                   </p>
+
+                  <?wsp If[KeyExistsQ[session["item"], "descid"], "<p>"<>descriptions[session["item", "descid"]]<>"</p>", ""] ?>
             
                 </div>
                    

@@ -61,6 +61,15 @@
                 <input id="ph" type="text" class="form-control form-control" value="<?wspph?>" name="ph">
             </div>            
             <small>Add the constant value to the phase in radians</small><br><br>  
+            <div class="form-group">
+  
+                <label class="form-group-label" for="ph">
+                    Phase threshold
+                </label>
+  
+                <input id="phtresh" type="text" class="form-control form-control" value="<?wsp PhaseTrashhold  ?>" name="phtresh">
+            </div>            
+            <small>The threshold for the phase unwrapping algorithm in radians</small><br><br>              
             
             <br><br>                        
 
@@ -176,10 +185,12 @@
             var fp = document.getElementById('fp').value;
             var ph = document.getElementById('ph').value;
             var amp = document.getElementById('amp').value;
+
+            var PhaseTrashhold = document.getElementById('phtresh').value;
             
 
             var q = `
-                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi}, ${fp}, ${ph}, ${amp}}]
+                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi}, ${fp}, ${ph}, ${amp}, ${PhaseTrashhold}}]
                     `;
 
             document.getElementById('logoFlames').style = "display: block";

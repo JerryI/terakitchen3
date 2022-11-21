@@ -1,0 +1,1 @@
+If[#2//BooleanQ, "<span class=\"badge badge-pill badge-"<>If[#2, "success", "secondary"]<>"\">"<>#1<>"</span><span> </span>", ("<span class=\"badge badge-light\" style=\"display:initial\">"<>ToString[#2]<>"</span>")]&

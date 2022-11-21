@@ -74,7 +74,7 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
   
   
-            <?wspLoadPage["assets/tableofresults.wsp"]?>
+          <?wsp With[{qq = session["Query", "q"]//StringUnfix//ToExpression}, LoadPage["assets/table.wsp", {q = qq, exclude = {}}] ]?>
   
       </div>
       </div>

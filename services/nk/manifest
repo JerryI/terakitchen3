@@ -1,5 +1,5 @@
 <|
-    "before"->"fourier",
+    "before"->"transmittance",
     "after"->"background",
     "dependencies"->{"fourier", "refs"},
     
@@ -11,6 +11,12 @@
             "value"-> 30,
             "type"->"integer"
         |>,
+        <|
+            "symbol"->"PhaseTrashhold",
+            "desc"->"Phase threshold",
+            "value"-> 5.3,
+            "type"->"symbol"
+        |>,        
         <|
             "symbol"->"locutoff", 
             "desc"->"lower cutoff frequency (cm-1)", 

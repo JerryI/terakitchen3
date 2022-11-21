@@ -1,3 +1,5 @@
+Print[">> Shared Libs V1"];
+
 (*misc*)
 FilterRange[data_, r_] := 
   Select[data, (#[[1]] >= r[[1, 1]] && #[[1]] <= r[[1, 2]] && #[[2]] >=
@@ -8,19 +10,19 @@ lowpass[FilterEdge_, Q_, x_, sample_] :=
      2 - (Tanh[(x - Length[sample[[All, 2]]]/2 - FilterEdge)/Q] + 1)/
      2);
 
-RGBHtml[r_, g_, b_, a_ : 0.8] := 
- StringTemplate["<div class=\"color-block\" style=\"background-color: rgba(``,``,``,``)\"></div>"][255 r // Floor, 255 g// Floor,255 b// Floor, a]     
-
 ShutDown := With[{}, 
     console["log", "stopping all tasks..."];
-    TaskRemove/@Values@CronTasks["backup"]; 
+    PushNotification["Cron", "Server was down"];
+    TaskRemove/@Values@CronTasks; 
     CBackup;
     DeleteFile["running.lock"];
     console["log", "bye"];
-    Exit[];
+    Exit[-1];
 ];		
 
 NullQ[x_] := TrueQ[x == Null];
+
+RandomString[n_] := Alphabet[][[RandomInteger[{1, 26}, n]]] // StringJoin;
 
 $loop = <||>;
 LoopSubmit[task_] := With[{uid = CreateUUID[]}, 
@@ -51,6 +53,7 @@ DefineOutputStreamMethod[
        With[{ }, 
        If[out === "", {0, state},
         
+        StringTemplate["<*Now*>"][] >>> "warnings.log";
         ByteArrayToString[out // ByteArray] >>> "warnings.log";
         console["log", ByteArrayToString[out // ByteArray]];
 

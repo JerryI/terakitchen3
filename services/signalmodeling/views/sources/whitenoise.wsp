@@ -1,0 +1,48 @@
+<?wsp
+    central = 37.0;
+    width   = 13.0;
+    amp     = 12.0;
+    randomamplitude = 1;
+
+    (* Tricky cache technic *)
+    sourcename = "whitenoise";
+    source[id_] := (
+        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]] },
+            Table[Exp[I (2 \[Pi] (1/33.356) t0 x) + I RandomReal[{-1, 1}]randomamplitude ] amp*E^(((-I 0)*amp*(-central + x))/(E^((-central + x)^2/(2*width^2))*width^2) - 
+            (-central + x)^2/(2*width^2)), {x, sample["freqs"]}]//Quiet
+        ]
+    );
+    src["phase"] := GetPhase[src];
+    ""
+?>
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Central FQ (in cm)
+  </label>
+  <input class="form-control form-control" type="number" step=any value=37 name="central" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Width (in cm)
+  </label>
+  <input class="form-control form-control" type="number" step=any value=13 name="width" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Amp
+  </label>
+  <input class="form-control form-control" type="number" step=any value=12 name="amp" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Phase error
+  </label>
+  <input class="form-control form-control" type="number" step=any value=1 name="randomamplitude" form="dialog">
+</div> 
+
+
+

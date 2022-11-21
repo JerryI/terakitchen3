@@ -17,6 +17,7 @@
         ]
       ]
     );
+    src["phase"] := GetPhase[src];
     ""
 ?>
 

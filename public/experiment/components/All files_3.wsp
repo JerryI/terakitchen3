@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+          <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="true">
+              All files in the project
+          </button>
+      </h4>
+  </div>
+  <div id="collapse<?wspuid?>" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        
+
+        <?wsp With[{qq = ("experiment"->Equal->session["experiment"]["sample"])}, LoadPage["assets/table.wsp", {q = qq, exclude = {"experiment"}}] ]?>
+
+
+        </div>
+      </div>
+    </div>     
+    

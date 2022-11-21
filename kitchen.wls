@@ -17,6 +17,8 @@ Put["running.lock"];
 
 window = <||>;
 
+temp = <||>;
+
 settings["bucket"] = {};
 
 settings["processes"] = <||>;
@@ -46,20 +48,30 @@ CronTasks["backup"] = SessionSubmit[
  ScheduledTask[CBackup,
   Quantity[30, "Minutes"]]];
 
+CronTasks["restart"] = SessionSubmit[
+  ScheduledTask[(
+      PushNotification["Server", "Terakitchen will be restarted in a hour"];
+      CronTasks["restart notify"] = SessionSubmit[ScheduledTask[PushNotification["Server", "Terakitchen will be restarted in 10 minutes"], {Quantity[40, "Minutes"]}] ]; 
+      CronTasks["restart real"] = SessionSubmit[ScheduledTask[ShutDown, {Quantity[50, "Minutes"]}] ];     
+    ), Quantity[25, "Hours"]]]; 
+
 CronTasks["timestamp"] = SessionSubmit[
  ScheduledTask[console["log", "<*Now*>"],
   Quantity[10, "Minutes"]]]; 
 
+(*
 CronTasks["timestamp"] = SessionSubmit[
  ScheduledTask[PushNotification["Me", "Terakitchen betriebszeit erreicht 1 Tag &#127856;", "duration" -> Quantity[1, "Days"]],
-  Quantity[1, "Days"]]];  
+  Quantity[1, "Days"]]];  *)
 
 CronTasks["timestamp"] = SessionSubmit[
  ScheduledTask[PushNotification["Me", "Terakitchen betriebszeit erreicht 5 Tag &#127874;", "duration" -> Quantity[1, "Days"]],
   Quantity[5, "Days"]]];  
 
 CronTasks["forecast"] = SessionSubmit[
- ScheduledTask[Forecast, "Daily"]];      
+ ScheduledTask[Forecast, "Daily"]];   
+ 
+    
 
   
 

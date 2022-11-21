@@ -1,0 +1,40 @@
+<div class="modal fade" id="editor<?wsp key ?>" tabindex="-1" role="dialog" aria-labelledby="editor<?wsp key ?>"  aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit '<b><?wsp key ?></b>'</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!--<span aria-hidden="true">&times;</span>-->
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editorform<?wsp key ?>" action="assets/keys/apply.wsp" method="post">
+            
+            <input name="id" value="<?wsp itemid ?>" type="hidden">
+            <input name="key" value="<?wsp key ?>" type="hidden">
+            <input name="interpretate" value="False" type="hidden">
+            <input name="redirect" value="<?wsp redirect ?>" type="hidden">
+
+            <div class="form-group"> 
+                <input name="action" type="submit" class="btn btn-primary" style="background-color: #ed553b" value="#ed553b" form="editorform<?wsp key ?>">
+                <input name="action" type="submit" class="btn btn-primary" style="background-color: #f6d55c" value="#f6d55c" form="editorform<?wsp key ?>">
+                <input name="action" type="submit" class="btn btn-primary" style="background-color: #3caea3" value="#3caea3" form="editorform<?wsp key ?>">
+                <input name="action" type="submit" class="btn btn-primary" style="background-color: #20639b" value="#20639b" form="editorform<?wsp key ?>">
+                <input name="action" type="submit" class="btn btn-primary" style="background-color: #173f5f" value="#173f5f" form="editorform<?wsp key ?>">
+            </div>        
+              
+          </form>          
+              
+        </div>
+              
+
+
+        <div class="modal-footer">
+          <input name="action" type="submit" class="btn btn-light" value="Remove" form="editorform<?wsp key ?>">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#editor<?wsp key ?>').modal('hide')">Close</button>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>

@@ -75,7 +75,7 @@ startDialog[uuid_] := (
     EventBind["submit", Function[{cli, data}, 
         If[data["action"] != "Ok", $Die];
 
-        {locutoff, hicutoff, numberFP, phaseCorr, amplify} = ToExpression/@data/@{"lo","hi","fp","ph","amp"};
+        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = ToExpression/@data/@{"lo","hi","fp","ph","amp", "phtresh"};
 
         (*check for errors*)
         (If[!NumberQ[#//N], Throw[StringTemplate["`` is not a number at checking the range"][#]]]) &/@ {locutoff, hicutoff, numberFP, phaseCorr, amplify};
@@ -129,7 +129,7 @@ startDialog[uuid_] := (
     ]];
 
     EventBind["event", Function[{cli, data}, 
-        {locutoff, hicutoff, numberFP, phaseCorr, amplify} = data;
+        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = data;
 
         result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
         nofp = If[numberFP > 0, First[result[[1]]]["first"], {{0,{0,0}}}];
@@ -415,6 +415,28 @@ ApplyToAll := (
             Module[{result,virgin},
 
                 result = ExtractNK[sam["data"], ref["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
+
+                (*
+                
+                With[{
+                    
+                    res = Table[
+                        phaseCorr = ph;
+                        result = ExtractNK[sam["data"], ref["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
+
+                        With[{nkt = result[[2,All,2]]},
+                            Take[nkt[[All,1]], 100]
+                        ]
+
+                    , {phaseCorr, {4Pi, 2Pi, 0, -2Pi, -4Pi}}]},
+                    
+                    ExportString[ListLinePlot[res, Ticks -> None, Axes -> None, PlotRange -> Full, PlotLegends -> {4Pi, 2Pi, 0, -2Pi, -4Pi}, ImageSize -> Tiny], "SVG"]
+                ]
+                
+                
+                
+                *)
+
 
                 With[{uid = i, r = result[[2,All,2]]},
                     CEval[ 

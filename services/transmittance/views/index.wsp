@@ -1,0 +1,173 @@
+
+<div class="d-flex align-items-center">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <a class="btn-outline-id" href="item/index.wsp?id=<?wsp samid ?>"><?wsp samid ?></a>
+      <h1 class="fw-light">Entscheidung erforderlich</h1>
+  
+          <p class="lead text-muted">Please check the cutoff frequencies for the nk extraction.</p>
+    
+          <div id="plot"></div>
+
+          <form action="window.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="lo">
+                   Low-frequency cutoff
+                </label>
+  
+                <input id="lo" type="text" class="form-control form-control" value="<?wsplo?>" name="lo">
+                
+            </div>
+
+            <div class="form-group">
+  
+                <label class="form-group-label" for="hi">
+                    High-frequency cutoff
+                </label>
+  
+                
+                <input id="hi" type="text" class="form-control form-control" value="<?wsphi?>" name="hi">
+            </div> 
+            <small>Use cm<sup>-1</sup> units</small><br><br>             
+            <div class="form-group">
+  
+                <label class="form-group-label" for="amp">
+                    Amplification
+                </label>
+  
+                
+                <input id="amp" type="text" class="form-control form-control" value="<?wspamp?>" name="amp">
+            </div>            
+            <small>Use the multiplier to adjust the stength of the sample's signal.</small><br><br>            
+            <div class="form-group">
+  
+                <label class="form-group-label" for="ph">
+                    Phase correction
+                </label>
+  
+                
+                <input id="ph" type="text" class="form-control form-control" value="<?wspph?>" name="ph">
+            </div>            
+            <small>Add the constant value to the phase in radians</small><br><br>  
+            <div class="form-group">
+  
+                <label class="form-group-label" for="ph">
+                    Phase threshold
+                </label>
+  
+                <input id="phtresh" type="text" class="form-control form-control" value="<?wsp PhaseTrashhold  ?>" name="phtresh">
+            </div>            
+            <small>The threshold for the phase unwrapping algorithm in radians</small><br><br>              
+            
+            <br><br>                        
+
+  
+            
+        </form>      
+
+     
+
+          <button class="btn btn-secondary" onclick="check()">Update preview</button>
+
+          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+  
+     
+          <p class="lead text-muted">By clicking submit you will apply the same settings for all spectras.</p>
+        
+        
+   
+    </div>
+  </div>
+
+
+  <script>
+        let fq = <?wsp ExportString[fq//N,"JSON"] ?>;
+
+        let data1 = {
+            x: fq,
+            y: <?wsp ExportString[transmission[[All,1]]//N,"JSON"] ?>,
+            mode: 'lines',
+            name: 'T'
+        };
+
+        let data2 = {
+            x: fq,
+            y: <?wsp ExportString[transmission[[All,2]]//N,"JSON"] ?>,
+            mode: 'lines',
+            yaxis: 'y2',
+            name: 'phase'
+        }; 
+
+        let layout = {
+            xaxis: {
+                title: 'wavenumber, cm-1',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'Transmission',
+                showgrid: true,
+                zeroline: true,
+            },
+            yaxis2: {
+                title: 'Phase',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            }            
+        };
+
+        
+
+        var id = '<?wsp $uid ?>';
+
+
+        Plotly.newPlot('plot', [data1, data2], layout);
+
+
+        core.UpdateGraph = function(args, env) {
+            let r = JSON.parse(interpretate(args[0]));
+
+            console.log("continue");
+                
+
+            console.log(r);
+
+
+
+                    Plotly.deleteTraces('plot', [-2, -1]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[1], name: 'T'}]);
+                    Plotly.addTraces('plot', [{x:r[0] , y: r[2], yaxis: 'y2', name: 'phase'}]);
+                  
+            
+                document.getElementById('logoFlames').style = "display: none"; 
+                document.getElementById('bigFlames').style = "opacity: 0";
+        }
+
+        function check() {
+            var lo = document.getElementById('lo').value;
+            var hi = document.getElementById('hi').value;
+            var ph = document.getElementById('ph').value;
+            var amp = document.getElementById('amp').value;
+
+            var PhaseTrashhold = document.getElementById('phtresh').value;
+            
+
+            var q = `
+                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi},  ${ph}, ${amp}, ${PhaseTrashhold}}]
+                    `;
+
+            document.getElementById('logoFlames').style = "display: block";
+            document.getElementById('bigFlames').style = "opacity: 0.2"; 
+          
+            socket.send(q);
+            //
+        }
+  </script>

@@ -22,19 +22,28 @@
             extendedtitles={};
 
             Do[
-                Do[ AppendTo[extendedtitles, titles[[i]]]; , {j, 1, If[ArrayQ[data[[i,1]]], Length[data[[i,1]]], 1] }]
+                Do[ 
+                    AppendTo[extendedtitles, titles[[i]]]; 
+
+                , {j, 1, If[ArrayQ[data[[i,1]]], Sum[If[Internal`RealValuedNumberQ[col], 1, 2], {col, data[[i,1]]}] , If[Internal`RealValuedNumberQ[data[[i,1]]], 1, 2] ] }]
+
             , {i, Length[data]}];
 
-            data = If[Length[#] < maxheight, Join[#,
-                With[{f = # // Last},
-                 Table[f, {i, maxheight - Length[#]}]
-                 ]
+            data = If[Length[#] < maxheight, 
             
-                ]
+                Join[#,
+
+                    With[{f = # // Last},
+                        Table[f, {i, maxheight - Length[#]}]
+                    ]
+            
+                    ]
            
             , #] & /@ data;
 
-            data = Flatten/@Transpose[data];
+            
+
+            data = (Flatten[Map[Function[x, If[Internal`RealValuedNumberQ[x], x, {Re[x], Im[x]}] ] , Flatten[#] ] ])&/@Transpose[data];
 
             data = Join[{extendedtitles}, data];
         
@@ -50,7 +59,7 @@
         exportdata[id_, field_, path_]:= Module[{name},
 
             name = If[KeyExistsQ[collection[id], "filename"], collection[id]["filename"], id] <> "_" <> field;
-            Export[path<>"/"<>name<>".dat", collection[id]["data"][field]];
+            Export[path<>"/"<>name<>".dat", (Flatten[Map[Function[x, If[Internal`RealValuedNumberQ[x], x, {Re[x], Im[x]}] ], Flatten[{#}] ] ])&/@(collection[id]["data"][field]) ];
 
             name<>".dat"
                     

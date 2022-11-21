@@ -1,10 +1,15 @@
 <|
-   "before"->"refs",
-   "after"->"nk",
+   "before"->"oversampler",
+   "after"->"transmittance",
    "dependencies"->{},
 
     "description"-> "Basic descrete fourier transformation of the time-domain data. It stores complex coefficients in [\"fft\"] for the each frequency in [\"freqs\"].",
     "parameters"-> {    
- 
+        <|
+            "symbol"->"interpolate", 
+            "desc"->"Irregular FFT", 
+            "value"-> False,
+            "type"->"bool"
+        |> 
     }
 |>

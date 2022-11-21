@@ -97,10 +97,12 @@
                 </div>
             </div>
                 </div>
+                <br>
                 <div class="panel-body" style="background: #fff;border-top: none;font-size: 15px;color: #6f6f6f;line-height: 28px;letter-spacing: 1px;">
                   Danger zone!
       
               </div>
+              <br>
                 <button type="button" class="btn btn-outline-danger" onclick="removeExp()">Remove experiment</button>
           
             </div>

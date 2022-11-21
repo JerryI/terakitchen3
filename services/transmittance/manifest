@@ -1,0 +1,34 @@
+<|
+    "before"->"fourier",
+    "after"->"nk",
+    "dependencies"->{"fourier", "refs"},
+    
+    "description"-> "Calculate the transmission &#38; phase difference.",
+    "parameters"-> {
+        <|
+            "symbol"->"PhaseTrashhold",
+            "desc"->"Phase threshold",
+            "value"-> 5.3,
+            "type"->"symbol"
+        |>,        
+        <|
+            "symbol"->"locutoff", 
+            "desc"->"lower cutoff frequency (cm-1)", 
+            "value"-> 10,
+            "type"->"symbol"
+        |>,
+        <|
+            "symbol"->"hicutoff", 
+            "desc"->"higer cutoff frequency (cm-1)", 
+            "value"-> 125,
+            "type"->"symbol"
+        |>,
+        <|
+            "symbol"->"askall", 
+            "desc"->"Ask the corrections for each measurement", 
+            "value"-> False,
+            "type"->"bool"
+        |>                                 
+    }
+
+|>

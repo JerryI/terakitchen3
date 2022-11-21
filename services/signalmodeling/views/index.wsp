@@ -33,6 +33,8 @@
             </div>
           </div>
 
+          <button class="btn btn-secondary" onclick="update()">Update preview</button>
+
           <p class="lead text-muted">Modelled signal</p>        
 
       
@@ -56,7 +58,7 @@
             
         </form>      
 
-        <button class="btn btn-secondary" onclick="update()">Update preview</button>
+
 
         <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
         <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
@@ -110,7 +112,17 @@
                 title: 'intensity, a.u.',
                 showgrid: true,
                 zeroline: true
-        }
+        },
+              yaxis2: {
+                title: 'radians',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+              } 
     };
 
     let dataSrcTDS = 
@@ -148,7 +160,7 @@
         }
     };    
         
-    Plotly.plot("ref-fft", [dataSrcFFTO, dataSrcFFT], layoutSrcFFT);
+    Plotly.plot("ref-fft", [dataSrcFFTO, dataSrcFFT, {x:[0], y:[0], yaxis: 'y2'}], layoutSrcFFT);
     Plotly.plot("ref-tds", [dataSrcTDSO, dataSrcTDS], layoutSrcTDS);
 
     let sorigFFTx = <?wsp ExportString[sample["freqs"], "JSON"] ?>;
@@ -192,7 +204,17 @@
                 title: 'intensity, a.u.',
                 showgrid: true,
                 zeroline: true
-        }
+        },
+              yaxis2: {
+                title: 'radians',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+              } 
     };
 
     let dataSamTDS = 
@@ -230,7 +252,7 @@
         }
     };    
         
-    Plotly.plot("sam-fft", [dataSamFFTO, dataSamFFT], layoutSamFFT);
+    Plotly.plot("sam-fft", [dataSamFFTO, dataSamFFT, {x:[0], y:[0], yaxis: 'y2'}], layoutSamFFT);
     Plotly.plot("sam-tds", [dataSamTDSO, dataSamTDS], layoutSamTDS);    
 
     function getSource(name) {
@@ -249,13 +271,16 @@
     core.UpdateSourceData = function(args, env) {
       
       var ft = JSON.parse(interpretate(args[0]));
+      var ph = JSON.parse(interpretate(args[2]));
       var td = JSON.parse(interpretate(args[1]));
 
-      Plotly.deleteTraces("ref-fft", [-1]);
+      Plotly.deleteTraces("ref-fft", [-1, -2]);
       Plotly.addTraces("ref-fft", [{x:ft[0] , y: ft[1], name:"model",
                 marker: {
                   color: '#d62728'
-                }}]);
+                }}, {x:ft[0], y:ph, yaxis: 'y2', marker: {
+                  color: 'magenta'
+                }, name:"phase"}]);
       
       Plotly.deleteTraces("ref-tds", [-1]);
       Plotly.addTraces("ref-tds", [{x:td[0] , y: td[1], name:"model", marker: {
@@ -268,13 +293,16 @@
     core.UpdateSampleData = function(args, env) {
       
       var ft = JSON.parse(interpretate(args[0]));
+      var ph = JSON.parse(interpretate(args[2]));
       var td = JSON.parse(interpretate(args[1]));
 
-      Plotly.deleteTraces("sam-fft", [-1]);
+      Plotly.deleteTraces("sam-fft", [-1, -2]);
       Plotly.addTraces("sam-fft", [{x:ft[0] , y: ft[1], name:"model",
                 marker: {
                   color: '#8c564b'
-                }}]);
+                }}, {x:ft[0], y:ph, yaxis: 'y2', marker: {
+                  color: 'magenta'
+                }, name:"phase"}]);
       
       Plotly.deleteTraces("sam-tds", [-1]);
       Plotly.addTraces("sam-tds", [{x:td[0] , y: td[1], name:"model",

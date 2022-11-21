@@ -1,6 +1,6 @@
 var WSPHost;
 
-let socket = new WebSocket("ws://"+window.location.hostname);
+let socket = new WebSocket("ws://"+window.location.hostname+':80');
 
 socket.onopen = function(e) {
   console.log("[open] Соединение установлено");
@@ -13,6 +13,7 @@ socket.onmessage = function(event) {
 };
 
 socket.onclose = function(event) {
+  console.log(event);
   console.log('Connection lost. Please, update the page to see new changes.');
 };
 
@@ -87,6 +88,24 @@ function WSPHttpQuery(command, promise, type = "String") {
   document.getElementById('logoFlames').style = "display: block";
   document.getElementById('bigFlames').style = "opacity: 0.1";
   http.send(null);
+}
+
+function WSPHttpBigQuery(command, promise, type = "String") {
+
+  var url = 'http://'+WSPHost+'/utils/post.wsp';
+
+const formData = new FormData();
+formData.append('command', command);
+
+
+const request = new XMLHttpRequest();
+request.open("POST", url);
+request.send(formData);
+
+promise("OK");
+
+
+
 }
 
 function WSPSetHost(host) {

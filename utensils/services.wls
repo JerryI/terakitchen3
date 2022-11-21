@@ -37,7 +37,7 @@ ValidateService[parameters_, args_] :=
       <|"symbol"->s["symbol"], "value"->s["value"]|>
     ,
       With[{val = Switch[s["type"], 
-                            "text", 
+                            "string", 
                               If[StringQ[#], #, Throw[StringTemplate["Provided data `` is not a string. Which is not valid for the selected input field."][#]]]&@args["params", s["symbol"]],
                             "integer",
                               If[IntegerQ[#], #, Throw[StringTemplate["Provided data `` is not a integer. Which is not valid for the selected input field."][#]]]&@ToExpression[args["params", s["symbol"]]],
@@ -125,6 +125,8 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
           parent = Hold[
             experiments[e, "date"] = Now;
             PushNotification["Server", "Finished. Click here <br>"<>"<a class=\"btn btn-outline-info\"  href=\"http://"<>$env["addr"]<>"/experiment/index.wsp?id="<>e<>"\">open</a>"];
+            PushNotification["Server", "Backing up the database in 7 minutes..."];
+            SessionSubmit[ ScheduledTask[CBackup, {Quantity[7, "Minutes"]}, AutoRemove->True] ];
           ]
         },
 
@@ -193,10 +195,16 @@ ImportFile[file_, args_] := Module[{input, fields, TransferField, TransferTheRes
       ];
       
          
-      With[{tds = Drop[ ImportString[ByteArrayToString[file["data"]], "CSV"],  1]},
-
+      Module[{tds = Drop[ ImportString[StringReplace[ByteArrayToString[file["data"]], ";"->","], "CSV"],  1]},
         If[!ArrayQ[tds], Throw["Imported CSV file is not array"]];
         If[!NumberQ[tds[[1,1]]], Throw[StringTemplate["imported cell `` is not a number"][tds[[1,1]]]]];
+
+        If[Length[First@tds] > 2,
+          PushNotification["Import", StringTemplate["An extra `` columns were found. For the TD signal we will ignore them."][Length[tds[[2]]] - 2] ];
+          tds = Take[#,2]&/@tds;     
+        ];
+
+        If[Length[First@tds] < 2, Throw["The number of columns is less than two."]];
 
         record["data"] = <|"tds" ->  tds|>; 
       ];

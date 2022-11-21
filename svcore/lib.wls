@@ -9,6 +9,7 @@ CPut[item_] := JTPClientEvaluate[kitchen, CPut[item]];
 
 CGet[id_] := JTPClientEvaluate[kitchen, collection[id]]; 
 CGet[id_, field_] := JTPClientEvaluate[kitchen, collection[id][field]];
+CGet[id_, field_, sub_] := JTPClientEvaluate[kitchen, collection[id, field, sub]];
 
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 

@@ -1,2 +1,10 @@
-<button type="button" class="btn btn-outline-dark mb-1 mr-2" style="padding: 3px 6px 3px 6px; border-radius: 2em; background-color: <?wsp keydata ?>; height: 1.7rem; width: 1.7rem; border: 0;" onclick="editorLoad('color-tag')"><span></span>
-</button>
+<?wsp If[keydata//MissingQ, ?>
+    <button type="button" class="btn btn-outline-secondary mb-1 mr-1" style="padding: 3px 6px 3px 6px;" onclick="editorLoad('<?wsp key ?>')"> 
+    <?wsp key ?> <span> </span><span class="badge badge-light">+</span>
+      <span class="sr-only">value</span>
+    </button>
+<?wsp , ""] ?>
+<?wsp If[!(keydata//MissingQ), ?>
+    <button type="button" class="btn btn-outline-dark mb-1 mr-2" style="padding: 3px 6px 3px 6px; opacity: 0.8; border-radius: 2em; background-color: <?wsp keydata ?>; height: 1.7rem; width: 1.7rem; border: 0;" onclick="editorLoad('color-tag')"><span></span>
+    </button>
+<?wsp , ""] ?>

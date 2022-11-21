@@ -20,6 +20,12 @@ console["log", "openning ``", dbbases ];
 
 Get[dbbases["filename"]];
 
+(*check the secret string*)
+If[secretstring =!= "TERAPUSS",
+  console["log", "secret string did not match! DB might be currupted. "];
+  Exit[0];
+];
+
 (*db operations*)
 InList[x_, y_] := MemberQ[y, x];
 Exist[f_] := ExistHolder[f];
@@ -29,7 +35,7 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
     console["log", "backing up..."];
     Put[name<>".lock"];
 
-    DumpSave[name, {collection, experiments, settings, descriptions, folders, notebooks}];
+    DumpSave[name, {collection, experiments, settings, descriptions, folders, notebooks, temp, secretstring}];
     console["log", "...done!"];
 
     DeleteFile[name<>".lock"];
@@ -46,6 +52,8 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
         trash = Take[trash, (Length@FileNames["*", "db"] - 100)];
         DeleteFile[#["filename"]]&/@trash;
     ];
+
+    PushNotification["DB Manager", "All good"];
 ];
 
 CQuery[q_, lst_:"null"] := Module[{list},
@@ -148,5 +156,14 @@ CFlatten[l_] := l //. {Rule[x_, y_] :> y, Association :> List} // Flatten;
 CGet := name |-> collection[name];
 CPut := content |-> collection[content["id"]]=content;
 
-(*caching trick*)
-CKey[tag_][whatever_] := (With[{path = "assets/keys/"<>tag<>"/"<>whatever<>".wsp"}, If[FileExistsQ["public/"<>path]//TrueQ, CKey[tag][whatever] := LoadPage[path], With[{newpath = "assets/keys/"<>whatever<>".wsp"}, CKey[tag][whatever] := LoadPage[newpath] ] ] ]; CKey[tag][whatever]);
+CKeyReset := (
+
+  Clear[CKey];
+  (*caching trick*)
+  CKey[tag_][whatever_] := (With[{path = "assets/keys/"<>tag<>"/"<>whatever<>".wsp"}, If[FileExistsQ["public/"<>path]//TrueQ, CKey[tag][whatever] := LoadPage[path], With[{newpath = "assets/keys/"<>whatever<>".wsp"}, CKey[tag][whatever] := LoadPage[newpath] ] ] ]; CKey[tag][whatever]);
+
+  CKey[tag_]["short"] := (With[{path = "assets/keys/"<>tag<>"/short.wls"}, If[FileExistsQ["public/"<>path]//TrueQ, CKey[tag]["short"] = Get["public/"<>path], With[{newpath = "assets/keys/short.wls"}, CKey[tag]["short"] = Get["public/"<>newpath] ] ] ]);
+
+);
+
+CKeyReset;

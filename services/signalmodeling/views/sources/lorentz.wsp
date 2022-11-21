@@ -1,0 +1,46 @@
+<?wsp
+    central = 37.0;
+    tau   = 1;
+    amp     = 12.0;
+    delay = 0;
+
+    (* Tricky cache technic *)
+    sourcename = "lorentz";
+    source[id_] := (
+        With[{t0 = (MaximalBy[reference["tds"], Abs[#[[2]]] &] // First // First) - reference["tds"][[1, 1]] + delay},
+            Table[Exp[I (2 \[Pi] (1/33.356) t0 x)] amp/((central*central - x*x) - (I x tau)), {x, sample["freqs"]}]//Quiet
+        ]
+    );
+    src["phase"] := GetPhase[src];
+    ""
+?>
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Central FQ (in cm)
+  </label>
+  <input class="form-control form-control" type="number" step=any value=37 name="central" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Damphing
+  </label>
+  <input class="form-control form-control" type="number" step=any value=1 name="tau" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+      Amp
+  </label>
+  <input class="form-control form-control" type="number" step=any value=12 name="amp" form="dialog">
+</div> 
+
+<div class="form-group">
+  <label class="form-group-label" for="central">
+  Extra delay time
+  </label>
+  <input class="form-control form-control" type="number" step=any value=0 name="delay" form="dialog">
+</div> 
+
+

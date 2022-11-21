@@ -3,9 +3,27 @@ input = $data["list"];
 If[Length[input] == 0, PushNotification["Signal modeling", "nothing to do..."]; $Die];
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
+Import["services/signalmodeling/functions.wls"];
 
 samples = CQuery[{"type"->Equal->"sample"}:>And, input];
 console["log", "number: "<>ToString[samples//Length]];
+
+PhaseTrashhold = 5.3;
+
+GetPhase[obj_] := Module[{t0, \[Phi]0, ph, right},
+  t0 = (MaximalBy[obj["tds"]//Transpose, Abs[#[[2]]] &] // First // First) - obj["tds"][[1,1]];
+  
+  right = 
+   Position[sample["freqs"], _?((Abs[# - 120] < 1) &)] // 
+     First // First;
+
+  \[Phi]0 = 2 \[Pi] (1/33.356) t0 # & /@ sample["freqs"];
+
+  ph = (Arg[obj["fft"][[2]]] -  \[Phi]0);
+
+  PadRight[Take[ClusterPhase[ph, 1, right, PhaseTrashhold], right], Length[ph] ]
+
+];
 
 fourier[data_] := Module[{tds, fft},
     tds = data;
@@ -154,7 +172,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
 
                     src["src"] = source[samid];
                     
-                    WebSocketSend[cli, UpdateSourceData[ ExportString[src["fft"]//Abs, "JSON"], ExportString[src["tds"], "JSON"] ] ]; 
+                    WebSocketSend[cli, UpdateSourceData[ ExportString[src["fft"]//Abs, "JSON"], ExportString[src["tds"], "JSON"], ExportString[src["phase"], "JSON"] ] ]; 
                 ],
 
             "update",
@@ -162,10 +180,10 @@ startDialog[uuid_, ssam_, ssamid_] := (
                     data//Last//ReleaseHold;
 
                     src["src"] = source[samid];
-                    WebSocketSend[cli, UpdateSourceData[ ExportString[src["fft"]//Abs, "JSON"], ExportString[src["tds"], "JSON"] ] ];
+                    WebSocketSend[cli, UpdateSourceData[ ExportString[src["fft"]//Abs, "JSON"], ExportString[src["tds"], "JSON"], ExportString[src["phase"], "JSON"] ] ];
 
                     sam["compute"];
-                    WebSocketSend[cli, UpdateSampleData[ ExportString[sam["fft"]//Abs, "JSON"], ExportString[sam["tds"], "JSON"] ] ]; 
+                    WebSocketSend[cli, UpdateSampleData[ ExportString[sam["fft"]//Abs, "JSON"], ExportString[sam["tds"], "JSON"], ExportString[GetPhase[sam], "JSON"] ] ]; 
                 
                 ]
                 

@@ -6,6 +6,7 @@
             fft       
         ]
     );
+    src["phase"] := GetPhase[src];
     ""
 ?>
 

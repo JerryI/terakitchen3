@@ -27,7 +27,7 @@
               <label class="form-group-label" for="expression">
                 The field value
               </label>
-              <textarea class="form-control form-control-lg" name="newvalue"><?wsp collection[itemid][key] ?></textarea>
+              <textarea class="form-control form-control-lg" name="newvalue"><?wsp If[MissingQ[collection[itemid][key]], "", collection[itemid][key]] ?></textarea>
             </div>     
             <?wsp , "" ] ?>        
               
@@ -38,8 +38,11 @@
 
 
         <div class="modal-footer">
+          <input type="submit" class="btn btn-light" name="action" value="Remove" form="editorform<?wsp key ?>">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#editor<?wsp key ?>').modal('hide')">Close</button>
-          <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Save" form="editorform<?wsp key ?>">
+          <input type="submit" class="btn btn-primary" name="action" value="Save" form="editorform<?wsp key ?>">
+          
+          
         </div>
       </div>
     </div>
