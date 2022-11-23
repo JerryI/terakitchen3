@@ -3,8 +3,14 @@
    "after"->"fourier",
    "dependencies"->{},
 
-    "description"-> "Matches TD signals with different sampling rates and sampling windows.",
+    "description"-> "Matches TD signals with different sampling rates and sampling windows or can fix irregular sampling rate.",
     "parameters"-> {    
+        <|
+            "symbol"->"irregularfix", 
+            "desc"->"Fix irregular sampling with a linear interpolation", 
+            "value"->False,
+            "type"->"bool"
+        |>,        
         <|
             "symbol"->"oversampling", 
             "desc"->"Double the maximal sample rate", 

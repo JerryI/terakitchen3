@@ -35,6 +35,30 @@
          
               </select>
             </div>
+
+            <div class="form-group">
+              <label for="folder">Choose the folder</label>
+              <select name="folder" id="folder" form="filesform">
+
+              <option value="Workbook" selected="selected">Workbook</option>  
+                
+              <?wsp If[ StringQ[selectedExperiment],  ?>
+                <?wsp Table[ ?>
+                  <option value="<?wsp i[[1]] ?>"><?wsp i[[2]] ?></option>          
+                <?wsp , {i, Function[x,{x,folders[x,"name"]}]/@(experiments[selectedExperiment, "folders"]//Keys)}] ?>
+              <?wsp , ""] ?>
+
+              <?wsp If[ !StringQ[selectedExperiment],  ?>
+                <?wsp Table[ ?>
+                  <option value="<?wsp i[[1]] ?>"><?wsp i[[2]] ?></option>          
+                <?wsp , {i, Function[x,{x,folders[x,"name"]}]/@(experiments[Last[experiments]["sample"], "folders"]//Keys)}] ?>
+              <?wsp , ""] ?>              
+
+
+         
+              </select>
+            </div>            
+
             <br>
             <div class="form-group">
               <label>Attach files</label>
@@ -192,6 +216,29 @@ if (ev.checked) {
   };
 
 
+  function addFolderData(id, name) {
+    const div = document.createElement('option');
+
+
+    div.innerHTML = name;
+
+    div.value=id;
+
+    document.getElementById('folder').appendChild(div);
+  };  
+
+  function addFolderDataEmpty() {
+    const div = document.createElement('option');
+
+
+    div.innerHTML = 'Workbook';
+
+    div.value='Workbook';
+    div.selected="selected";
+
+    document.getElementById('folder').appendChild(div);
+  };    
+
 
   
 
@@ -223,11 +270,24 @@ if (ev.checked) {
     document.getElementById('form-exp-files').appendChild(div);
   };  
 
+  function fillFolders(input) {
+    var data = interpretate(input);
+    console.log(data);
+    document.getElementById('folder').innerHTML = "";
+
+    addFolderDataEmpty();
+    data.forEach(function callback(val) {
+      addFolderData(val[0], val[1]);
+    });  
+
+  }
+
   function getExp(selectObject) {
     var value = selectObject.value;  
     console.log(value);
     
     WSPHttpQuery('Map[Function[x, {x[[1]], x[[2]], ToString[x[[3]],InputForm]//StringFix} ], experiments["' + value + '"]["parser"]]',fillFields, 'ExpressionJSON');
+    WSPHttpQuery('Function[x,{x,folders[x,"name"]}]/@(experiments["'+ value +'", "folders"]//Keys)',fillFolders, 'ExpressionJSON');
   };
 
   function loadState(s) {

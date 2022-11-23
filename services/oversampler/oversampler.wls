@@ -28,15 +28,16 @@ With[{tds = CGet[#, "data", "tds"]},
 
     
     With[{plot = If[supress, "", ExportString[ListLinePlot[Differences[tds[[All,1]]], AxesLabel->"ps", ImageSize->Small, AspectRatio->1.2],"SVG"]<>"<br> <br>" ] },
-      PushNotification["Oversampler", StringTemplate["<span class=\"badge badge-warning\">Irregular samplerate</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. A linear approximation will be applied to the average."][#,#,plot, Round[std,0.0000001]100000] ];
+      PushNotification["Oversampler", StringTemplate["<span class=\"badge badge-warning\">Irregular samplerate</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. ``"][#,#,plot, Round[std,0.0000001]100000, If[irregularfix//TrueQ, "A linear approximation will be applied to the average.", ""] ] ];
     ];
 
     supress = True;
 
 
-    
-    With[{new = resample[tds, "Average", "Linear"], id = #}, 
-      CEval[collection[id, "data", "tds"] = new; ]
+    If[irregularfix//TrueQ,
+      With[{new = resample[tds, "Average", "Linear"], id = #}, 
+        CEval[collection[id, "data", "tds"] = new; ]
+      ];
     ];
   ]; 
 ]& /@ input;

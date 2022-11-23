@@ -13,7 +13,7 @@
 
 
       With[{args = <| "params"->session["data"], "service" -> session["Query", "id"], "list" -> session["local_results"], "after" -> Null |>},
-        LoopSubmit[CallService[args]];
+        SessionSubmit[CallService[args]];
       ];
 
       PushNotification["Tinyweb", 

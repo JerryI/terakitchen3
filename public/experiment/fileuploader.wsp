@@ -39,6 +39,7 @@
         "exp" -> $experiment,
         "files" -> files,
         "parser" -> parser,
+        "folder" -> data["folder"],
         "services" -> servicesparameters,
         "manual" -> If[data["manual"]==="on", True, False]
       |>;

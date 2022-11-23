@@ -37,7 +37,7 @@ ValidateService[parameters_, args_] :=
       <|"symbol"->s["symbol"], "value"->s["value"]|>
     ,
       With[{val = Switch[s["type"], 
-                            "string", 
+                            "text", 
                               If[StringQ[#], #, Throw[StringTemplate["Provided data `` is not a string. Which is not valid for the selected input field."][#]]]&@args["params", s["symbol"]],
                             "integer",
                               If[IntegerQ[#], #, Throw[StringTemplate["Provided data `` is not a integer. Which is not valid for the selected input field."][#]]]&@ToExpression[args["params", s["symbol"]]],
@@ -117,6 +117,11 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
       service = unit["after"];
     ];
 
+    (*add to the folder*)
+    If[args["folder"] != "Workbook",
+      folders[args["folder"], "list"] = Flatten[{folders[args["folder"], "list"], diff}];
+    ];
+
     sequence = sequence // Flatten;
 
     With[{e = args["exp"]},
@@ -125,8 +130,8 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
           parent = Hold[
             experiments[e, "date"] = Now;
             PushNotification["Server", "Finished. Click here <br>"<>"<a class=\"btn btn-outline-info\"  href=\"http://"<>$env["addr"]<>"/experiment/index.wsp?id="<>e<>"\">open</a>"];
-            PushNotification["Server", "Backing up the database in 7 minutes..."];
-            SessionSubmit[ ScheduledTask[CBackup, {Quantity[7, "Minutes"]}, AutoRemove->True] ];
+            (*PushNotification["Server", "Backing up the database in 7 minutes..."];
+            SessionSubmit[ ScheduledTask[CBackup, {Quantity[7, "Minutes"]}, AutoRemove->True] ];*)
           ]
         },
 
