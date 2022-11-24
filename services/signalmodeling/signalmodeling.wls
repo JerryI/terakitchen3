@@ -53,59 +53,67 @@ sam["compute"] := (
     sam["tds"] = equalList[sample["tds"][[All,1]], ifourier[sam["fft"][[2]] ] ];
 );
 
-GenTransmission := Module[{nk = sample["nk"], thickness, freqs},
-    thickness = CGet[samid, "thickness"];
-    freqs = sample["freqs"];
+GenTransmission := Switch[method, 
+    "alpha",
+    Module[{nk = sample["nk"], thickness, freqs},
+        thickness = CGet[samid, "thickness"];
+        freqs = sample["freqs"];
 
-    If[MissingQ[ thickness ] || !StringQ[thickness], 
-        thickness = With[{id = CGet[samid, "experiment"]}, CEval[ experiments[id, "thickness"] ] ];
-    ];
+        If[MissingQ[ thickness ] || !StringQ[thickness], 
+            thickness = With[{id = CGet[samid, "experiment"]}, CEval[ experiments[id, "thickness"] ] ];
+        ];
 
-    thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression[thickness] ];
+        thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression[thickness] ];
 
-    With[{transm = 
-        If[!TrueQ[fpmodel], 
-          Table[
-            With[
-                {
-                    L = thickness, \[Omega] = 2 \[Pi]  10^12 ((freqs[[i]]/33.356)) , c = 2.9979 10^10 , 
-                    nair = 1,
-                    n = nk[[i, 1]], k = nk[[i, 2]]
-                },
-     
-                 (4 (n - I k) nair)/((n - I k) + 
-                    nair)^2 Exp[-I ((n - I k) - nair) (\[Omega] L)/c] (*1/(
-                  1 - (((n - I k) - nair)/((n - I k) + 
-                      nair))^2 Exp[-2 I (n - I k) (\[Omega] L)/c])*)
+        With[{transm = 
+            If[!TrueQ[fpmodel], 
+              Table[
+                With[
+                    {
+                        L = thickness, \[Omega] = 2 \[Pi]  10^12 ((freqs[[i]]/33.356)) , c = 2.9979 10^10 , 
+                        nair = 1,
+                        n = nk[[i, 1]], k = nk[[i, 2]]
+                    },
 
+                     (4 (n - I k) nair)/((n - I k) + 
+                        nair)^2 Exp[-I ((n - I k) - nair) (\[Omega] L)/c] (*1/(
+                      1 - (((n - I k) - nair)/((n - I k) + 
+                          nair))^2 Exp[-2 I (n - I k) (\[Omega] L)/c])*)
+
+                ]
+              , {i, 1, Length[freqs]}]
+            ,
+              Table[
+                With[
+                    {
+                        L = thickness, \[Omega] = 2 \[Pi]  10^12 ((freqs[[i]]/33.356)) , c = 2.9979 10^10 , 
+                        nair = 1,
+                        n = nk[[i, 1]], k = nk[[i, 2]]
+                    },
+
+                     (4 (n - I k) nair)/((n - I k) + 
+                        nair)^2 Exp[-I ((n - I k) - nair) (\[Omega] L)/c] 1/(
+                      1 - (((n - I k) - nair)/((n - I k) + 
+                          nair))^2 Exp[-2 I (n - I k) (\[Omega] L)/c])
+
+                ]
+              , {i, 1, Length[freqs]}]
             ]
-          , {i, 1, Length[freqs]}]
-        ,
-          Table[
-            With[
-                {
-                    L = thickness, \[Omega] = 2 \[Pi]  10^12 ((freqs[[i]]/33.356)) , c = 2.9979 10^10 , 
-                    nair = 1,
-                    n = nk[[i, 1]], k = nk[[i, 2]]
-                },
-     
-                 (4 (n - I k) nair)/((n - I k) + 
-                    nair)^2 Exp[-I ((n - I k) - nair) (\[Omega] L)/c] 1/(
-                  1 - (((n - I k) - nair)/((n - I k) + 
-                      nair))^2 Exp[-2 I (n - I k) (\[Omega] L)/c])
+        },    
 
-            ]
-          , {i, 1, Length[freqs]}]
+
+            transm
+
+
         ]
-    },    
 
+    ],
 
-        transm
-
-    
-    ]
-
+    "transmission",
+    (Exp[-I #[[2]]]Sqrt[#[[1]]])&/@sample["transmission"]
 ];
+
+
 
 startDialog[uuid_, ssam_, ssamid_] := (
     $uid = uuid;
@@ -123,10 +131,16 @@ startDialog[uuid_, ssam_, ssamid_] := (
     ,
         postRedirect[next_] := Function[data, If[data["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"] ];
     ];
-    
+
+    method = "alpha";
+
+    If[!KeyExistsQ[sample, "alpha"],
+        PushNotification["Signalmodelling", "<span class=\"badge badge-info\">alpha field is absent</span> The transmittance filed will be used instead."];
+        method = "transmission";
+    ];   
 
     content =   Block[{}, 
-                    LoadPage["services/signalmodeling/views/index.wsp"]
+                    LoadPage["services/signalmodeling/views/"<>method<>".wsp"]
                 ];
 
     src["src"] = source[samid];

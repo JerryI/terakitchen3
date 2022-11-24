@@ -30,7 +30,12 @@
                 <div class="page-header">
                   <h1><?wsp session["folder", "name"] ?></h1>
 
+
+                  
+
                   <p class="lead"><?wsp session["Query", "id"] ?></p>
+
+                  <button class="btn btn-sm btn-outline-secondary"  onclick="formFieldsOpen(exportPromise)">Export</button>
                   
 
                 
@@ -69,7 +74,12 @@
 </div>
 
 <script>
+function exportPromise(e) {
+  console.log("export");
+  console.log(e);
+  WSPGet('utils/export.wsp', 'command=query&query=<?wsp session["q"]//StringUnfix ?>&fields='+e, window.open);
 
+}
   function removeFolder() {
     var folderid = '<?wsp session["Query", "id"] ?>';
 

@@ -59,7 +59,7 @@
 
                   <div class="collapse" id="<?wsp uid?>">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">    
-                      <li><a href="experiment/index.wsp?id=<?wsp exp ?>" class="link-dark rounded">Workbook</a></li>  
+                      <li><a href="experiment/index.wsp?id=<?wsp exp ?>" class="link-dark rounded"><span class="font-weight-bold">Workbook</span></a></li>  
                       <?wsp Table[ With[{uid = RandomString[7]}, ?>
                       <li><a href="folder/index.wsp?id=<?wsp folder ?>" class="link-dark rounded"><?wsp folders[folder, "name"] ?></a></li>  
                

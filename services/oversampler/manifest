@@ -3,7 +3,7 @@
    "after"->"fourier",
    "dependencies"->{},
 
-    "description"-> "Matches TD signals with different sampling rates and sampling windows or can fix irregular sampling rate.",
+    "description"-> "Matches TD signals with different sampling rates and sampling windows and fix time jitter.",
     "parameters"-> {    
         <|
             "symbol"->"irregularfix", 

@@ -143,6 +143,10 @@ store[i_] := (
                                         {#[[1]], #[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
                                         ];
+                        collection[uid]["data"]["absorbance"] := With[{id = uid}, 
+                                        {#[[1]], 2-Log10@#[[2]]} & /@ 
+                                            Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
+                                        ];                                        
                         collection[uid]["data"]["phase-shift"] := With[{id = uid}, 
                                         {#[[1]], #[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 2]]}]
@@ -206,6 +210,10 @@ ApplyToAll := (
                                         {#[[1]], #[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 2]]}]
                                         ];
+                        collection[uid]["data"]["absorbance"] := With[{id = uid}, 
+                                        {#[[1]], 2-Log10@#[[2]]} & /@ 
+                                            Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
+                                        ];                                         
 
                         ];
                 ];
