@@ -1,13 +1,20 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
+
 $env = <|
-  "addr" -> "137.250.85.38",
+  "addr" -> "127.0.0.1",
   "port" -> 80,
   "path" -> "public",
-  "storagehost" -> "137.250.85.38:82"
+  "storagehost" -> "127.0.0.1:82"
 |>;
+SetDirectory["/Volumes/Data/Github/terakitchen3"];
+
+
 
 (* ::Input:: *)
+(**)
+
+
 Print[">> INITIALIZATION STARTS"];
 
 NullQ[x_]:=TrueQ[x == Null];
