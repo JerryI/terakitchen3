@@ -1,9 +1,11 @@
 (*loading DB*)
 
-dbbases = 
- First@StringCases[#, 
-     RegularExpression["((.*-)(\\d*))"] :> <|"filename" -> "$1", 
-       "ver" -> ToExpression["$3"]|>] & /@ FileNames["*", "db"];
+dbbases = (First@
+     StringCases[#, 
+      RegularExpression["((.*-)(\\d*))"] :> <|"filename" -> "$1", 
+        "ver" -> ToExpression["$3"]|>] & /@ 
+   Select[FileNames["*", "db"], 
+    Length[StringCases[#, "default-"]] > 0 &]);
 
 If[Length@dbbases == 0, console["log", "no db files was found. Abort"]; Exit[]];
 
@@ -18,13 +20,94 @@ While[TrueQ[FileExistsQ[(First@dbbases)["filename"] <> ".lock"]],
 dbbases = First@dbbases;
 console["log", "openning ``", dbbases ];
 
+(*Get/@FileNames["*.mx", dbbases["filename"]];*)
 Get[dbbases["filename"]];
 
 (*check the secret string*)
 If[secretstring =!= "TERAPUSS",
   console["log", "secret string did not match! DB might be currupted. "];
-  Exit[0];
+  Exit[-1];
 ];
+
+(*storage*)
+
+SGlobalDate := Now;
+
+(*
+Set[collection[x_, "data", y_], r_] ^:= storage["set", x, y, r];
+Set[collection[x_, "data"][y_], r_] ^:= storage["set", x, y, r];
+Set[collection[x_] ["data"][y_], r_] ^:= storage["set", x, y, r];
+Unset[collection[x_] ["data"], y_] ^:= storage["remove", x, y];
+Unset[collection[x_, "data"], y_] ^:= storage["remove", x, y];
+Unset[collection[x_, "data", y_]] ^:= storage["remove", x, y];
+Unset[collection[x_]["data"][y_]] ^:= storage["remove", x, y];
+Unset[collection[x_, "data"][y_]] ^:= storage["remove", x, y];
+*)
+
+storage["url"]="archive/";
+
+storage["set",id_,field_, data_]:=With[{},
+  console["log", "storage >> setting `` for ``", field, id];
+  If[!KeyExistsQ[collection[id, "data"], field],
+    console["log", "storage >> `` doesnt exist. Creating...", field];
+    With[{uid = CreateUUID[]},
+      storage[uid]["data"]=data;
+      storage[uid]["id"]=uid;
+      storage[uid]["date"]=SGlobalDate;
+      storage[uid]["archived"]=False;
+
+      collection[id,"data", field]:=storage[uid]["data"];
+    ]
+  ,
+
+    With[{s=Extract[collection[id,"data"],{Key[field],0}]},
+      s["date"]=SGlobalDate;
+      s["archived"]=False;
+      s["data"]=data;
+    ]
+  ];
+  data
+
+];
+
+storage["remove",id_,field_]:=With[{},
+  console["log", "storage >> removing `` for ``", field, id];
+  If[KeyExistsQ[collection[id, "data"], field],
+    With[{obj= Extract[collection[id,"data"],{Key[field],0}]},
+
+      If[obj["archived"],
+        DeleteFile[storage["url"]<>obj["id"]<>".mx"]
+      ];
+
+      Unset[obj["data"]];
+      Unset[obj["id"]];
+      Unset[obj["date"]];
+      Unset[obj["archived"]];
+    ];
+    console["log", "storage >> `` for `` was removed", field, id];
+    collection[id,"data"]=KeyDrop[collection[id,"data"],field ];
+  ];
+  Null
+];
+
+storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; storage[uid]["data"]);
+
+CArchive := ((If[! #["archived"],
+    If[Now - #["date"] > Quantity[3, "Minutes"],
+     console["log", "archived ``", #["id"]];
+     Print["archived " <> #["id"]];
+     With[{url = 
+        Export[storage["url"] <> #["id"] <> ".mx", #["data"]], str = "restored "<>#["id"]}, 
+        #["data"] := (
+        Print[str];
+        #["archived"] = False;
+        #["date"] = Now;
+        #["data"] = Import[url]
+        )];
+     #["archived"] = True;
+     ]]; #["id"]) & /@ 
+ DeleteDuplicates@(Extract[#, {1}, Extract[#, {1, 0}] &] & /@ 
+    SubValues[storage]));
 
 (*db operations*)
 InList[x_, y_] := MemberQ[y, x];
@@ -35,7 +118,24 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
     console["log", "backing up..."];
     Put[name<>".lock"];
 
-    DumpSave[name, {collection, experiments, settings, descriptions, folders, notebooks, temp, secretstring}];
+    While[CreateDirectory[name] === $Failed,
+      console["log", "looks like it already exists.. purging"];
+      DeleteDirectory[name, DeleteContents->True];
+      Pause[1];
+    ];
+
+    Do[ With[{j = i /. {Hold :> Unevaluated}}, DumpSave[name <> "/" <> ToString@Extract[i, 1, HoldForm] <> ".mx", j]; console["log", ">> dump ``", name <> ToString@Extract[i, 1, HoldForm] <> ".mx"] ], {i, Hold /@ Unevaluated[{ 
+        experiments, 
+        settings, 
+        descriptions, 
+        folders, 
+        notebooks, 
+        temp, 
+        secretstring,
+        collection,
+        storage
+    }]}];
+
     console["log", "...done!"];
 
     DeleteFile[name<>".lock"];
@@ -50,7 +150,7 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
 
         trash = SortBy[trash, #["ver"] &];
         trash = Take[trash, (Length@FileNames["*", "db"] - 100)];
-        DeleteFile[#["filename"]]&/@trash;
+        DeleteDirectory[#["filename"], DeleteContents->True]&/@trash;
     ];
 
     PushNotification["DB Manager", "All good"];
@@ -154,7 +254,7 @@ CSort[cri_, lst_] :=
 CFlatten[l_] := l //. {Rule[x_, y_] :> y, Association :> List} // Flatten;
 
 CGet := name |-> collection[name];
-CPut := content |-> collection[content["id"]]=content;
+CPut := content |-> (collection[content["id"]]=KeyDrop[content, "data"]; collection[content["id"], "data"] = <||>; Map[(collection[content["id"], "data", #] = content["data", #])&, content["data"]//Keys]);
 
 CKeyReset := (
 

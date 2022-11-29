@@ -1,6 +1,6 @@
 var WSPHost;
 
-let socket = new WebSocket("ws://"+window.location.hostname+':80');
+let socket = new WebSocket("ws://"+window.location.hostname+':'+window.location.port);
 
 socket.onopen = function(e) {
   console.log("[open] Соединение установлено");
