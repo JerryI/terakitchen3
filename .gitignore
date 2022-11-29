@@ -1,5 +1,6 @@
 /logs.txt
 /db/*
+/old
 /running.lock
 /public/trashcan
 /nohup.out
