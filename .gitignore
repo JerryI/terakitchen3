@@ -5,3 +5,4 @@
 /public/trashcan
 /nohup.out
 migrate
+/archive/*

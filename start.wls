@@ -2,10 +2,10 @@
 (* ::Package:: *)
 
 $env = <|
-  "addr" -> "127.0.0.1",
+  "addr" -> "137.250.85.38",
   "port" -> 80,
   "path" -> "public",
-  "storagehost" -> "127.0.0.1:82"
+  "storagehost" -> "137.250.85.38:82"
 |>;
 SetDirectory["/Volumes/Data/Github/terakitchen3"];
 

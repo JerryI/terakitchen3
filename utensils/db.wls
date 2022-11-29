@@ -20,8 +20,7 @@ While[TrueQ[FileExistsQ[(First@dbbases)["filename"] <> ".lock"]],
 dbbases = First@dbbases;
 console["log", "openning ``", dbbases ];
 
-(*Get/@FileNames["*.mx", dbbases["filename"]];*)
-Get[dbbases["filename"]];
+Get/@FileNames["*.mx", dbbases["filename"]];
 
 (*check the secret string*)
 If[secretstring =!= "TERAPUSS",
@@ -33,7 +32,7 @@ If[secretstring =!= "TERAPUSS",
 
 SGlobalDate := Now;
 
-(*
+
 Set[collection[x_, "data", y_], r_] ^:= storage["set", x, y, r];
 Set[collection[x_, "data"][y_], r_] ^:= storage["set", x, y, r];
 Set[collection[x_] ["data"][y_], r_] ^:= storage["set", x, y, r];
@@ -42,7 +41,7 @@ Unset[collection[x_, "data"], y_] ^:= storage["remove", x, y];
 Unset[collection[x_, "data", y_]] ^:= storage["remove", x, y];
 Unset[collection[x_]["data"][y_]] ^:= storage["remove", x, y];
 Unset[collection[x_, "data"][y_]] ^:= storage["remove", x, y];
-*)
+
 
 storage["url"]="archive/";
 

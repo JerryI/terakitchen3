@@ -11,7 +11,8 @@ CGet[id_] := JTPClientEvaluate[kitchen, collection[id]];
 CGet[id_, field_] := JTPClientEvaluate[kitchen, collection[id][field]];
 CGet[id_, field_, sub_] := JTPClientEvaluate[kitchen, collection[id, field, sub]];
 
-storage[id_] := JTPClientEvaluate[kitchen, storage[id]]; 
+storage["get", id_] := JTPClientEvaluate[kitchen, storage["get", id]]; 
+storage[id_]["data"] := JTPClientEvaluate[kitchen, storage[id]["data"]]; 
 
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 
