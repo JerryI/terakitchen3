@@ -217,4 +217,4 @@
 
 <?wsp LoadPage["assets/modal/modify.wsp"] ?> 
 
-<?wsp LoadPage["assets/modal/addToFolder.wsp"] ?> 
+<?wsp LoadPage["assets/modal/addToFolder.wsp", {list = experiments[session["item", "experiment"], "folders"]//Keys, obj = session["item", "id"]}] ?> 

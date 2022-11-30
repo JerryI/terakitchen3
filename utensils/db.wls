@@ -30,7 +30,7 @@ If[secretstring =!= "TERAPUSS",
 
 (*storage*)
 
-SGlobalDate := Now;
+SGlobalDate = Now;
 
 
 Set[collection[x_, "data", y_], r_] ^:= storage["set", x, y, r];
@@ -91,9 +91,10 @@ storage["remove",id_,field_]:=With[{},
 
 storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; storage[uid]["data"]);
 
-CArchive := ((If[! #["archived"],
-    If[Now - #["date"] > Quantity[3, "Minutes"],
+CArchive := Module[{cnt = 0}, (If[! #["archived"],
+    If[Now - #["date"] > Quantity[5, "Days"],
      console["log", "archived ``", #["id"]];
+     cnt = cnt + 1;
      Print["archived " <> #["id"]];
      With[{url = 
         Export[storage["url"] <> #["id"] <> ".mx", #["data"]], str = "restored "<>#["id"]}, 
@@ -106,7 +107,10 @@ CArchive := ((If[! #["archived"],
      #["archived"] = True;
      ]]; #["id"]) & /@ 
  DeleteDuplicates@(Extract[#, {1}, Extract[#, {1, 0}] &] & /@ 
-    SubValues[storage]));
+    SubValues[storage]);
+
+    PushNotification["Archiver", StringTemplate["`` items were unloaded to HDD"][cnt] ];
+    ];
 
 (*db operations*)
 InList[x_, y_] := MemberQ[y, x];
@@ -152,7 +156,7 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
         DeleteDirectory[#["filename"], DeleteContents->True]&/@trash;
     ];
 
-    PushNotification["DB Manager", "All good"];
+    PushNotification["DB", "A system backup was created"];
 ];
 
 CQuery[q_, lst_:"null"] := Module[{list},

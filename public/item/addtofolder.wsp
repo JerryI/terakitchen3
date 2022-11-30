@@ -1,7 +1,15 @@
 <?wsp
-    session["Redirect"] = "item/index.wsp?id="<>session["data"]["id"];
+    
+    If[KeyExistsQ[session["data"], "query"],
+        session["Redirect"] = "index.wsp";
+        With[{qr = CQuery[session["data", "query"]//Uncompress]},
+            Map[(folders[#, "list"] = Flatten@{folders[#, "list"], qr})&, Keys@Select[session["data"], Function[x, x === "on"]]]; 
+        ];     
+    ,
+        session["Redirect"] = "item/index.wsp?id="<>session["data"]["id"];
+        Map[(folders[#, "list"] = Flatten@{folders[#, "list"], session["data"]["id"]})&, Keys@Select[session["data"], Function[x, x === "on"]]];    
+    ];
 
-    Map[(folders[#, "list"] = Flatten@{folders[#, "list"], session["data"]["id"]})&, Keys@Select[session["data"], Function[x, x === "on"]]];
     
     ""
     

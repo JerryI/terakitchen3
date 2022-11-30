@@ -23,6 +23,8 @@
           <div class="col-md-6">
             <br>
             <button class="btn btn-sm btn-outline-secondary"  onclick="formFieldsOpen(exportPromise)">Export</button>
+            <button class="btn btn-sm my-2" style="cursor: pointer" onclick="$('#addToFolder').modal('show')">Add to the folder</button>
+            
             <br>
 
             <?wsp With[{qq = session["Query", "q"]//StringUnfix//ToExpression}, LoadPage["assets/table.wsp", {q = qq, exclude = {}}] ]?>
@@ -65,4 +67,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("search"), {
 
 </script>
 
+<?wsp LoadPage["assets/modal/addToFolder.wsp", {list = folders//Keys, obj = session["Query", "q"]//StringUnfix//ToExpression}] ?> 
+
 <?wsp LoadPage["assets/footer.wsp"] ?>
+

@@ -42,6 +42,7 @@
               
                     <div class="form-group">
                         <button type="button" class="btn btn-outline-info" onclick="plot()">Plot</button>
+                        <button type="button" class="btn btn-outline-info" onclick="exportP()">Export</button>
                       
                     </div>
 
@@ -98,6 +99,10 @@
 
     function clearP() {
       Plotly.newPlot("plot", [], layout);
+    }
+
+    function exportP() {
+        WSPGet("utils/plot.wsp", 'xaxis=' + encodeURIComponent(xaxis.getValue()) + '&yaxis=' +encodeURIComponent(yaxis.getValue()) + '&q=' + encodeURIComponent(s.getValue()) + '&export=on', window.open);
     }
 
     function plot() {

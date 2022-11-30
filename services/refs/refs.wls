@@ -27,7 +27,11 @@ Module[{refs, sm},
 
   sm["ref"] = If[Length[refs] == 0, "noref", First[refs]];
 
-  CPut[sm];
+  With[{uid = sm["id"], ref = sm["ref"]},
+    CEval[
+      collection[uid, "ref"] = ref;
+    ]
+  ];
 ] & /@ samples;
 
 (*fetching for the rest*)

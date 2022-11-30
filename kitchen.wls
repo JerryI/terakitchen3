@@ -42,22 +42,22 @@ CronTasks["hide notifications"] = SessionSubmit[
 CronTasks["remove notifications"] = SessionSubmit[
  ScheduledTask[
 (settings["notifications"][#] = .;)&/@ (Select[settings["notifications"]//Keys,  (settings["notifications"][#]["date"] < (Now - Quantity[1, "Days"]))&]),
-  Quantity[12, "Hours"]]];  
+  Quantity[6, "Hours"]]];  
 
 CronTasks["storage date"] = SessionSubmit[
- ScheduledTask[SGlobalDate = Now,
-  Quantity[60, "Minutes"]]];  
+ ScheduledTask[SGlobalDate = Now; CArchive;,
+  Quantity[12, "Hours"]]];  
 
 CronTasks["backup"] = SessionSubmit[
  ScheduledTask[CBackup,
-  Quantity[30, "Minutes"]]];
+  Quantity[60, "Minutes"]]];
 
 CronTasks["restart"] = SessionSubmit[
   ScheduledTask[(
       PushNotification["Server", "Terakitchen will be restarted in a hour"];
       CronTasks["restart notify"] = SessionSubmit[ScheduledTask[PushNotification["Server", "Terakitchen will be restarted in 10 minutes"], {Quantity[40, "Minutes"]}] ]; 
       CronTasks["restart real"] = SessionSubmit[ScheduledTask[ShutDown, {Quantity[50, "Minutes"]}] ];     
-    ), Quantity[25, "Hours"]]]; 
+    ), Quantity[48, "Hours"]]]; 
 
 CronTasks["timestamp"] = SessionSubmit[
  ScheduledTask[console["log", "<*Now*>"],

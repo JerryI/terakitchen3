@@ -10,9 +10,14 @@
         </div>
         <div class="modal-body">
           <form id="addToFolderform" action="item/addtofolder.wsp" method="post">
-            <?wsp With[{i = session["item"]["id"]}, ?>
-            <input name="id" value="<?wsp i ?>" type="hidden">
-            <?wsp ] ?>
+            <?wsp If[StringQ[obj], ?>
+              <input name="id" value="<?wsp obj ?>" type="hidden">
+            <?wsp , ""] ?>
+
+            <?wsp If[!StringQ[obj], ?>
+              <input name="query" value="<?wsp obj//Compress ?>" type="hidden">
+            <?wsp , ""] ?>     
+
             <div class="form-group"> 
               <label class="form-group-label" >
                 Click on the folder
@@ -22,10 +27,8 @@
                 <div class="form-check">
                   <input class="form-check-input" name = "<?wsp key ?>" type="checkbox" unchecked id = "<?wsp key ?>">
                   <label class="form-check-label" for="<?wsp key ?>"> <?wsp folders[key, "name"] ?> </label>
-                  
-                <div>           
-
-              <?wsp , {key, Keys@folders}] ?>
+              </div>           
+              <?wsp , {key, list}] ?>
               
 
             </div>             

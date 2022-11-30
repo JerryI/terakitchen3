@@ -33,6 +33,14 @@ Do[
         ];
 
         {probesam, proberef} = {sam, ref};
+
+        probesam["data", "freqs"]   = probesam["data", "freqs"];
+        probesam["data", "fft"]     = probesam["data", "fft"];
+        probesam["data", "tds"]     = probesam["data", "tds"];
+        proberef["data", "freqs"]   = proberef["data", "freqs"];
+        proberef["data", "fft"]     = proberef["data", "fft"];
+        proberef["data", "tds"]     = proberef["data", "tds"];        
+
         samid = i;
 
         Break[];
@@ -213,12 +221,12 @@ startVisor[uuuid_, ll_, rr_, st_] := (
         ];
     ]];
 
-    (*create temporary storage*)
-    storage = {};
+    (*create temporary stack*)
+    stack = {};
 
     (*client asked for the previous data*)
     EventBind["event", Function[{cli, data},
-        WebSocketSend[cli, UpdateGraphMulti[storage//Flatten]];
+        WebSocketSend[cli, UpdateGraphMulti[stack//Flatten]];
     ]];
 
     variants = {};
@@ -338,12 +346,12 @@ correctThickness[left_, right_, istep_] := (
     ,
     
     "nominima",
-        EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[storage//Flatten]]; WebSocketSend[cli, NoMinima[]];]];
+        EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[stack//Flatten]]; WebSocketSend[cli, NoMinima[]];]];
         WebSocketPublish[NoMinima[], $uid]; 
         PushNotification["NK", "No minimum was found. The procedure was suspended.<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
     "phaseerror",
-        EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[storage//Flatten]]; WebSocketSend[cli, PhaseError[errorWithFP - sorted[[minimal, 3]]]];]];
+        EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[stack//Flatten]]; WebSocketSend[cli, PhaseError[errorWithFP - sorted[[minimal, 3]]]];]];
         WebSocketPublish[PhaseError[errorWithFP - sorted[[minimal, 3]]], $uid];
         PushNotification["NK", "Overcompensation was detected. FP subtraction failed. <br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
@@ -359,13 +367,13 @@ correctThickness[left_, right_, istep_] := (
                             Flatten[variants], #[[2]] == 0 &], Last] // First              
                             },
             With[{r = {min[[3]][[All,1]], ((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@(min[[3]]), min[[3]][[All,2,1]], ((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@(virgin[[3]])}},
-                storage = ExportString[r, "JSON"];
-                WebSocketPublish[UpdateFinalGraph[storage], $uid]; 
+                stack = ExportString[r, "JSON"];
+                WebSocketPublish[UpdateFinalGraph[stack], $uid]; 
             ];
             (*client asked for the previous data*)
             EventBind["event", Function[{cli, data},
                 WebSocketSend[cli, ItIsOK[ToString[10 L //N//DecimalForm]<>" mm", amplify] ];
-                WebSocketSend[cli, UpdateFinalGraph[storage] ];
+                WebSocketSend[cli, UpdateFinalGraph[stack] ];
             ]];
         ];  
 
@@ -379,12 +387,19 @@ correctThickness[left_, right_, istep_] := (
 
 ApplyToAll := (
     Do[
-        With[{sam = CGet[i], ref = With[{uid = i}, CEval[collection[collection[uid]["ref"]]]]},
+        Module[{sam = CGet[i], ref = With[{uid = i}, CEval[collection[collection[uid]["ref"]]]]},
 
             If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
                 PushNotification["NK extractor", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
                 Continue[];
             ];
+
+            sam["data", "freqs"]   = sam["data", "freqs"];
+            sam["data", "fft"]     = sam["data", "fft"];
+            sam["data", "tds"]     = sam["data", "tds"];
+            ref["data", "freqs"]   = ref["data", "freqs"];
+            ref["data", "fft"]     = ref["data", "fft"];
+            ref["data", "tds"]     = ref["data", "tds"];            
 
             If[!thicknessCorrection || numberFP == 0,
                 If[KeyExistsQ[sam,"thickness"],

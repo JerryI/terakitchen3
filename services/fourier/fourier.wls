@@ -68,7 +68,12 @@ Module[{},
   ];
 
   console["log", sm["id"]]; 
-  CPut[sm];
+  With[{uid = sm["id"], fft = sm["data", "fft"], freqs = sm["data"]["freqs"]},
+    CEval[
+      collection[uid, "data", "fft"] = fft;
+      collection[uid, "data", "freqs"] = freqs;
+    ]
+  ];
 ] &  /@ input; 
           
 PushNotification["Fourier", "Fourier transform is done"]; 

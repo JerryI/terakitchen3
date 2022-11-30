@@ -20,7 +20,15 @@
             data = (If[FreeQ[#, Missing], #, Missing[] ])& /@ data;
             data = data // DeleteMissing;
             
-            ExportString[data, "JSON"]
+            If[KeyExistsQ[session["Query"], "export"], 
+                With[{filename = StringTake[CreateUUID[], 6]<>".dat", packed = Join@@Map[Function[piece, Table[{piece[[1,i]], piece[[2,i]], piece[[3]]}, {i, 1, Length[piece[[1]]]}]],data]},
+                    Export["public/trashcan/"<>filename, packed];
+                    "http://"<>  $env["storagehost"] <>"/trashcan/"<>filename
+                ] 
+            ,
+                ExportString[data, "JSON"]
+            ]
+            
         ]
 
     

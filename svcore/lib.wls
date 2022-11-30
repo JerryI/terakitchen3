@@ -8,11 +8,13 @@ SetAttributes[CEval, HoldAll];
 CPut[item_] := JTPClientEvaluate[kitchen, CPut[item]]; 
 
 CGet[id_] := JTPClientEvaluate[kitchen, collection[id]]; 
-CGet[id_, field_] := JTPClientEvaluate[kitchen, collection[id][field]];
+CGet[id_, field_] := JTPClientEvaluate[kitchen, collection[id, field]];
 CGet[id_, field_, sub_] := JTPClientEvaluate[kitchen, collection[id, field, sub]];
 
-storage["get", id_] := JTPClientEvaluate[kitchen, storage["get", id]]; 
 storage[id_]["data"] := JTPClientEvaluate[kitchen, storage[id]["data"]]; 
+storage["get", id_] := JTPClientEvaluate[kitchen, storage["get", id]]; 
+
+Protect[storage];
 
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 

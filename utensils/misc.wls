@@ -56,6 +56,7 @@ DefineOutputStreamMethod[
         StringTemplate["<*Now*>"][] >>> "warnings.log";
         ByteArrayToString[out // ByteArray] >>> "warnings.log";
         console["log", ByteArrayToString[out // ByteArray]];
+        PushNotification["System", ByteArrayToString[out // ByteArray]];
 
         {Length@bytes, state}]]]]}
 ];
@@ -65,7 +66,7 @@ Forecast := PushNotification["Weather",
        CityData[#, "Name"], 
        With[{temp = 
           WeatherForecastData[#, "MaxTemperature"]["FirstValue"][[1]]},
-        If[temp < 1, "&#10052;" , 
+        If[temp < 1, "&#10052;", 
          If[temp > 25, "&#127774;", "&#9925;"]]
         ], 
        WeatherForecastData[#, "MaxTemperature"][

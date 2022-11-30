@@ -332,7 +332,7 @@ ProcessNK[calculated_] := With[
             (*publish*)
             With[{rr = ExportString[r, "JSON"], id = $uid}, 
                 WebSocketPublish[UpdateGraph[rr], $uid];
-                storage = {storage, rr};
+                stack = {stack, rr};
             ];
         ];
     ) & /@ calculated;  

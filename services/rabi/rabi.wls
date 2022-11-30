@@ -22,12 +22,27 @@ fourier[data_] := With[{},
 
     (*cut the unusable half*)
     fft = Drop[fft, -Length[fft]/2]; 
+    fft[[1]] = 0.;
+    fft[[2]] = 0.;
+    fft[[3]] = 0.;
 ];
 
 startDialog[uuid_, ssam_, ssamid_] := (
+
+
     $uid = uuid;
     sam = ssam;
     samid = ssamid;
+ 
+
+    sam["tds"] = sam["tds"];
+    sam["freqs"] = sam["freqs"];
+    sam["fft"] = sam["fft"];  
+
+
+    PushNotification["Rabi", StringTemplate["Processing <a class=\"badge badge-info\" href=\"item/index.wsp?id=``\">``</a>"][samid, samid]];
+
+    
 
     $next = CreateUUID[];
 
@@ -37,16 +52,26 @@ startDialog[uuid_, ssam_, ssamid_] := (
         sam["tds"] = Transpose[{Drop[sam["tds"][[All,1]], Length[sam["tds-no-fp"] ] - Length[sam["tds"] ] ], sam["tds-no-fp"]} ];
     ];
 
+ 
+
     fourier[sam["tds"]];
+
+
 
     dfreq   = freq;
     dfft    = fft // Abs;
+
+  
 
     content =   Block[{}, 
                     LoadPage["services/rabi/views/range.wsp"]
                 ];
 
-    WebSocketPublish[LoadDynamicPage[content], $uid];            
+            
+
+    WebSocketPublish[LoadDynamicPage[content], $uid];    
+
+         
 
     CreatePage[
         content,
@@ -56,8 +81,12 @@ startDialog[uuid_, ssam_, ssamid_] := (
         "eventHandler" -> ProcessEventEmitt[$id, "event"]
     ];
 
+
+
     EventBind["submit", Function[{cli, data}, 
         If[data["action"] != "Ok", $Die];
+
+    
 
         EventBind["event", Function[{cli, data}, Null;]];
 
@@ -107,6 +136,11 @@ startDialog[uuid_, ssam_, ssamid_] := (
         EventBind["submit", Function[{cli, data}, 
             If[data["action"] != "Ok", $Die]; 
 
+
+
+            EventBind["event", Function[{cli, data}, Null;]];
+            EventBind["submit", Function[{cli, data}, Null;]];
+
             With[{f = freq, trace = simTDS, a = fft, id = samid, reg = regions, split = Abs[peaks[[1]]-peaks[[2]]], central = \[Omega]0, epsilon = \[Epsilon]\[Infinity], gamma = \[Gamma], strength = \[Omega]p},
                 CEval[  
                     
@@ -114,6 +148,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
                     collection[id, "data", "rabi-fft-freq"] = f;
                     collection[id, "data", "rabi-reg"]  = reg;
                     collection[id, "data", "rabi-splitting"]  = split;
+                    collection[id, "rabi-freq"]  = ToString[split]<>" cm";
 
                     collection[id, "data", "rabi-fit-freq"]  = central;
                     collection[id, "data", "rabi-fit-epsilon"] = epsilon;
@@ -128,17 +163,19 @@ startDialog[uuid_, ssam_, ssamid_] := (
             If[Length[samples] == 0, PushNotification["Rabi", "Done! Check the tickets to Stockholm &#127881;"]; $Die];
 
             startDialog[$next, CGet[samples//First, "data"], samples//First];
+
             samples = Drop[samples, 1];
 
             PushNotification["Rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
         ]];  
 
-        storage = ExportString[{{0},{0}}, "JSON"];    
+        stack = ExportString[{{0},{0}}, "JSON"];    
 
         (*initial*)
         {l\[Epsilon], r\[Epsilon], l\[Omega], r\[Omega], l\[Gamma], r\[Gamma]} = {0.01, 20, 1, 20, 0.001, Abs[peaks[[2]]-peaks[[1]]]} // N; 
 
         EventBind["event", Function[{cli, data},
+        
             Switch[data[[1]],
                 "update",
                     {\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma]} = data[[2 ;; ]];
@@ -171,6 +208,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
     ]];   
 
     EventBind["event", Function[{cli, data}, 
+     
         range = MinMax @ ImportString[data, "JSON"];
         regions = Partition[
                 Map[Function[x, (Position[sam["tds"][[All,1]], _?((Abs[# - x] < 1) &)] // First // First)], Flatten[range]]
@@ -187,6 +225,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
 
 
 prepareRabi := (
+
    If[MissingQ[ref = CGet[CGet[samid, "ref"], "data"]],
         PushNotification["Rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
         $Die;
@@ -199,6 +238,14 @@ prepareRabi := (
 
     thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
     If[!NumberQ[thickness], PushNotification["Rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
+
+    sam["tds"] = sam["tds"];
+    sam["freqs"] = sam["freqs"];
+    sam["fft"] = sam["fft"];    
+    ref["tds"] = ref["tds"];
+    ref["freqs"] = ref["freqs"];
+    ref["fft"] = ref["fft"];    
+
 
 
     t0sam = (MaximalBy[sam["tds"], Abs[#[[2]]] &] // First // First) - 
@@ -274,9 +321,11 @@ prepareRabi := (
 
     incr = samplerate/(regions[[2]] - regions[[1]]);
 
+ 
 );
 
 fitRabi := (
+
 
     If[MissingQ[ref = CGet[CGet[samid, "ref"], "data"]],
         PushNotification["Rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
@@ -287,6 +336,13 @@ fitRabi := (
         thickness = With[{id = CGet[samid, "experiment"]}, CEval[experiments[id, "thickness"]]];
         If[MissingQ[thickness], PushNotification["Rabi", "No thickness was specified. Die."]; $Die];
     ];
+
+    sam["tds"] = sam["tds"];
+    sam["freqs"] = sam["freqs"];
+    sam["fft"] = sam["fft"];    
+    ref["tds"] = ref["tds"];
+    ref["freqs"] = ref["freqs"];
+    ref["fft"] = ref["fft"];     
 
     thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
     If[!NumberQ[thickness], PushNotification["Rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
@@ -431,6 +487,7 @@ correctRabi := (
 );
 
 Simulate := (
+
     With[{sim = 
         Conjugate[
             semiClassical @@ {\[Epsilon]\[Infinity], \[Omega]p, 
@@ -439,16 +496,17 @@ Simulate := (
         simTDS = InverseFourier[Join[sim, {0}, Drop[Reverse[Conjugate[sim]], -1]]] // Re;
 
         With[{r = {originalTDS[[All, 1]], simTDS}},
-            storage = ExportString[r, "JSON"];
+            stack = ExportString[r, "JSON"];
             jvars = ExportString[{\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma]}, "JSON"];
 
-            WebSocketPublish[UpdateGraph[storage, jvars], $uid];
+            WebSocketPublish[UpdateGraph[stack, jvars], $uid];
         ];
         
 
     ];
  
 );
+
 
 
 startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
