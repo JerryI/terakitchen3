@@ -4,6 +4,8 @@ Print[">> Shared Libs V1"];
 FilterRange[data_, r_] := 
   Select[data, (#[[1]] >= r[[1, 1]] && #[[1]] <= r[[1, 2]] && #[[2]] >=
         r[[2, 1]] && #[[2]] <= r[[2, 2]]) &];
+
+DropHalf[x_] := Drop[x,-Length[x]/2 //Round];
 		
 lowpass[FilterEdge_, Q_, x_, sample_] := 
   1 - ((Tanh[(x - Length[sample[[All, 2]]]/2 + FilterEdge)/Q] + 1)/

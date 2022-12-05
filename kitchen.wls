@@ -1,10 +1,15 @@
+(*import shared libraries*)
+Import/@FileNames["*.wls", "shared"];
 
+(*load core modules*)
 Import["utensils/db.wls"];
 Import["utensils/misc.wls"];
 Import["utensils/notifications.wls"];
 Import["utensils/svhost.wls"];
 Import["utensils/services.wls"];
 Import["utensils/window.wls"];
+Import["utensils/cells.wls"];
+Import["utensils/notebook.wls"];
 
 (*check*)
 If[FileExistsQ["running.lock"],
@@ -51,13 +56,6 @@ CronTasks["storage date"] = SessionSubmit[
 CronTasks["backup"] = SessionSubmit[
  ScheduledTask[CBackup,
   Quantity[60, "Minutes"]]];
-
-CronTasks["restart"] = SessionSubmit[
-  ScheduledTask[(
-      PushNotification["Server", "Terakitchen will be restarted in a hour"];
-      CronTasks["restart notify"] = SessionSubmit[ScheduledTask[PushNotification["Server", "Terakitchen will be restarted in 10 minutes"], {Quantity[40, "Minutes"]}] ]; 
-      CronTasks["restart real"] = SessionSubmit[ScheduledTask[ShutDown, {Quantity[50, "Minutes"]}] ];     
-    ), Quantity[48, "Hours"]]]; 
 
 CronTasks["timestamp"] = SessionSubmit[
  ScheduledTask[console["log", "<*Now*>"],

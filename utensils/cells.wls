@@ -5,7 +5,8 @@ Options[CellObj] = {
     "next" -> Null,
     "prev" -> Null,
     "display" -> Null,
-    "data" -> Null
+    "data" -> Null,
+    "sign" :> CreateUUID[]
 };
 
 CellObj[OptionsPattern[]] := With[{cell = CreateUUID[]}, 
@@ -17,6 +18,7 @@ CellObj[OptionsPattern[]] := With[{cell = CreateUUID[]},
     CellObj[cell]["prev"   ] = OptionValue["prev"];
     CellObj[cell]["display"] = OptionValue["display"];
     CellObj[cell]["data"]    = OptionValue["data"];
+    CellObj[cell]["sign"]    = OptionValue["sign"];
 
     CellObj[cell]
 ];
@@ -57,6 +59,7 @@ CellObjCreateChild[CellObj[cell_]] := (
         ,
             CellObj[cell]["child"] = new;
             new["parent"] = CellObj[cell];
+            new["sign"] = CellObj[cell]["sign"];
         ];
         new
     ]  
@@ -68,19 +71,21 @@ CellObjCreateNext[CellObj[cell_]] := (
         While[next["next"] =!= Null, next = next["next"]];
         next["next"] = new;
         new["prev"] = next;
+        new["sign"] = next["sign"];
         new
     ]  
 );
 
 CellObj /:
 CellObjRemove[CellObj[cell_]] := ( 
-    CellEventFire["RemovedCell"][CellObj[cell_]];
+    fireEvent["RemovedCell"][CellObj[cell]];
 
     Unset[CellObj[cell]["data"]];
     Unset[CellObj[cell]["type"]];
     Unset[CellObj[cell]["next"]];
     Unset[CellObj[cell]["prev"]];
     Unset[CellObj[cell]["parent"]];
+    Unset[CellObj[cell]["sign"]];
 
     If[CellObj[cell]["child"] =!= Null,
         CellObjRemoveAllNext[CellObj[cell]["child"]];
@@ -128,8 +133,8 @@ CellObjEvaluate[CellObj[cell_], evaluator_, OptionsPattern[]] := (
             CellObj[cell]["type"] = "input";
             CellObj[cell]["parent"] = Null;
 
-            CellEventFire["CellMove"][CellObj[cell], parent];
-            CellEventFire["CellMorph"][CellObj[cell]];
+            fireEvent["CellMove"][CellObj[cell], parent];
+            fireEvent["CellMorph"][CellObj[cell]];
         ];    
 
         (*if has a child*)
@@ -139,16 +144,27 @@ CellObjEvaluate[CellObj[cell_], evaluator_, OptionsPattern[]] := (
             CellObj[cell]["child"] = Null;            
         ];
 
-        With[{callback = OptionValue["callback"]},
+        With[{callback = OptionValue["callback"], fireLocalEvent=fireEvent},
             evaluator[#, Function[result,
                 With[{new = CellObjCreateChild[CellObj[cell] ]},
                     new["data"] = result;
                     new["type"] = "output";
 
-                    CellEventFire["NewCell"][new];
+                    fireLocalEvent["NewCell"][new];
                 ]
             ] ]& /@ exps;
         ];
     ];  
 );
+
+CellObj /: 
+CellObjGenerateTree[CellObj[cell_]] := (  
+    fireEvent["NewCell"][CellObj[cell]];
+    
+    If[CellObj[cell]["child"] =!= Null, CellObjGenerateTree[CellObj[cell]["child"]]];
+    If[CellObj[cell]["next"] =!= Null, CellObjGenerateTree[CellObj[cell]["next"]]];
+);
+
+
+SimpleEvaluator[exp_, callback_] := callback@(ToString[ToExpression[exp], InputForm]);
 

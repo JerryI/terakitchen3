@@ -25,7 +25,7 @@
             function openField<?wspuid?>() {
                 if(fieldState<?wspuid?> == false) {
                     fieldState<?wspuid?> = true;
-                    loadField('ExportString[{data["alpha"][[All,1]],data["alpha"][[All,2]], data["background"], data["subtracted"][[All,2]]}, "JSON"]', function(resp) {
+                    loadField('ExportString[DropHalf/@{data["alpha"][[All,1]],data["alpha"][[All,2]], data["background"], data["subtracted"][[All,2]]}, "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
         

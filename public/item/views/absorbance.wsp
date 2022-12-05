@@ -27,7 +27,7 @@
                     fieldState<?wspuid?> = true;
 
                     
-                    loadField('ExportString[ Transpose[data["absorbance"]], "JSON"]', function(resp) {
+                    loadField('ExportString[ DropHalf/@Join[Transpose[data["absorbance"]], {data["transmission"][[All,2]]} ], "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
 

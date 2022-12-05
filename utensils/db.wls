@@ -91,8 +91,8 @@ storage["remove",id_,field_]:=With[{},
 
 storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; storage[uid]["data"]);
 
-CArchive := Module[{cnt = 0}, (If[! #["archived"],
-    If[Now - #["date"] > Quantity[5, "Days"],
+CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
+    If[now - #["date"] > Quantity[5, "Days"],
      console["log", "archived ``", #["id"]];
      cnt = cnt + 1;
      Print["archived " <> #["id"]];
@@ -101,7 +101,7 @@ CArchive := Module[{cnt = 0}, (If[! #["archived"],
         #["data"] := (
         Print[str];
         #["archived"] = False;
-        #["date"] = Now;
+        #["date"] = now;
         #["data"] = Import[url]
         )];
      #["archived"] = True;
@@ -136,7 +136,8 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
         temp, 
         secretstring,
         collection,
-        storage
+        storage,
+        CellObj
     }]}];
 
     console["log", "...done!"];
