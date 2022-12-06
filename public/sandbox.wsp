@@ -1,25 +1,5 @@
 <?wsp
-    CellEventFire["NewCell"][cell_] := (
-        With[
-            {
-                obj = <|
-                        "id"->cell[[1]], 
-                        "sign"->cell["sign"],
-                        "type"->cell["type"],
-                        "data"->cell["data"],
-                        "child"->If[NullQ[ cell["child"] ], "", cell["child"][[1]]],
-                        "parent"->If[NullQ[ cell["parent"] ], "", cell["parent"][[1]]],
-                        "next"->If[NullQ[ cell["next"] ], "", cell["next"][[1]]],
-                        "prev"->If[NullQ[ cell["prev"] ], "", cell["prev"][[1]]]
-                    |>
-            },
-
-            WebSocketPublish[server, FrontEndCreateCell[ExportString[obj, "JSON"]], "console"];
-        ];
-    );
-
-    ""
-      
+    ""     
 ?>
 
   <?wsp LoadPage["assets/header.wsp"] ?>
@@ -43,7 +23,11 @@
                 <label class="form-group-label" for="function">
                   Wolfram Language
                 </label>
-                <textarea class="form-control" id="function" rows="4" name="function"><?wspsession["data"]["function"]?></textarea>
+                <button class="btn btn-sm btn-outline-info" onclick="addCell()">+</button>
+                <div id="console">
+                
+                </div>
+                
               </div>
             </div>
 
@@ -62,98 +46,66 @@
   </div>
 
   <script>
-        core.EvaluatedResult = function(args, env) {
-      var r = interpretate(args[0]);
+    function addCell() {
+      var q = 'Block[{fireEvent = CellEventFire[client]}, CellObjCreateNext[CellObj["'+last+'"]]]';
+      socket.send(q);
+    }
 
-      
+    function eval(id, cell) {
+      var q = 'NotebookEvaluate["'+id+'", "'+cell+'"]';
+      socket.send(q);
+    }
 
-      var html = `
-      <div class="row py-lg-3">
-  
-      <div class="col-lg-10 col-md-8 mx-left">
-      <div class="form-control" style="height: 100%;" id="evaluated">
-         ${r} 
-      </div>
-    </div>
-    </div>  
-      
-      `;
-      document.getElementById("res").insertAdjacentHTML('afterbegin', html);
-
-
-    };
-    function calculate(func) {
-      var data = `
-      With[
-            {
-        
-                virt = {Graphics[xs___] :> ExportString[Graphics[xs], "SVG"]},
-                cli = client
-    
-            },
-
-            WebSocketSend[cli, EvaluatedResult[ToString[(${func}) /. virt]]]
-
-        ];
-      `;
-
-      socket.send(data);
-
-    };
+    var last;
 
     core.FrontEndCreateCell = function(args, env) {
-      var r = interpretate(args[0]);
+      var input = JSON.parse(interpretate(args[0]));
+      console.log(input);
 
-      var html = `
-      <div class="row py-lg-3">
-  
-      <div class="col-lg-10 col-md-8 mx-left">
-      <div class="form-control" style="height: 100%;" id="evaluated">
-         ${r} 
-      </div>
-    </div>
-    </div>  
       
-      `;
+    
+      var target;
 
-      document.getElementById("res").insertAdjacentHTML('afterbegin', html);
+      if (input["parent"] === "") {
+        // create a new div element
+        const newDiv = document.createElement("div");
+        newDiv.id = input["id"];
+        newDiv.class = "parent-node";
+        document.getElementById("console").appendChild(newDiv);
+        
+        target = newDiv;
+      } else {
+        target = document.getElementById(input["parent"]);
+      }
 
-    };
+      var notebook = input["sign"];
+      var uuid = input["id"];
 
-    function subscribeOnLoad() {
+      var newCell = CodeMirror(target, {value: input["data"], mode:  "mathematica", extraKeys: {
+        "Shift-Enter": function(instance) { 
+           eval(notebook, uuid);
+        },
+       }});
+      var wrapper = newCell.display.wrapper;
+      wrapper.id = input["id"]+"-"+input["type"];
+
+      last = input["id"];
+
+    }
+
+    function OpenOnLoad() {
         console.log("sub");
-        var q = 'Tinyweb`WebSocketSubscribe[server, "console", client]';
+        var q = 'NotebookOpen["console"]';
 
         if (socket.readyState != 1) {
-            setTimeout(subscribeOnLoad, 500);
+            setTimeout(OpenOnLoad, 500);
         } else {
             socket.send(q);
         }
     };
 
-    var editor = CodeMirror.fromTextArea(document.getElementById("function"), {
-       lineNumbers: false,
-       autoCloseTags: true,
-       setSize: (200,200),
-       mode:  "mathematica",
-       indentWithTabs: true,
-       theme: "default",   
-       lineWrapping: true,         
-       extraKeys: {
-         "F11": function(cm) {
-           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-         },
-         "Esc": function(cm) {
-          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-        },
-        "Shift-Enter": function(instance) { 
-          calculate(instance.getValue());
-        },
-      }      
-    });
+    OpenOnLoad();
 
-    subscribeOnLoad();
-
-    </script>
+  </script>
   
   <?wsp LoadPage["assets/footer.wsp"] ?>

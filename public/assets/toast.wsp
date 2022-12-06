@@ -10,7 +10,7 @@
     </button>-->
   </div>
   <div class="toast-body">
-    <?wsp settings["notifications"][i]["message"] ?>
+    <?wsp settings["notifications", i, "message"] //ReleaseHold ?>
   </div>
 </div>
 

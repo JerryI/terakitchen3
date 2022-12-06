@@ -8,6 +8,6 @@
     </button>-->
   </div>
   <div class="toast-body">
-    <?wsp settings["notifications"][id]["message"] ?>
+    <?wsp settings["notifications", id, "message"]//ReleaseHold ?>
   </div>
 </div>

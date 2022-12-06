@@ -11,6 +11,7 @@ Options[PushNotification] = {"duration" -> Quantity[2, "Minutes"]};
 PushNotification[author_, message_, OptionsPattern[]]:=With[{uid = CreateUUID[]},
   settings["notifications"][uid] = <||>;
   settings["notifications"][uid]["date"] = Now;
+  settings["notifications"][uid]["uid"] = uid;
   settings["notifications"][uid]["author"] = author;
   settings["notifications"][uid]["message"] = message;
 

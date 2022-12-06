@@ -1,4 +1,12 @@
 (*binging to the events*)
+Unprotect[NotebookCreate];
+Unprotect[NotebookOpen];
+Unprotect[NotebookEvaluate];
+
+ClearAll[NotebookOpen];
+ClearAll[NotebookCreate];
+ClearAll[NotebookEvaluate];
+
 Options[NotebookCreate] = {
     "name" -> "Untitled",
     "id" :> CreateUUID[],
@@ -25,7 +33,13 @@ NotebookOpen[id_] := (
     ];
 );
 
-NotebookCellEvaluate[id_, cellid_] := (
+NotebookEvaluate[id_, cellid_] := (
+    Block[{fireEvent = CellEventFire[client]},
+        CellObjEvaluate[CellObj[cellid], notebooks[id, "evaluator"] ];
+    ];
+);
+
+NotebookOperate[id_, cellid_] := (
     Block[{fireEvent = CellEventFire[client]},
         CellObjEvaluate[CellObj[cellid], notebooks[id, "evaluator"] ];
     ];
@@ -33,13 +47,14 @@ NotebookCellEvaluate[id_, cellid_] := (
 
 CellEventFire[addr_]["NewCell"][cell_] := (
     (*actually frirstly you need to check!*)
+  
     With[
         {
             obj = <|
                         "id"->cell[[1]], 
                         "sign"->cell["sign"],
                         "type"->cell["type"],
-                        "data"->cell["data"],
+                        "data"->If[cell["data"]//NullQ, "", cell["data"]],
                         "child"->If[NullQ[ cell["child"] ], "", cell["child"][[1]]],
                         "parent"->If[NullQ[ cell["parent"] ], "", cell["parent"][[1]]],
                         "next"->If[NullQ[ cell["next"] ], "", cell["next"][[1]]],
@@ -47,6 +62,6 @@ CellEventFire[addr_]["NewCell"][cell_] := (
                     |>
         },
 
-        WebSocketPublish[server, FrontEndCreateCell[ExportString[obj, "JSON"] ], addr];
+        WebSocketSend[addr, FrontEndCreateCell[ExportString[obj, "JSON"] ]];
     ];
 );

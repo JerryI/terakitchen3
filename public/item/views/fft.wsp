@@ -31,12 +31,26 @@
                 <br>
 
                 <button class="btn btn-sm btn-outline-info" onclick="rewrap<?wspuid?>()">Reunwrap phase</button>
+                <button class="btn btn-sm btn-outline-warning" onclick="savewnrapped<?wspuid?>()">Save phase</button>
+                <button class="btn btn-sm btn-outline-secondary" id="exportUnw" style="display: none" onclick="fieldExport('unwrapped-phase')">Export unwrapped</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
             </div>
         </div>
 
         <script>
             var fieldState<?wspuid?> = false;
+            
+            function savewnrapped<?wspuid?>() {
+                var ph = document.getElementById("phasetresh").value;
+                var cut = document.getElementById("lowcut").value;
+
+                var uid = '<?wspsession["item", "id"]?>';
+                
+                var func = 'collection["'+uid+'", "data", "unwrapped-phase"] := With[{uid = "'+uid+'"}, With[{data = collection[uid, "data"]}, ClusterPhase[Arg[data["fft"]] - (((MaximalBy[data["tds"]//Abs, Last] // First // First) - data["tds"][[1, 1]]) 2 Pi (1/33.356) data["freqs"] ), '+cut+', Length[data["fft"]], '+ph+']]]; "saved!"';
+
+                WSPHttpBigQuery(func, function(r) {document.getElementById("exportUnw").style= ""; });
+
+            };
 
             function rewrap<?wspuid?>() {
                 var ph = document.getElementById("phasetresh").value;
@@ -61,7 +75,7 @@
             function openField<?wspuid?>() {
                 if(fieldState<?wspuid?> == false) {
                     fieldState<?wspuid?> = true;
-                    loadField('ExportString[DropHalf/@{data["freqs"], (data["fft"]//Abs)^2, ClusterPhase[Arg[data["fft"]] - (((MaximalBy[data["tds"]//Abs, Last] // First // First) - data["tds"][[1, 1]]) 2 Pi (1/33.356) data["freqs"] ), 10, Length[data["fft"]], 5.3]}, "JSON"]', function(resp) {
+                    loadField('ExportString[DropHalf/@{data["freqs"], (data["fft"]//Abs)^2, If[KeyExistsQ[data, "unwrapped-phase"], data["unwrapped-phase"], ClusterPhase[Arg[data["fft"]] - (((MaximalBy[data["tds"]//Abs, Last] // First // First) - data["tds"][[1, 1]]) 2 Pi (1/33.356) data["freqs"] ), 10, Length[data["fft"]], 5.3]]}, "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
         
@@ -104,6 +118,12 @@
                         };
         
                         Plotly.newPlot('plot<?wspuid?>', [data, phase], layout);
+                        
+                        WSPHttpQuery('KeyExistsQ[collection["'+'<?wspsession["item", "id"]?>'+'", "data"], "unwrapped-phase"]//TrueQ', function(r) {
+                            console.log(r);
+                            if(r === "True") {document.getElementById("exportUnw").style= ""; }
+                        });
+
         
                     });
                 }
