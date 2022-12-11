@@ -58,7 +58,7 @@
         <|
             "symbol"->"recursionNumber", 
             "desc"->"recursion number (accuracy)", 
-            "value"-> 2,
+            "value"-> 1,
             "type"->"integer"
         |>,
         <|

@@ -6,6 +6,10 @@
 
           <div class="col-xs-6">
             <div id="tds"></div>
+            <div id="fft"></div>
+            <?wsp If[plotAlpha,  ?>
+              <div id="alpha"></div>
+            <?wsp , "" ]?>
           </div>
           
         
@@ -52,6 +56,12 @@
             <input id="gamma" type="text" class="form-control form-control" value="<?wsp \[Gamma] ?>" name="gamma">
         
           </div> 
+
+          <div class="form-group">
+            <small>Include FP reflections</small><br>
+          
+            <input id="fpmodel" name="fpmodel" type="checkbox" form="dialog" checked>
+          </div> 
           
           
 
@@ -77,7 +87,10 @@
     }
 
     function update() {
-        var q = `PageEmitt["<?wsp $uid ?>"][{"update", ${document.getElementById("epsinf").value}, ${document.getElementById("omegap").value}, ${document.getElementById("omega0").value}, ${document.getElementById("gamma").value}}];`;   
+        var fp = document.getElementById("fpmodel").checked;
+        if (fp) {fp="True";} else {fp="False";}
+
+        var q = `PageEmitt["<?wsp $uid ?>"][{"update", ${document.getElementById("epsinf").value}, ${document.getElementById("omegap").value}, ${document.getElementById("omega0").value}, ${document.getElementById("gamma").value}, ${fp}}];`;   
 
         socket.send(q);
 
@@ -86,6 +99,7 @@
     }
 
     var tds = document.getElementById('tds');
+    var fft = document.getElementById('fft');
 
 
     var color1      = '#7b3294';
@@ -107,7 +121,24 @@
                 x: [0],
                 y: [0],
                 mode: 'lines'
-    };            
+    };  
+    
+    let freqs = <?wsp ExportString[dfreq//DropHalf, "JSON"]   ?>;
+
+    let data3 = 
+        {
+                y: <?wsp ExportString[dfft//DropHalf, "JSON"]   ?>,
+                x: freqs,
+                mode: 'lines',
+                name: 'exp'
+    };
+    
+    let data4 = 
+        {
+                x: [0],
+                y: [0],
+                mode: 'lines'
+    };    
         
     let layout = {
         xaxis: {
@@ -121,16 +152,107 @@
             zeroline: true
         }
     };
+
+    let layout2 = {
+        xaxis: {
+            title: 'wavenumber, cm-1',
+            showgrid: true,
+            zeroline: true
+        },
+        yaxis: {
+            title: 'Power, a.u.',
+            showgrid: true,
+            zeroline: true
+        }
+    };    
         
     Plotly.plot(tds, [data, data2], layout);
+
+    Plotly.plot(fft, [data3, data4], layout2);
+
+
+    
+    <?wsp If[plotAlpha,  ?>
+    let alphaExp = 
+        {
+                y: <?wsp ExportString[sam["alpha"][[All,2]]//DropHalf, "JSON"]   ?>,
+                x: freqs,
+                mode: 'lines',
+                name: 'exp'
+    };
+
+    let nExp = 
+        {
+                y: <?wsp ExportString[sam["n"][[All,2]]//DropHalf, "JSON"]   ?>,
+                x: freqs,
+                mode: 'lines',
+                name: 'exp',
+                yaxis: 'y2'
+    };    
+    
+    let alphaSim = 
+        {
+                x: [0],
+                y: [0],
+                mode: 'lines'
+    };
+    let nSim = 
+        {
+                x: [0],
+                y: [0],
+                mode: 'lines',
+                yaxis: 'y2'
+    };    
+
+    let layoutAlpha = {
+            xaxis: {
+                title: 'wavenumber, cm-1',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'absorption coefficient, cm-1',
+                showgrid: true,
+                zeroline: true,
+            },
+            yaxis2: {
+                title: 'n',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            }            
+      };   
+      
+    Plotly.plot('alpha', [alphaExp, nExp, alphaSim, nSim], layoutAlpha);  
+
+    <?wsp , ""] ?>
+
+    core.UpdateAlphaGraph = function(args, env) {
+        let a = JSON.parse(interpretate(args[1]));
+        let i = JSON.parse(interpretate(args[0]));
+
+
+        Plotly.deleteTraces('alpha', [2,3]);
+        Plotly.addTraces('alpha', [{x:freqs, y: a, name: 'sim'}, {x:freqs, y: i, name: 'sim', yaxis: 'y2'}]);
+        
+    }    
 
     core.UpdateGraph = function(args, env) {
         let r = JSON.parse(interpretate(args[0]));
 
         let jr = JSON.parse(interpretate(args[1]));
 
+        let ft = JSON.parse(interpretate(args[2]));
+
         Plotly.deleteTraces(tds, [1]);
         Plotly.addTraces(tds, [{x:r[0] , y: r[1], name: 'sim'}]);
+
+        Plotly.deleteTraces(fft, [1]);
+        Plotly.addTraces(fft, [{x:freqs, y: ft, name: 'sim'}]);        
 
         document.getElementById("epsinf").value = jr[0];
         document.getElementById("omegap").value = jr[1];

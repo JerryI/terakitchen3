@@ -1,4 +1,8 @@
 Import["https://raw.githubusercontent.com/JerryI/tcp-mathematica/main/JTP/JTP.wl"];
+(*import shared libraries*)
+Import/@FileNames["*.wls", "shared"];
+
+(*only for the SVCORE*)
 Import["svcore/lib.wls"];
 
 kitchen = (JTPClient@@Uncompress[$kitchen]) // JTPClientStart;

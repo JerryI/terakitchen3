@@ -93,15 +93,15 @@
 
   <script>
         let data1 = {
-            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
-            y: <?wsp ExportString[alpha[[2]],"JSON"] ?>,
+            x: <?wsp ExportString[DropHalf@alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[DropHalf@alpha[[2]],"JSON"] ?>,
             mode: 'lines',
             name: 'alpha'
         };
 
         let data2 = {
-            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
-            y: <?wsp ExportString[n,"JSON"] ?>,
+            x: <?wsp ExportString[DropHalf@alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[DropHalf@n,"JSON"] ?>,
             mode: 'lines',
             yaxis: 'y2',
             name: 'n'
@@ -110,8 +110,8 @@
         <?wsp If[fpnumber > 0 , ?>
         
         let data3 = {
-            x: <?wsp ExportString[alpha[[1]],"JSON"]   ?>,
-            y: <?wsp ExportString[alphanofp[[2]], "JSON"] ?>,
+            x: <?wsp ExportString[DropHalf@alpha[[1]],"JSON"]   ?>,
+            y: <?wsp ExportString[DropHalf@alphanofp[[2]], "JSON"] ?>,
             mode: 'lines',
             name: 'alpha - with FP',
             line: { opacity: 0.5 }

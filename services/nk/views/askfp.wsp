@@ -64,8 +64,8 @@
         type: 'scatter',
         mode: 'markers',
 
-        x: <?wsp ExportString[alpha[[1]]//Re,"JSON"]   ?>,
-        y: <?wsp ExportString[alpha[[2]]//Re,"JSON"]   ?>,
+        x: <?wsp ExportString[DropHalf@alpha[[1]]//Re,"JSON"]   ?>,
+        y: <?wsp ExportString[DropHalf@alpha[[2]]//Re,"JSON"]   ?>,
 
         xaxis: 'wavenumber, cm-1',
         yaxis: 'absorption coefficient, cm-1',
@@ -86,7 +86,7 @@
 
     var colors = [];
 
-    for(var i = 0; i < <?wsp alpha[[1]]//Length ?>; i++) colors.push(color1Light);
+    for(var i = 0; i < <?wsp (DropHalf@alpha[[1]])//Length ?>; i++) colors.push(color1Light);
         eventData.points.forEach(function(pt) {
             x.push(pt.x);
             y.push(pt.y);

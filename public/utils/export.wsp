@@ -9,13 +9,15 @@
                 data = collection[id]["data"][#]&/@Keys[collection[id]["data"]];
                 titles = Keys[collection[id]["data"]];
             ,
-                data = collection[id]["data"][#]&/@fields;
+                data = If[KeyExistsQ[collection[id]["data"], #], collection[id]["data"][#], collection[id][#]]&/@fields;
                 titles = fields;
             ];
             
-            titles = Select[titles, KeyExistsQ[collection[id]["data"], #]&];
+            titles = Select[titles, (KeyExistsQ[collection[id]["data"], #] || KeyExistsQ[collection[id], #])&];
 
             data = data // DeleteMissing;
+
+            data = If[Length[#] === 0, {#}, #]&/@data;
 
             maxheight = Max[Length /@ data];
 
@@ -25,7 +27,7 @@
                 Do[ 
                     AppendTo[extendedtitles, titles[[i]]]; 
 
-                , {j, 1, If[ArrayQ[data[[i,1]]], Sum[If[Internal`RealValuedNumberQ[col], 1, 2], {col, data[[i,1]]}] , If[Internal`RealValuedNumberQ[data[[i,1]]], 1, 2] ] }]
+                , {j, 1, If[ArrayQ[data[[i,1]]], Sum[If[Internal`RealValuedNumberQ[col] || StringQ[col], 1, 2], {col, data[[i,1]]}] , If[Internal`RealValuedNumberQ[data[[i,1]]] || StringQ[data[[i,1]]], 1, 2] ] }]
 
             , {i, Length[data]}];
 
@@ -33,7 +35,7 @@
             
                 Join[#,
 
-                    With[{f = # // Last},
+                    With[{f = If[Length[#//Last]> 0, Table["---", {ik, 1, Length[#//Last]}], "---"]},
                         Table[f, {i, maxheight - Length[#]}]
                     ]
             
@@ -43,12 +45,12 @@
 
             
 
-            data = (Flatten[Map[Function[x, If[Internal`RealValuedNumberQ[x], x, {Re[x], Im[x]}] ] , Flatten[#] ] ])&/@Transpose[data];
+            data = (Flatten[Map[Function[x, If[StringQ[x], x, If[Internal`RealValuedNumberQ[x], x, {Re[x], Im[x]} ] ] ] , Flatten[#] ] ])&/@Transpose[data];
 
             data = Join[{extendedtitles}, data];
         
 
-            name = If[KeyExistsQ[collection[id], "filename"], collection[id]["filename"], id];
+            name = If[KeyExistsQ[collection[id], "filename"], collection[id]["filename"]<>"-"<>StringTake[id,-3], id];
 
             Export[path<>"/"<>name<>".dat", data];
 

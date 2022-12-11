@@ -15,6 +15,8 @@
 
                 </div>
                 <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('<?wspfieldname?>')">Add to the bucket</button>
+                
+                <button id="exportrawtds" style="display:none" class="btn btn-sm btn-outline-secondary" onclick="fieldExport('tds-no-fp')">Export modified</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
             </div>
         </div>
@@ -60,6 +62,7 @@
 
                 if (raw.length > 2) {
                     Plotly.newPlot('plot<?wspuid?>', [data, data2], layout);
+                    document.getElementById("exportrawtds").style="";
                 } else {
                     Plotly.newPlot('plot<?wspuid?>', [data], layout);
                 }

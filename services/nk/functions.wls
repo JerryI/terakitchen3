@@ -140,7 +140,17 @@ TDSwithoutFP[in1_, in2_, L_, trustreg_, checkregions_, first_] :=
 
   slog = nsam["phase"]; rlog = nref["phase"];
 
-  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+  If[KeyExistsQ[nsam, "unwrapped-phase"],
+    Warn["phase was unwrapped"];
+    nsam["phase"] = nsam["unwrapped-phase"];
+    slog = nsam["unwrapped-phase"];
+    
+
+    transm[[All, 2]] = nsam["unwrapped-phase"] - ClusterPhase[rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+  ,
+    transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+  ];
+  
   slog = transm[[All, 2]];
 
   transm[[All, 2]] = transm[[All, 2]];
@@ -186,7 +196,7 @@ estimateOscillations[f_, FPperiod_] :=
          Transpose@
           piece)}, 
           
-          With[{filtered = FilterRange[spectrum, {{0.9/(2 FPperiod), 9999}, {-9999, 9999}}] },
+          With[{filtered = FilterRange[spectrum, {{0.65/(2 FPperiod), 1.35/(2 FPperiod)}, {-9999, 9999}}] },
             Function[x, (x[[2, 1]] - x[[1, 1]]) Total[x[[All, 2]]]// N] @ filtered
           ]
   ]
@@ -242,7 +252,16 @@ ExtractNK[in1_, in2_, L_, trustreg_, checkregions_] := Module[
 
   slog = nsam["phase"]; rlog = nref["phase"];
 
-  transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+
+  If[KeyExistsQ[nsam, "unwrapped-phase"],
+    Warn["phase was unwrapped"] ;
+    nsam["phase"] = nsam["unwrapped-phase"];
+    slog = nsam["unwrapped-phase"];
+
+    transm[[All, 2]] = nsam["unwrapped-phase"] - ClusterPhase[rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+  ,
+    transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
+  ];  
   slog = transm[[All, 2]];
  
 
@@ -360,7 +379,7 @@ ProcessNK[calculated_] := With[
         ];
     ) & /@ calculated;  
     (*update sampling graph*)
-    With[{r = {#["first"][[All,1]], Function[x,((x[[2, 2]] 4 \[Pi] 10^12 x[[1]])/(33.356 2.9979 10^10))]/@(#["first"]), #["sampling"]}},
+    With[{r = DropHalf/@{#["first"][[All,1]], Function[x,((x[[2, 2]] 4 \[Pi] 10^12 x[[1]])/(33.356 2.9979 10^10))]/@(#["first"]), #["sampling"]}},
         WebSocketPublish[UpdateSamplingGraph[ExportString[r, "JSON"]], $uid];        
     ]&@Last[calculated];
 ];    

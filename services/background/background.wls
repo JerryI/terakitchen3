@@ -117,7 +117,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
             CEval[ 
                 collection[uid, "data", "background"] = r;  
 
-                collection[uid, "data", "subtracted"] := With[{id = uid}, 
+                collection[uid]["data"]["subtracted"] := With[{id = uid}, 
                                             With[{alpha = collection[id, "data", "alpha"]},
                                                 Transpose[{alpha[[All, 1]], alpha[[All, 2]] - collection[id, "data", "background"]}]
                                             ] 

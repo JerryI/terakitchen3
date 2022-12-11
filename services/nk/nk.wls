@@ -39,7 +39,10 @@ Do[
         probesam["data", "tds"]     = probesam["data", "tds"];
         proberef["data", "freqs"]   = proberef["data", "freqs"];
         proberef["data", "fft"]     = proberef["data", "fft"];
-        proberef["data", "tds"]     = proberef["data", "tds"];        
+        proberef["data", "tds"]     = proberef["data", "tds"];     
+        If[KeyExistsQ[probesam["data"], "unwrapped-phase"], probesam["data", "unwrapped-phase"] = With[{uuid = probesam["id"] }, CEval[ collection[uuid]["data"]["unwrapped-phase"] ] ];  ];   
+        
+        
 
         samid = i;
 
@@ -53,6 +56,8 @@ startDialog[uuid_] := (
     $uid = uuid;
 
     result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
+
+    If[Min[result[[2]][[All,2,1]]] < 0, Warn["anomaly refractive index"] ];
     
     nofp = If[numberFP > 0, First[result[[1]]]["first"], {}];
     $next = CreateUUID[];
@@ -140,8 +145,11 @@ startDialog[uuid_] := (
         {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = data;
 
         result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
+
+        If[Min[result[[2]][[All,2,1]]] < 0, Warn["anomaly refractive index"] ];
+
         nofp = If[numberFP > 0, First[result[[1]]]["first"], {{0,{0,0}}}];
-        With[{dt = {result[[2]][[All,1]],((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@result[[2]], result[[2]][[All,2,1]],  ((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@nofp}},
+        With[{dt = DropHalf/@{result[[2]][[All,1]],((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@result[[2]], result[[2]][[All,2,1]],  ((#[[2, 2]] 4 \[Pi] 10^12 #[[1]])/(33.356 2.9979 10^10)) &/@nofp}},
 
             WebSocketSend[cli, UpdateGraph[ExportString[dt,"JSON"]] ];
 
@@ -149,6 +157,16 @@ startDialog[uuid_] := (
     ]];
 
     PushNotification["NK", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+);
+
+Warn["anomaly refractive index"] := (
+    PushNotification["NK", "<span class=\"badge badge-warning\">Anomaly refractive index</span> was detected which might create an artificial features in the absorption spectrum. Please, consider to cut the noisy part of the spectrum or use <a class=\"badge badge-info\" href=\"service.wsp?id=transmittance\">transmittance</a> service instead."];
+    Warn["anomaly refractive index"] = Null;
+);
+
+Warn["phase was unwrapped"] := (
+    PushNotification["NK", "<span class=\"badge badge-info\">The phase was alredy unwrapped</span> We will skip this procedure for the sample signal."];
+    Warn["phase was unwrapped"] = Null;
 );
 
 
@@ -399,7 +417,9 @@ ApplyToAll := (
             sam["data", "tds"]     = sam["data", "tds"];
             ref["data", "freqs"]   = ref["data", "freqs"];
             ref["data", "fft"]     = ref["data", "fft"];
-            ref["data", "tds"]     = ref["data", "tds"];            
+            ref["data", "tds"]     = ref["data", "tds"];
+
+            If[KeyExistsQ[sam["data"], "unwrapped-phase"], sam["data", "unwrapped-phase"] = With[{uuid = sam["id"] }, CEval[collection[uuid]["data"]["unwrapped-phase"] ] ]; ];             
 
             If[!thicknessCorrection || numberFP == 0,
                 If[KeyExistsQ[sam,"thickness"],

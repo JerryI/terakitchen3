@@ -1,17 +1,5 @@
 Print[">> Shared Libs V1"];
 
-(*misc*)
-FilterRange[data_, r_] := 
-  Select[data, (#[[1]] >= r[[1, 1]] && #[[1]] <= r[[1, 2]] && #[[2]] >=
-        r[[2, 1]] && #[[2]] <= r[[2, 2]]) &];
-
-DropHalf[x_] := Drop[x,-Length[x]/2 //Round];
-		
-lowpass[FilterEdge_, Q_, x_, sample_] := 
-  1 - ((Tanh[(x - Length[sample[[All, 2]]]/2 + FilterEdge)/Q] + 1)/
-     2 - (Tanh[(x - Length[sample[[All, 2]]]/2 - FilterEdge)/Q] + 1)/
-     2);
-
 ShutDown := With[{}, 
     console["log", "stopping all tasks..."];
     PushNotification["Cron", "Server was down"];
@@ -22,9 +10,7 @@ ShutDown := With[{},
     Exit[-1];
 ];		
 
-NullQ[x_] := TrueQ[x == Null];
 
-RandomString[n_] := Alphabet[][[RandomInteger[{1, 26}, n]]] // StringJoin;
 
 $loop = <||>;
 LoopSubmit[task_] := With[{uid = CreateUUID[]}, 
@@ -42,8 +28,9 @@ TaskAbort[LoopTask[uid_]] := ($loop[uid, "status"] = "aborted");
 
 SetAttributes[LoopSubmit, HoldFirst];
 
+
 DefineOutputStreamMethod[
-  "DebugStream", {"ConstructorFunction" -> 
+  "Toast", {"ConstructorFunction" -> 
     Function[{name, isAppend, caller, opts}, 
      With[{state = Unique["JaBoo"]},
       {True, state}]], 
@@ -55,10 +42,9 @@ DefineOutputStreamMethod[
        With[{ }, 
        If[out === "", {0, state},
         
+        PushNotification["System", ByteArrayToString[out // ByteArray]];
         StringTemplate["<*Now*>"][] >>> "warnings.log";
         ByteArrayToString[out // ByteArray] >>> "warnings.log";
-        console["log", ByteArrayToString[out // ByteArray]];
-        PushNotification["System", ByteArrayToString[out // ByteArray]];
 
         {Length@bytes, state}]]]]}
 ];

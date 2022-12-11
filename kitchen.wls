@@ -11,6 +11,9 @@ Import["utensils/window.wls"];
 Import["utensils/cells.wls"];
 Import["utensils/notebook.wls"];
 
+(*load libs from the services*)
+Import/@FileNames["lib.wls", "services", 2];
+
 (*check*)
 If[FileExistsQ["running.lock"],
   console["log", ">>crashed before"];
@@ -21,17 +24,13 @@ If[FileExistsQ["running.lock"],
 Put["running.lock"];
 
 window = <||>;
-
 temp = <||>;
-
 settings["bucket"] = {};
-
 settings["processes"] = <||>;
-
 settings["cpu"] = 0;
 
 (*debug stream*)
-$Messages = {OpenWrite[Method -> "DebugStream"]};
+$Messages = {OpenWrite[Method -> "Toast"]};
 
 (*async tasks*)
 

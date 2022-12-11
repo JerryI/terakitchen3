@@ -5,6 +5,25 @@
 
     "description"-> "Interactive Rabi analyser",
     "parameters"-> {
-          
+        <|
+            "symbol"->"noSurgery", 
+            "desc"->"Skip splitting extraction dialog", 
+            "value"-> False,
+            "type"->"bool"
+        |> ,
+
+        <|
+            "symbol"->"plotAlpha", 
+            "desc"->"Plot absorption coefficient as well", 
+            "value"-> False,
+            "type"->"bool"
+        |> ,
+
+        <|
+            "symbol"->"plotAlphaReverse", 
+            "desc"->"Plot absorption coefficient as well (reverse ingeneering)", 
+            "value"-> False,
+            "type"->"bool"
+        |>                   
     }
 |>

@@ -38,9 +38,9 @@ Set[collection[x_, "data"][y_], r_] ^:= storage["set", x, y, r];
 Set[collection[x_] ["data"][y_], r_] ^:= storage["set", x, y, r];
 Unset[collection[x_] ["data"], y_] ^:= storage["remove", x, y];
 Unset[collection[x_, "data"], y_] ^:= storage["remove", x, y];
-Unset[collection[x_, "data", y_]] ^:= storage["remove", x, y];
-Unset[collection[x_]["data"][y_]] ^:= storage["remove", x, y];
-Unset[collection[x_, "data"][y_]] ^:= storage["remove", x, y];
+Unset[collection[x_, "data", y_] ] ^:= storage["remove", x, y];
+Unset[collection[x_]["data"][y_] ] ^:= storage["remove", x, y];
+Unset[collection[x_, "data"][y_] ] ^:= storage["remove", x, y];
 
 
 storage["url"]="archive/";
@@ -55,14 +55,15 @@ storage["set",id_,field_, data_]:=With[{},
       storage[uid]["date"]=SGlobalDate;
       storage[uid]["archived"]=False;
 
-      collection[id,"data", field]:=storage[uid]["data"];
+      collection[id]["data"][field]:=storage["get", uid];
     ]
   ,
 
-    With[{s=Extract[collection[id,"data"],{Key[field],0}]},
-      s["date"]=SGlobalDate;
-      s["archived"]=False;
-      s["data"]=data;
+    With[{s=Extract[collection[id, "data"],{Key[field],2}]},
+      console["log", "storage >> `` is rewritting... `` ", s, field];
+      storage[s]["date"]=SGlobalDate;
+      storage[s]["archived"]=False;
+      storage[s]["data"]=data;
     ]
   ];
   data
@@ -71,17 +72,17 @@ storage["set",id_,field_, data_]:=With[{},
 
 storage["remove",id_,field_]:=With[{},
   console["log", "storage >> removing `` for ``", field, id];
-  If[KeyExistsQ[collection[id, "data"], field],
-    With[{obj= Extract[collection[id,"data"],{Key[field],0}]},
+  If[ KeyExistsQ[collection[id, "data"], field],
+    With[ {obj= storage[Extract[collection[id,"data"],{Key[field],2}] ]},
 
       If[obj["archived"],
         DeleteFile[storage["url"]<>obj["id"]<>".mx"]
       ];
 
-      Unset[obj["data"]];
-      Unset[obj["id"]];
-      Unset[obj["date"]];
-      Unset[obj["archived"]];
+      Unset[obj["data"] ];
+      Unset[obj["id"] ];
+      Unset[obj["date"] ];
+      Unset[obj["archived"] ];
     ];
     console["log", "storage >> `` for `` was removed", field, id];
     collection[id,"data"]=KeyDrop[collection[id,"data"],field ];

@@ -16,6 +16,8 @@
                 
                 <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('<?wspfieldname?>')">Add to the bucket</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+                <button id="exportrawalpha" class="btn btn-sm btn-outline-secondary" style="display:none" onclick="fieldExport('alpha-with-fp')">Export raw</button>
+                
             </div>
             
         </div>
@@ -66,6 +68,7 @@
                         
                         if (raw.length > 2) {
                             Plotly.newPlot('plot<?wspuid?>', [data2, data], layout);
+                            document.getElementById("exportrawalpha").style="";
                         } else {
                             Plotly.newPlot('plot<?wspuid?>', [data], layout);
                         }

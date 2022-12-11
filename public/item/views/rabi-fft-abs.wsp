@@ -34,6 +34,7 @@
                     <p>Semiclassical modelling</p>
 
                     <div id='sim<?wspuid?>'></div>
+                    <div id='simFFT<?wspuid?>'></div>
                       <p>Using the equation</p>
                       <?wsp ExportString["\[Epsilon]=\!\(\*SubscriptBox[\(\[Epsilon]\), \(\
                       \[Infinity]\)]\)+\!\(\*FractionBox[SuperscriptBox[\(f\), \(2\)], \
@@ -179,7 +180,7 @@
                 if(fieldState<?wspuid?> == false) {
                     fieldState<?wspuid?> = true;
 
-                    loadField('ExportString[{data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 1]], data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 2]], data["tds"][[ ;; data["rabi-reg"][[1]], 1]], data["tds"][[ ;; data["rabi-reg"][[1]], 2]], data["rabi-fft-freq"], data["rabi-fft-abs"], data["freqs"], data["fft"]//Abs}, "JSON"]', function(resp) {
+                    loadField('ExportString[{data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 1]], data["tds"][[data["rabi-reg"][[1]] ;; data["rabi-reg"][[2]], 2]], data["tds"][[ ;; data["rabi-reg"][[1]], 1]], data["tds"][[ ;; data["rabi-reg"][[1]], 2]], DropHalf@data["rabi-fft-freq"], DropHalf@data["rabi-fft-abs"], DropHalf@data["freqs"], DropHalf@data["fft"]//Abs}, "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
         
@@ -248,7 +249,7 @@
                         });
                             
                         
-                        loadField('ExportString[{data["tds"][[ ;; data["rabi-reg"][[2]], 1]], data["tds"][[ ;; data["rabi-reg"][[2]], 2]], data["rabi-fit-trace"]}, "JSON"]', function(resp2) {
+                        loadField('ExportString[{data["tds"][[ ;; data["rabi-reg"][[2]], 1]], data["tds"][[ ;; data["rabi-reg"][[2]], 2]], data["rabi-fit-trace"], data["rabi-fit-trace-nofp"]}, "JSON"]', function(resp2) {
 
                             raw = JSON.parse(resp2);
 
@@ -265,7 +266,14 @@
                                 name: 'sim'
                             };  
 
-                            Plotly.newPlot('sim<?wspuid?>', [data4, data5], {
+                            let data6 = {
+                                x: raw[0],
+                                y: raw[3],
+                                mode: 'lines',
+                                name: 'sim no FP'
+                            };                            
+
+                            Plotly.newPlot('sim<?wspuid?>', [data4, data5, data6], {
                             xaxis: {
                                 title: 't, ps',
                                 showgrid: true,
@@ -275,7 +283,46 @@
                                 title: 'I, nA',
                                 showgrid: true,
                                 zeroline: true
+                            }});    
+                            
+                            loadField('ExportString[DropHalf/@{data["freqs"], data["fft"]//Abs, data["rabi-fit-fft"]//Abs, data["rabi-fit-fft-nofp"]//Abs}, "JSON"]', function(resp3) {
+
+                            raw = JSON.parse(resp3);
+
+                            let data42 = {
+                                x: raw[0],
+                                y: raw[1],
+                                mode: 'lines',
+                                name: 'exp'
+                            };
+                            let data52 = {
+                                x: raw[0],
+                                y: raw[2],
+                                mode: 'lines',
+                                name: 'sim'
+                            };  
+
+                            let data62 = {
+                                x: raw[0],
+                                y: raw[3],
+                                mode: 'lines',
+                                name: 'sim no FP'
+                            };                            
+
+                            Plotly.newPlot('simFFT<?wspuid?>', [data42, data52, data62], {
+                            xaxis: {
+                                title: 'wavenumber, cm-1',
+                                showgrid: true,
+                                zeroline: true
+                            },
+                            yaxis: {
+                                title: 'A, a.u.',
+                                showgrid: true,
+                                zeroline: true
                             }});                        
+
+                            });
+
                             
                         });
                             

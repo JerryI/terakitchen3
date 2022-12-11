@@ -72,6 +72,7 @@ Module[{},
     CEval[
       collection[uid, "data", "fft"] = fft;
       collection[uid, "data", "freqs"] = freqs;
+      collection[uid, "data", "fft-abs"] = With[{id=uid},collection[id,"data","fft"]//Abs];
     ]
   ];
 ] &  /@ input; 
