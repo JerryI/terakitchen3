@@ -151,6 +151,11 @@ store[i_] := (
                                         {#[[1]], #[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 2]]}]
                                         ];
+                        collection[uid]["data"]["rough-alpha"] := With[{id = uid}, 
+                                        With[{d = GetThickness["cm"][id]},
+                                            {#[[1]], -Log[#[[2]]]/d} & /@ 
+                                                Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
+                                        ] ];                                               
 
                         ];
                 ];
@@ -159,7 +164,7 @@ store[i_] := (
                 With[{uid = i},
                     CEval[
         
-                        collection[uid]["data"]["tds-no-fp"] = .;
+                        1+1 "LOL"
                     ]
                 ];   
 
@@ -200,7 +205,7 @@ ApplyToAll := (
 
                         collection[uid]["data"]["transmission"] = r; 
 
-                        collection[uid]["refractive-index"] = index; 
+                        collection[uid]["refractive-index"] = DecimalForm[index // N, 3]; 
 
                         collection[uid]["data"]["transmittance"] := With[{id = uid}, 
                                         {#[[1]], #[[2]]} & /@ 
@@ -213,7 +218,13 @@ ApplyToAll := (
                         collection[uid]["data"]["absorbance"] := With[{id = uid}, 
                                         {#[[1]], 2-Log10@#[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
-                                        ];                                         
+                                        ];  
+
+                        collection[uid]["data"]["rough-alpha"] := With[{id = uid}, 
+                                        With[{d = GetThickness["cm"][id]},
+                                            {#[[1]], -Log[#[[2]]]/d} & /@ 
+                                                Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]
+                                        ] ];                                                                               
 
                         ];
                 ];
