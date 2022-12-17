@@ -111,7 +111,25 @@ CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
     SubValues[storage]);
 
     PushNotification["Archiver", StringTemplate["`` items were unloaded to HDD"][cnt] ];
-    ];
+];
+
+CArchiveStat := Module[{cnt = 0, toarchived = 0, archived = 0, now = Now}, 
+(
+  If[#["archived"],
+    archived = archived + 1;
+  ,
+    If[now - #["date"] > Quantity[2, "Days"],
+      toarchived = toarchived + 1;
+    ,
+      cnt = cnt + 1;
+    ]
+  ]
+) & /@ 
+ DeleteDuplicates@(Extract[#, {1}, Extract[#, {1, 0}] &] & /@ 
+    SubValues[storage]);
+
+    {cnt, toarchived, archived}
+];
 
 (*db operations*)
 InList[x_, y_] := MemberQ[y, x];

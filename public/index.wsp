@@ -42,9 +42,6 @@
                 
                 <div class="card-body">
                   <p class="card-text"><?wsp experiments[i]["describtion"] ?></p>
-                  <?wsp If[StringLength[experiments[i]["thickness"]] > 0, ?>
-                    <p class="card-text">Thickness <?wsp" "?>  <?wsp experiments[i]["thickness"] ?></p>
-                  <?wsp, ""]?>
                   <div class="d-flex justify-content-between align-items-left mb-3">
                     <div class="align-items-sm-baseline align-items-left"">
                       <svg class="bi me-2" width="1em" height="1em" style="margin-right:0.5em"><use xlink:href="#people-circle"></use></svg>

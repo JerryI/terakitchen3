@@ -146,11 +146,13 @@ CellObjEvaluate[CellObj[cell_], evaluator_, OptionsPattern[]] := (
 
         With[{callback = OptionValue["callback"], fireLocalEvent=fireEvent},
             evaluator[#, Function[result,
-                With[{new = CellObjCreateChild[CellObj[cell] ]},
-                    new["data"] = result;
-                    new["type"] = "output";
+                If[result =!= "Null",
+                    With[{new = CellObjCreateChild[CellObj[cell] ]},
+                        new["data"] = result;
+                        new["type"] = "output";
 
-                    fireLocalEvent["NewCell"][new];
+                        fireLocalEvent["NewCell"][new];
+                    ]
                 ]
             ] ]& /@ exps;
         ];

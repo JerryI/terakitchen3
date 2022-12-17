@@ -47,7 +47,6 @@ NotebookOperate[id_, cellid_] := (
 
 CellEventFire[addr_]["NewCell"][cell_] := (
     (*actually frirstly you need to check!*)
-  
     With[
         {
             obj = <|

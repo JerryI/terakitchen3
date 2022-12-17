@@ -263,14 +263,16 @@
                                 x: raw[0],
                                 y: raw[2],
                                 mode: 'lines',
-                                name: 'sim'
+                                name: 'sim',
+                                yaxis: 'y2'
                             };  
 
                             let data6 = {
                                 x: raw[0],
                                 y: raw[3],
                                 mode: 'lines',
-                                name: 'sim no FP'
+                                name: 'sim no FP',
+                                yaxis: 'y2'
                             };                            
 
                             Plotly.newPlot('sim<?wspuid?>', [data4, data5, data6], {
@@ -283,7 +285,14 @@
                                 title: 'I, nA',
                                 showgrid: true,
                                 zeroline: true
-                            }});    
+                            },
+                            yaxis2: {
+                                title: 'I, nA',
+                                titlefont: {color: 'rgb(148, 103, 189)'},
+                                tickfont: {color: 'rgb(148, 103, 189)'},
+                                overlaying: 'y',
+                                side: 'right'
+                            }  });    
                             
                             loadField('ExportString[DropHalf/@{data["freqs"], data["fft"]//Abs, data["rabi-fit-fft"]//Abs, data["rabi-fit-fft-nofp"]//Abs}, "JSON"]', function(resp3) {
 

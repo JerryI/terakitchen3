@@ -22,6 +22,10 @@
         <div class="d-flex align-items-center">
             <div class="col-lg-10 col-md-8 mx-left">
               <h1 class="fw-light">Console</h1>
+
+
+              <?wsp LoadPage["assets/dashboard.wsp"] ?>              
+
               <p class="lead text-muted">Direct commands to WF Engine</p>
               <div action=""  id="service">
               <div class="form-group">
@@ -31,6 +35,10 @@
                   Wolfram Language
                 </label>
                 <textarea class="form-control" id="function" rows="4" name="function"><?wspsession["data"]["function"]?></textarea>
+
+                <div class="d-flex align-items-center" id="res">
+
+</div>
               </div>
             </div>
 
@@ -41,9 +49,7 @@
         
 
 
-        <div class="d-flex align-items-center" id="res">
-
-        </div>
+  
 
   
   </div>
@@ -88,7 +94,7 @@
     </div>  
       
       `;
-      document.getElementById("res").insertAdjacentHTML('afterbegin', html);
+      document.getElementById("res").innerHTML = html;
       document.getElementById('logoFlames').style = "display: none";
       document.getElementById('bigFlames').style = "opacity: 0"; 
 

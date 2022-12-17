@@ -8,7 +8,11 @@ ShutDown := With[{},
     DeleteFile["running.lock"];
     console["log", "bye"];
     Exit[-1];
-];		
+];	
+
+console["memory stat"] := (
+  settings["memory"]={settings["memory"], Round[MemoryInUse[]/1024,1]/1024//N}//Flatten;
+);
 
 
 
@@ -42,7 +46,7 @@ DefineOutputStreamMethod[
        With[{ }, 
        If[out === "", {0, state},
         
-        PushNotification["System", ByteArrayToString[out // ByteArray]];
+        PushNotification["system", "<span style=\"color:red\">"<>ByteArrayToString[out // ByteArray]<>"</span>"];
         StringTemplate["<*Now*>"][] >>> "warnings.log";
         ByteArrayToString[out // ByteArray] >>> "warnings.log";
 

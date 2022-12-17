@@ -23,10 +23,14 @@ If[FileExistsQ["running.lock"],
 (*clear pages*)
 Put["running.lock"];
 
+(*dunno if it helps here*)
+$HistoryLength = 0;
+
 window = <||>;
 temp = <||>;
 settings["bucket"] = {};
 settings["processes"] = <||>;
+settings["memory"] = {Round[MemoryInUse[]/1024,1]/1024//N};
 settings["cpu"] = 0;
 
 (*debug stream*)
@@ -57,8 +61,8 @@ CronTasks["backup"] = SessionSubmit[
   Quantity[60, "Minutes"]]];
 
 CronTasks["timestamp"] = SessionSubmit[
- ScheduledTask[console["log", "<*Now*>"],
-  Quantity[10, "Minutes"]]]; 
+ ScheduledTask[console["log", "<*Now*>"]; console["memory stat"];,
+  Quantity[20, "Minutes"]]]; 
 
 (*
 CronTasks["timestamp"] = SessionSubmit[

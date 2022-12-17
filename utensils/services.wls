@@ -200,7 +200,7 @@ ImportFile[file_, args_] := Module[{input, fields, TransferField, TransferTheRes
       ];
       
          
-      Module[{tds = Drop[ ImportString[StringReplace[ByteArrayToString[file["data"]], ";"->","], "CSV"],  1]},
+      Module[{tds = Drop[ ImportString[StringReplace[ByteArrayToString[file["data"]], {";"->",", "E"->"*10^"}], "CSV"],  1]},
         If[!ArrayQ[tds], Throw["Imported CSV file is not array"]];
         If[!NumberQ[tds[[1,1]]], Throw[StringTemplate["imported cell `` is not a number"][tds[[1,1]]]]];
 

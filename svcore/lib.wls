@@ -58,7 +58,7 @@ DefineOutputStreamMethod[
        With[{ }, 
        If[out === "", {0, state},
         
-        PushNotification["Debug", ByteArrayToString[out // ByteArray]];
+        PushNotification["svcore", "<span style=\"color:red\">"<>ByteArrayToString[out // ByteArray]<>"</span>"];
         {Length@bytes, state}]]]]}
 ];
 

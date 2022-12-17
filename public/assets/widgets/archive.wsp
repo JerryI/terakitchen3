@@ -1,0 +1,51 @@
+<div class="col">
+      <div class="card shadow-sm" >
+        <div id="archiveplot" style="min-width:19em; height:10em"></div>
+        
+        <div class="card-body">
+     
+          <div class="d-flex justify-content-between align-items-left mb-1">
+            <div class="align-items-sm-baseline align-items-left"">
+             
+              <small class="text-muted">Storage</small>
+              <button class="btn btn-sm btn-outline-secondary" onclick="archivenow()">Archive now</button>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+<script>
+
+    function archivenow() {
+      socket.send('PushNotification["Archiver", "starting..."]; CArchive;');
+    }
+
+    var interval2 = setInterval(function() {
+        if (!(socket.readyState != 1)) {
+          socket.send('Tinyweb`WebSocketSend[client, CreatePieChartArchive@@CArchiveStat];');
+          clearInterval(interval2);
+        };
+    }, 100);    
+
+
+
+    core.CreatePieChartArchive = function(args, env) {
+        var data = [{
+          values: [interpretate(args[0]), interpretate(args[1]), interpretate(args[2])],
+          labels: ['Local records', 'Old records', 'Archived on HDD'],
+          type: 'pie'
+        }];
+      
+        var layout = {
+
+          margin: {
+        r: 50,
+        b: 1,
+        t: 10,
+        pad: 1
+        }};
+      
+        Plotly.newPlot('archiveplot', data, layout, {displayModeBar: false});
+    };
+</script>
