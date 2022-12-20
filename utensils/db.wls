@@ -137,6 +137,8 @@ Exist[f_] := ExistHolder[f];
 ExistOuter[f_] := Hold[ToString[Evaluate[f][[0]]] != "Missing"];
 
 CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
+    settings["backup date"] = Now;
+
     console["log", "backing up..."];
     Put[name<>".lock"];
 
@@ -239,8 +241,8 @@ SortGroup[$$$s_, l_] :=
 
              
 
-      With[{sym = (function@collection[#]) /. {ExistHolder :> 
-          ExistOuter} // ReleaseHold},
+      With[{sym = ((function@collection[#]) /. {ExistHolder :> 
+          ExistOuter} // ReleaseHold)/. {Missing :> Function[x, False]}},
           
           If[KeyExistsQ[groups, sym],
            groups[sym] = Append[groups[sym], #];

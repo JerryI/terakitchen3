@@ -1,2 +1,54 @@
 "SessionSubmit::datenx: \n   Specification DateObject[{_, _, _, 7}] cannot be \
 resolved to an exact date."
+"Sat 17 Dec 2022 16:13:26"
+"Hi"
+"Sat 17 Dec 2022 16:15:31"
+"ByteArray::lend: \n   The argument at position 1 in \n    \
+ByteArray[ToExpression::sntx: \n                 Invalid syntax in or before \
+\"\n                   WebSocketSend[cli,\n                     \n            \
+     EvaluatedResult[ToString[(WriteString[OutputStream[/tmp/m0000\n          \
+       081273861\n                      , 54], \"Hh\"]) /. virt]]]\n          \
+                                                                    \n        \
+                    ^\n                    \".\n      ] should be a vector of \
+uns"
+"Sat 17 Dec 2022 16:15:31"
+"igned byte values or a Base64-encoded string."
+"Sat 17 Dec 2022 16:15:31"
+"ByteArrayToString::barray: \n   ByteArray[ToExpression::sntx: \n             \
+   Invalid syntax in or before \"\n                  WebSocketSend[cli,\n     \
+               \n                \
+EvaluatedResult[ToString[(WriteString[OutputStream[/tmp/m00000\n              \
+  81273861\n                     , 54], \"Hh\"]) /. virt]]]\n                 \
+                                                             \n               \
+           ^\n                   \".\n      ] is not a ByteArray object or \
+{}."
+"Sat 17 Dec 2022 16:15:31"
+"Sat 17 Dec 2022 16:15:31"
+"ByteArray::lend: \n   The argument at position 1 in \n    \
+ByteArray[ToExpression::sntx: \n                 Invalid syntax in or before \
+\"\n                   WebSocketSend[cli,\n                     \n            \
+     EvaluatedResult[ToString[(WriteString[OutputStream[/tmp/m0000\n          \
+       081273861\n                      , 54], \"Hh\"]) /. virt]]]\n          \
+                                                                    \n        \
+                    ^\n                    \".\n      ] should be a vector of \
+uns"
+"Sat 17 Dec 2022 16:15:31"
+"igned byte values or a Base64-encoded string."
+"Sat 17 Dec 2022 16:15:31"
+"ByteArrayToString::barray: \n   ByteArray[ToExpression::sntx: \n             \
+   Invalid syntax in or before \"\n                  WebSocketSend[cli,\n     \
+               \n                \
+EvaluatedResult[ToString[(WriteString[OutputStream[/tmp/m00000\n              \
+  81273861\n                     , 54], \"Hh\"]) /. virt]]]\n                 \
+                                                             \n               \
+           ^\n                   \".\n      ] is not a ByteArray object or \
+{}."
+ByteArrayToString[ByteArray["ToExpression::sntx: \n   Invalid syntax in or \
+before \"\n     WebSocketSend[cli,\n        \
+EvaluatedResult[ToString[(WriteString[OutputStream[/tmp/m0000081273861\n      \
+  , 54], \"Hh\"]) /. virt]]]\n                                                \
+                            ^\n      \"."]]
+"Sat 17 Dec 2022 16:15:52"
+"Hh"
+"Sat 17 Dec 2022 16:22:38"
+"BinaryWrite::errfile: Could not access file File write failed."

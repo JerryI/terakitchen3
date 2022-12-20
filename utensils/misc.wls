@@ -37,8 +37,8 @@ DefineOutputStreamMethod[
   "Toast", {"ConstructorFunction" -> 
     Function[{name, isAppend, caller, opts}, 
      With[{state = Unique["JaBoo"]},
-      {True, state}]], 
-   "CloseFunction" -> Function[state, ClearAll[state]], 
+      {True, state}] ], 
+   "CloseFunction" -> Function[state, ClearAll[state] ], 
    "WriteFunction" -> 
     Function[{state, bytes},(*Since we're writing to a cell,
      we don't want that trailing newline.*)
@@ -50,7 +50,7 @@ DefineOutputStreamMethod[
         StringTemplate["<*Now*>"][] >>> "warnings.log";
         ByteArrayToString[out // ByteArray] >>> "warnings.log";
 
-        {Length@bytes, state}]]]]}
+        {Length@bytes, state}] ] ] ]}
 ];
 
 Forecast := PushNotification["Weather", 

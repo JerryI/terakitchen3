@@ -6,10 +6,12 @@
         exportitem[id_, path_]:= Module[{name, data, maxheight, titles, extendedtitles},
 
             If[NullQ[fields], 
-                data = collection[id]["data"][#]&/@Keys[collection[id]["data"]];
-                titles = Keys[collection[id]["data"]];
+                data = collection[id]["data"][#]&/@Keys[collection[id]["data"] ];
+                titles = Keys[collection[id]["data"] ];
             ,
-                data = If[KeyExistsQ[collection[id]["data"], #], collection[id]["data"][#], collection[id][#]]&/@fields;
+                fields = StringTrim /@ fields;
+
+                data = If[KeyExistsQ[collection[id]["data"], #], collection[id]["data"][#], collection[id][#] ]&/@fields;
                 titles = fields;
             ];
             

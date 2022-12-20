@@ -8,9 +8,9 @@
   session["cleanurl"] = StringDelete[session["rawurl"], RegularExpression["&page=[[:digit:]]+"]];
 
   If[ListQ[exclude],
-    session["texclude"] = Join[{"data","date", "id", "ref", "type", "descid", "description"}, exclude];
+    session["texclude"] = Join[{"data","date","experiment", "id", "ref", "type", "descid", "description"}, exclude];
   ,
-    session["texclude"] = {"data","date", "id", "ref", "type", "descid", "description"};
+    session["texclude"] = {"data","date","experiment", "id", "ref", "type", "descid", "description"};
   ];
 
 
@@ -28,9 +28,9 @@
   session["tfields"] = Complement[session["rfields"], Join[session["texclude"], session["bfields"]] ];
 
 
-  session["tsort"] = If[StringQ[sort] || ListQ[sort], If[StringQ[sort], {sort}, sort], {"date"}];
+  session["tsort"] = With[{now=Now}, If[KeyExistsQ[session["Query"], "sort"], {session["Query", "sort"]}, If[StringQ[sort] || ListQ[sort], If[StringQ[sort], {sort}, sort], {"date":>Function[x,now-x]}] ] ];
 
-  session["tresults"] = CSort[session["tsort"],session["tresults"]]//CFlatten//Reverse;
+  session["tresults"] = CSort[session["tsort"],session["tresults"]]//CFlatten;
 
   session["tpages"] = Length[session["tresults"]]/50 // Ceiling;
 
@@ -48,12 +48,13 @@
           <tr>
             <th scope="col"><a class="link-dark rounded">id</a></th>
             <th scope="col"><a class="link-dark rounded">ref</a></th>
+            <th scope="col"><a class="link-dark rounded">experiment</a></th>
             
 
 
             <?wsp Table[ ?>
               <th scope="col" style="white-space: nowrap;">
-              <?wsp Block[{key = i}, CKey[i]["title"] ] ?>
+              <?wsp Block[{key = i}, "<a href=\""<>session["rawurl"]<>"&?sort="<>i<>"\">"<>CKey[i]["title"]<>"</a>" ] ?>
               </th>
             <?wsp , {i, session["tfields"]}] ?>
 
@@ -66,7 +67,7 @@
             
         <?wsp Table[ 
         
-            With[{item = collection[key], ref = If[KeyExistsQ[collection[key], "ref"], collection[key, "ref"], ""]},
+            With[{item = collection[key], exp = collection[key, "experiment"], ref = If[KeyExistsQ[collection[key], "ref"], collection[key, "ref"], ""]},
         ?>
 
           
@@ -74,6 +75,7 @@
             
             <td><a class="badge badge-light" href="item/index.wsp?id=<?wsp key ?>"><?wsp key?></a></td>
             <td><a class="badge badge-light" href="item/index.wsp?id=<?wsp ref ?>"><?wsp ref ?></a></td>
+            <td><a class="badge badge-light" href="experiment/index.wsp?id=<?wsp exp ?>"><?wsp exp ?></a></td>
 
 
 
@@ -86,7 +88,7 @@
             <?wsp , {f, session["tfields"]}] ?>
 
             <td>
-                <?wsp Table[ If[KeyExistsQ[item, f], (CKey[f]["short"])@@{f, item[f]} , "" ] , {f, session["bfields"]}] ?>              
+                <?wsp Table[ If[KeyExistsQ[item, f], "<a href=\""<>session["rawurl"]<>"&?sort="<>f<>"\">"<>((CKey[f]["short"])@@{f, item[f]})<>"</a>" , "" ] , {f, session["bfields"]}] ?>              
             </td>
           
             <td>

@@ -2,12 +2,12 @@
 (* ::Package:: *)
 
 $env = <|
-  "addr" -> "137.250.85.38",
+  "addr" -> "0.0.0.0",
   "port" -> 80,
   "path" -> "public",
-  "storagehost" -> "137.250.85.38:82"
+  "storagehost" -> "tk.physik.uni-augsburg.de:82",
+  "domain" -> "tk.physik.uni-augsburg.de"
 |>;
-SetDirectory["/Volumes/Data/Github/terakitchen3"];
 
 
 

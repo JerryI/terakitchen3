@@ -5,15 +5,23 @@
         <div class="card-body">
      
           <div class="d-flex justify-content-between align-items-left mb-1">
-            <div class="align-items-sm-baseline align-items-left"">
+            <div class="align-items-sm-baseline align-items-left">
              
               <small class="text-muted">Storage</small>
-              <button class="btn btn-sm btn-outline-secondary" onclick="archivenow()">Archive now</button>
+              
             </div>
+            <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-secondary" onclick="archivenow()">Archive now</button>
+                    </div>
+                    
+
+            </div>            
           </div> 
         </div>
       </div>
     </div>
+
 
 <script>
 
@@ -33,7 +41,7 @@
     core.CreatePieChartArchive = function(args, env) {
         var data = [{
           values: [interpretate(args[0]), interpretate(args[1]), interpretate(args[2])],
-          labels: ['Local records', 'Old records', 'Archived on HDD'],
+          labels: ['Local records', 'To be archived', 'Archived on HDD'],
           type: 'pie'
         }];
       

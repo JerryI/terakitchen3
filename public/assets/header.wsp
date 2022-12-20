@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="http://<?wsp host ?>">
+    <base href="http://<?wsp $env["domain"] ?>">
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,7 +32,7 @@
     <script src="http://<?wsp  $env["storagehost"] ?>/assets/mode/mathematica/mathematica.js"></script>
   
     <script>
-      WSPSetHost("<?wsp host ?>");
+      WSPSetHost("<?wsp $env["domain"] ?>");
       WSPSetStorageHost("<?wsp  $env["storagehost"]  ?>");
     </script>  
       <!-- Custom styles for this template -->
