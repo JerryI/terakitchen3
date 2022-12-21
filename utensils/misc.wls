@@ -67,7 +67,7 @@ Forecast := PushNotification["Weather",
 , "duration" -> Quantity[1, "Days"]];
 
 AnalyseTags[last_:200] := Module[{keys},
-	keys = Take[collection//Keys, -last];
+	keys = settings["recent"] = Take[collection//Keys, -last];
 	
 	Map[Function[key,
 	  {
@@ -89,5 +89,5 @@ TagCloud :=
 
   url = StringJoin["http://", $env["storagehost"], "/trashcan/", uid, 
     ".svg"]; 
-  PushNotification["Recent", StringJoin["<img src=\"",url,"\">"], 
+  PushNotification["Recent", StringJoin["<a href=\"recent.wsp?id=Null\">", "<img style=\"cursor:pointer\" src=\"",url,"\">", "</a>"], 
    "duration" -> Quantity[12, "Hours"] ] ];

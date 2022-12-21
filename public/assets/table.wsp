@@ -14,7 +14,7 @@
   ];
 
 
-  session["tresults"] = CQuery[q];
+  session["tresults"] = If[TrueQ@(Length[q]>3), q, CQuery[q]];
  
 
 

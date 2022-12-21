@@ -43,6 +43,7 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-outline-info" onclick="plot()">Plot</button>
                         <button type="button" class="btn btn-outline-info" onclick="exportP()">Export</button>
+                        <button type="button" class="btn btn-outline-info" onclick="alert('not implemented')">Save figure</button>
                       
                     </div>
 
