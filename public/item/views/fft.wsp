@@ -33,11 +33,20 @@
                 <button class="btn btn-sm btn-outline-info" onclick="rewrap<?wspuid?>()">Reunwrap phase</button>
                 <button class="btn btn-sm btn-outline-warning" onclick="savewnrapped<?wspuid?>()">Save phase</button>
                 <button class="btn btn-sm btn-outline-secondary" id="exportUnw" style="display: none" onclick="fieldExport('unwrapped-phase')">Export unwrapped</button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="customExportFFT<?wspuid?>()">Export</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="customExportFFTABS<?wspuid?>()">Export amplitude</button>
             </div>
         </div>
 
         <script>
+            function customExportFFT<?wspuid?>() {
+                exportPromise('{"freqs", "fft"}');
+            };
+
+            function customExportFFTABS<?wspuid?>() {
+                exportPromise('{"freqs", "fft-abs"}');
+            };            
+
             var fieldState<?wspuid?> = false;
             
             function savewnrapped<?wspuid?>() {

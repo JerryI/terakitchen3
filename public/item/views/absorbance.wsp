@@ -15,6 +15,7 @@
                 </div>
                 
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('transmittance')">Export transmission</button>
             </div>
             
         </div>

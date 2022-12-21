@@ -14,7 +14,7 @@
                     <div id='plot<?wspuid?>'><!-- Plotly chart will be drawn inside this DIV --></div>
 
                 </div>
-                <button class="btn btn-sm btn-outline-secondary" onclick="addToBucket('<?wspfieldname?>')">Add to the bucket</button>
+          
                 
                 <button id="exportrawtds" style="display:none" class="btn btn-sm btn-outline-secondary" onclick="fieldExport('tds-no-fp')">Export modified</button>
                 <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('<?wspfieldname?>')">Export</button>

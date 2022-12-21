@@ -75,6 +75,9 @@ CronTasks["timestamp"] = SessionSubmit[
 
 CronTasks["forecast"] = SessionSubmit[
  ScheduledTask[Forecast, "Daily"]];   
+
+CronTasks["tags"] = SessionSubmit[
+ ScheduledTask[TagCloud, "Daily"]];  
  
     
 

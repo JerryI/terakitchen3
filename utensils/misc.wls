@@ -65,3 +65,29 @@ Forecast := PushNotification["Weather",
          "FirstValue"][[1]]] & /@ (GeoNearest[Entity["City"], Here, 
         2] // EntityList))), -4]
 , "duration" -> Quantity[1, "Days"]];
+
+AnalyseTags[last_:200] := Module[{keys},
+	keys = Take[collection//Keys, -last];
+	
+	Map[Function[key,
+	  {
+		Select[
+			Complement[(collection[key]//Keys), 
+			{"id", "data", "date", "ref", "descid", "experiment"}]
+		, Function[tag, BooleanQ[collection[key, tag]]]]
+	  , collection[key, "experiment"]}
+	], keys]//Flatten
+];
+
+TagCloud := 
+ Module[{uid = CreateUUID[], url = ""}, 
+
+  Export[StringJoin["public/trashcan/", uid, ".svg"], 
+    WordCloud[AnalyseTags[200], 
+     Rectangle @@ ({{0, 0}, {3, 1.5}} - Mean[{{0, 0}, {3, 1.5}}]), 
+     ImageSize -> Small] ]; 
+
+  url = StringJoin["http://", $env["storagehost"], "/trashcan/", uid, 
+    ".svg"]; 
+  PushNotification["Recent", StringJoin["<img src=\"",url,"\">"], 
+   "duration" -> Quantity[12, "Hours"] ] ];

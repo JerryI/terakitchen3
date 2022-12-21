@@ -164,8 +164,8 @@
                     </div>                    
 
                 </div>
-                <button class="btn btn-sm btn-outline-secondary" onclick="customExport<?wspuid?>()">Export FFT</button>
-                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('rabi-rabi-fit-trace')">Export SIM</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="customExport<?wspuid?>()">Export fourier amplitude</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fieldExport('rabi-rabi-fit-trace')">Export modelled TDS</button>
             </div>
         </div>
 
