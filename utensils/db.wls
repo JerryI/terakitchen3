@@ -181,55 +181,55 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
     PushNotification["DB", "A system backup was created"];
 ];
 
-CQuery[q_, lst_:"null"] := Module[{list},
+CXRule[x_, CXRule[op_, y_]] := op[x, y];
+CXRule[x_String, CXRule[op_, y_]] := CXRule[#[x], CXRule[op, y]];
+
+CApply[x_, op_] := CStamp[op, x];
+CApply[x_String, y_] := CApply[#[x], y];
+CApply[x_, CApply[y_, z_]] := CApply[CApply[x, y], z];
+CApply[x_String, CRule[opA_, rest_]] := CPatter[x, opA, rest]
+CPatter[x_, y_, z_] := CRule[CStamp[y, #[x]], z];
+
+CXAnd[x__] := And[x];
+CXAnd[x_List] := And @@ x;
+CXOr[x__] := Or[x];
+CXOr[x_List] := Or @@ x;
+CXNot[x_] := Not[x];
+
+
+
+CQuery[q_, lst_:"null"] := Module[{list, query},
    If[TrueQ[lst=="null"],list=collection//Keys;, list=lst];
 
   If[ListQ[q],
 
-   If[Length[q] == 3 , list = folders[q[[3]], "list"]; ];
+    If[Length[q] == 3 , list = folders[q[[3]], "list"]; ];
 
-   $$$q = q[[1]] /. {RuleDelayed :> Rr} // Evaluate;
-   $$$q = $$$q /. {Rr :> RuleDelayed};
-   $$$q = $$$q //. {RuleDelayed[x_, y_] :> 
-       If[! ListQ[x], 
-        Rule[y[[1]][If[StringQ[x], Hold[$[x]], x]], y[[2]]], y @@ x], 
-      Rule[x_, y_] :> 
-       If[ToString[y[[2, 0]]] == "List", y[[1]] @@ y[[2]], 
-        y[[1]][If[StringQ[x], Hold[$[x]], x], y[[2]]]]};
+    query = q[[1]]//Evaluate;
+    query = query /. {Not :> CNot, Or :> COr, And :> CAnd, RuleDelayed :> CApply, Rule -> CRule} /. {CRule :> CXRule};
+    query = With[{f = query}, Function[f] ] /. {CAnd :> CXAnd, COr :> CXOr, CNot :> CXNot};
+
+    query = query //. {CStamp[x_, y_] :> x[y]};
+
    
-    
-    Select[
-        list
-     ,
-     Function[$$, (Function[$, $$$q // ReleaseHold // Evaluate // 
-             ReleaseHold // Evaluate]@collection[$$]) /. {ExistHolder :> 
-          ExistOuter} // ReleaseHold]
-     , q[[2]]]
-     
 
+    With[{fun = query},
+      Select[list, Function[x, fun[collection[x] ] ], q[[2]]]
+    ]
   ,
 
-  $$$q = q /. {RuleDelayed :> Rr} // Evaluate;
-   $$$q = $$$q /. {Rr :> RuleDelayed};
-   $$$q = $$$q //. {RuleDelayed[x_, y_] :> 
-       If[! ListQ[x], 
-        Rule[y[[1]][If[StringQ[x], Hold[$[x]], x]], y[[2]]], y @@ x], 
-      Rule[x_, y_] :> 
-       If[ToString[y[[2, 0]]] == "List", y[[1]] @@ y[[2]], 
-        y[[1]][If[StringQ[x], Hold[$[x]], x], y[[2]]]]};
-   
+    query = q//Evaluate;
+    query = query /. {Not :> CNot, Or :> COr, And :> CAnd, RuleDelayed :> CApply, Rule -> CRule} /. {CRule :> CXRule};
+    query = With[{f = query}, Function[f] ] /. {CAnd :> CXAnd, COr :> CXOr, CNot :> CXNot};
+
+    query = query //. {CStamp[x_, y_] :> x[y]};
+
     
-    Select[
-        list
-     ,
-     Function[$$, (Function[$, $$$q // ReleaseHold // Evaluate // 
-             ReleaseHold // Evaluate]@collection[$$]) /. {ExistHolder :> 
-          ExistOuter} // ReleaseHold]
-     ] 
-  
+    
+    With[{fun = query},
+      Select[list, Function[x, fun[collection[x] ] ] ]
+    ]
   ]
-
-
 ];
 
 SortGroup[$$$s_, l_] :=
