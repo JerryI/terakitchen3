@@ -5,6 +5,9 @@ Import/@FileNames["*.wls", "shared"];
 (*only for the SVCORE*)
 Import["svcore/lib.wls"];
 
+(*definitions*)
+MEMORYLimit = 200 1024 1024;
+
 kitchen = (JTPClient@@Uncompress[$kitchen]) // JTPClientStart;
 
 eventlistener = JTPServer[] // JTPServerStart;
@@ -23,12 +26,23 @@ $Messages = {OpenWrite[Method -> "Toast"]};
 
 With[{symbol = Symbol[#["symbol"]], val = #["value"]}, Set[symbol, val]] &/@ $data["init"];
 
-Import[$data["task"]];
+If[MemoryConstrained[Import[$data["task"]], MEMORYLimit] === $Aborted, PushNotification["svcore/run/import", "<span style=\"badge badge-danger\">Memory limit was exeeded</span>"]; $Die];
 
 While[True, 
-    (Block[{This := $loop[#]}, $loop[#, "expression"]//ReleaseHold]; $loop[#] = .) &/@ Keys@$loop;
+    (Block[{This := $loop[#]}, If[MemoryConstrained[$loop[#, "expression"]//ReleaseHold, MEMORYLimit] === $Aborted, PushNotification["svcore/run/loop", "<span style=\"badge badge-danger\">Memory limit was exeeded</span>"] ] ]; $loop[#] = .) &/@ Keys@$loop;
     Pause[0.1];
 ];
+
+PushNotification["svcore/run/loop", "<span style=\"badge badge-danger\">loop error</span> unwanted exit of the loop. Restarting the loop"];
+
+While[True, 
+    (Block[{This := $loop[#]}, If[MemoryConstrained[$loop[#, "expression"]//ReleaseHold, MEMORYLimit] === $Aborted, PushNotification["svcore/run/loop", "<span style=\"badge badge-danger\">Memory limit was exeeded</span>"] ] ]; $loop[#] = .) &/@ Keys@$loop;
+    Pause[0.1];
+];
+
+PushNotification["svcore/run/loop", "<span style=\"badge badge-danger\">loop error</span> bye"];
+
+$Die;
 
 
 

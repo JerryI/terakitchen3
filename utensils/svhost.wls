@@ -20,7 +20,7 @@ With[{},
 
     settings["processes"][id]["pid"] = StartProcess["wolframscript"];
     WriteString[settings["processes"][id]["pid"], StringTemplate["$id = \"``\" \r\n"][id]];
-    WriteString[settings["processes"][id]["pid"], StringTemplate["$kitchen = \"``\" \r\n"][List["host" -> jtp["host"], "port" -> jtp["port"]]//Compress]];
+    WriteString[settings["processes"][id]["pid"], StringTemplate["$kitchen = \"``\" \r\n"][List["host" -> $env["domain"], "port" -> jtp["port"] ]//Compress] ];
  
     
 
@@ -83,6 +83,8 @@ ProcessCheck[id_] := With[{},
     If[settings["processes", id, "status"] == "launching",
 
         console["log", "process >> received ``", ReadString[settings["processes"][id]["pid"], EndOfBuffer]];
+
+        console["log", "process >> END OF FILE"];
 
         If[TrueQ[ProcessStatus[settings["processes", id, "pid"]] == "Finished"],
             PushNotification["SV Daemon", StringTemplate["Process `` crashed. We will try to restart it"][settings["processes"][id]["name"]]];
