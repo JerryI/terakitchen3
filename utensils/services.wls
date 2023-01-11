@@ -65,17 +65,7 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
   (*fetching for the first service*)
     
-  firstservice = FileNames[All, "services"]//First//FileNameTake;
-  unit = Get["services/"<>firstservice<>"/manifest"];
-
-  console["log", "firstservice >> name ``", firstservice];
-
-  While[!(unit["before"]//NullQ), 
-    firstservice = unit["before"];  
-    unit = Get["services/"<>firstservice<>"/manifest"];
-  ];
-
-  console["log", "firstservice >> name ``", firstservice];
+  services = Association[(#->Get["services/"<>#<>"/manifest"])&/@FileNameTake/@FileNames[All, "services"] ];
 
   (*process all files*)
   diff = args["files"];
@@ -85,15 +75,13 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
     console["log", ">> imported ``", #]/@diff;
 
-    service = firstservice;
-
     donelist={};
     sequence = {};
 
-    While[!NullQ[service],
-      unit = Get["services/"<>service<>"/manifest"];
+    Do[
+      unit = services[service];
 
-      If[SubsetQ[donelist, unit["dependencies"]] == False && args["services", service, "allowed"] === "on",
+      If[SubsetQ[donelist, unit["dependencies"] ] == False && args["services", service, "allowed"] === "on",
         console["log", "an error was occured. Dependencies are not matched!"];
         deps = "";
 
@@ -102,7 +90,6 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
         deps = StringDrop[deps,-1];
 
         PushNotification["Import", "Dependencies are not matched for "<>service<>"."<>"<br>Need: "<>deps];
-        service = unit["after"];
         Continue[];
       ];
 
@@ -114,8 +101,7 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
       console["log", "service >> name ``", service];
 
-      service = unit["after"];
-    ];
+    , {service, SortBy[services//Keys, services[#, "priority"]&]}];
 
     (*add to the folder*)
     If[args["folder"] != "Workbook",

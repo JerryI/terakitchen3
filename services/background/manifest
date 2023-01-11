@@ -1,6 +1,7 @@
 <|
    "before"->"nk",
    "after"->"previewgenerator",
+   "priority"-> 10,
    "dependencies"->{"nk"},
 
     "description"-> "Interactive background subtractor and filter",

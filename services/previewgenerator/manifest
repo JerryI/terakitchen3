@@ -1,6 +1,7 @@
 <|
     "before"->"background",
     "after"->"rabi",
+    "priority"-> 1000,
     "dependencies"->{"nk"},
 
     "description"-> "Preview generator for the front-page of the experiment",

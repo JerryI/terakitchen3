@@ -1,6 +1,7 @@
 <|
    "before"->"background",
    "after"->"rabi",
+   "priority"-> 9,
    "dependencies"->{"fourier", "refs"},
 
     "description"-> "Interactive filter (in dev)",

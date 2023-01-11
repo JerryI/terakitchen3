@@ -140,16 +140,16 @@ TDSwithoutFP[in1_, in2_, L_, trustreg_, checkregions_, first_] :=
 
   slog = nsam["phase"]; rlog = nref["phase"];
 
-  If[KeyExistsQ[nsam, "unwrapped-phase"],
+  (*If[KeyExistsQ[nsam, "unwrapped-phase"],
     Warn["phase was unwrapped"];
     nsam["phase"] = nsam["unwrapped-phase"];
     slog = nsam["unwrapped-phase"];
     
 
     transm[[All, 2]] = nsam["unwrapped-phase"] - ClusterPhase[rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
-  ,
-    transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
-  ];
+  ,*)
+    transm[[All, 2]] = ClusterPhase[slog - rlog, 1, right, PhaseTrashhold];
+  (*];*)
   
   slog = transm[[All, 2]];
 
@@ -253,15 +253,15 @@ ExtractNK[in1_, in2_, L_, trustreg_, checkregions_] := Module[
   slog = nsam["phase"]; rlog = nref["phase"];
 
 
-  If[KeyExistsQ[nsam, "unwrapped-phase"],
+  (*If[KeyExistsQ[nsam, "unwrapped-phase"],
     Warn["phase was unwrapped"] ;
     nsam["phase"] = nsam["unwrapped-phase"];
     slog = nsam["unwrapped-phase"];
 
     transm[[All, 2]] = nsam["unwrapped-phase"] - ClusterPhase[rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
-  ,
+  ,*)
     transm[[All, 2]] = ClusterPhase[slog - rlog, If[extrapolatePhase == "yes", left, 1], right, PhaseTrashhold];
-  ];  
+  (*];  *)
   slog = transm[[All, 2]];
  
 

@@ -1,6 +1,7 @@
 <|
     "before"->"fourier",
     "after"->"nk",
+    "priority"-> 0,
     "dependencies"->{"fourier", "refs"},
     
     "description"-> "Calculate the transmission &#38; phase difference.",

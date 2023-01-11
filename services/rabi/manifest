@@ -1,6 +1,7 @@
 <|
     "before"->"filter",
     "after"->"signalmodeling",
+    "priority"-> 2,
     "dependencies"->{"fourier", "refs"},
 
     "description"-> "Interactive Rabi analyser",

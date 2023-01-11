@@ -1,6 +1,7 @@
 <|
    "before"->"rabi",
    "after"->Null,
+   "priority"-> 20,
    "dependencies"->{"nk"},
 
     "description"-> "Interactive signal modeller based on extracted material parameters",

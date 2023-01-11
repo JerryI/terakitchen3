@@ -1,6 +1,7 @@
 <|
    "before"->"refs",
    "after"->"fourier",
+   "priority"-> -5,
    "dependencies"->{},
 
     "description"-> "Matches TD signals with different sampling rates and sampling windows and fix time jitter.",

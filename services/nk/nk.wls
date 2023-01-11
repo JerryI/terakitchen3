@@ -34,14 +34,13 @@ Do[
 
         {probesam, proberef} = {sam, ref};
 
-        probesam["data", "freqs"]   = probesam["data", "freqs"];
-        probesam["data", "fft"]     = probesam["data", "fft"];
-        probesam["data", "tds"]     = probesam["data", "tds"];
-        proberef["data", "freqs"]   = proberef["data", "freqs"];
-        proberef["data", "fft"]     = proberef["data", "fft"];
-        proberef["data", "tds"]     = proberef["data", "tds"];     
-        If[KeyExistsQ[probesam["data"], "unwrapped-phase"], probesam["data", "unwrapped-phase"] = With[{uuid = probesam["id"] }, CEval[ collection[uuid]["data"]["unwrapped-phase"] ] ];  ];   
-        
+        probesam["data", "freqs"]   = probesam["data"]["freqs"];
+        probesam["data", "fft"]     = probesam["data"]["fft"];
+        probesam["data", "tds"]     = probesam["data"]["tds"];
+        proberef["data", "freqs"]   = proberef["data"]["freqs"];
+        proberef["data", "fft"]     = proberef["data"]["fft"];
+        proberef["data", "tds"]     = proberef["data"]["tds"];     
+        (*If[KeyExistsQ[probesam["data"], "unwrapped-phase"], probesam["data", "unwrapped-phase"] = With[{uuid = probesam["id"] }, CEval[ collection[uuid]["data"]["unwrapped-phase"] ] ];  ]; *)
         
 
         samid = i;
@@ -419,7 +418,8 @@ ApplyToAll := (
             ref["data", "fft"]     = ref["data", "fft"];
             ref["data", "tds"]     = ref["data", "tds"];
 
-            If[KeyExistsQ[sam["data"], "unwrapped-phase"], sam["data", "unwrapped-phase"] = With[{uuid = sam["id"] }, CEval[collection[uuid]["data"]["unwrapped-phase"] ] ]; ];             
+            (*If[KeyExistsQ[sam["data"], "unwrapped-phase"], sam["data", "unwrapped-phase"] = With[{uuid = sam["id"] }, CEval[collection[uuid]["data"]["unwrapped-phase"] ] ]; ];      *)
+            (*cause a bug when open a sample file again*)       
 
             If[!thicknessCorrection || numberFP == 0,
                 If[KeyExistsQ[sam,"thickness"],

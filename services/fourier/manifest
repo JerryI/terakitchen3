@@ -1,6 +1,7 @@
 <|
    "before"->"oversampler",
    "after"->"transmittance",
+   "priority"-> -2,
    "dependencies"->{},
 
     "description"-> "Basic descrete fourier transformation of the time-domain data. It stores complex coefficients in [\"fft\"] for the each frequency in [\"freqs\"].",

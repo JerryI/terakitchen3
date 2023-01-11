@@ -1,6 +1,7 @@
 <|
     "before"->"transmittance",
     "after"->"background",
+    "priority"-> 0,
     "dependencies"->{"fourier", "refs"},
     
     "description"-> "An algorithm for the complex refractive index extraction. It stores values into [\"nk\"] as pairs. See DOI: 10.1117/12.612946",
