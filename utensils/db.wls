@@ -110,7 +110,7 @@ CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
  DeleteDuplicates@(Extract[#, {1}, Extract[#, {1, 0}] &] & /@ 
     SubValues[storage]);
 
-    PushNotification["Archiver", StringTemplate["`` items were unloaded to HDD"][cnt] ];
+    PushNotification["utensils/db/carchive", StringTemplate["`` items were unloaded to HDD"][cnt] ];
 ];
 
 CArchiveStat := Module[{cnt = 0, toarchived = 0, archived = 0, now = Now}, 
@@ -131,10 +131,7 @@ CArchiveStat := Module[{cnt = 0, toarchived = 0, archived = 0, now = Now},
     {cnt, toarchived, archived}
 ];
 
-(*db operations*)
-InList[x_, y_] := MemberQ[y, x];
-Exist[f_] := ExistHolder[f];
-ExistOuter[f_] := Hold[ToString[Evaluate[f][[0]]] != "Missing"];
+
 
 CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
     settings["backup date"] = Now;
@@ -178,8 +175,12 @@ CBackup := Module[{trash, name = "db/default-"<>ToString[dbbases["ver"]+1]},
         DeleteDirectory[#["filename"], DeleteContents->True]&/@trash;
     ];
 
-    PushNotification["DB", "A system backup was created"];
+    PushNotification["utensils/db/cbackup", "A system backup was created"];
 ];
+
+(*db operations*)
+InList[x_, y_] := MemberQ[y, x];
+Exist[x_] := Not[MissingQ[x] ];
 
 CXRule[x_, CXRule[op_, y_]] := op[x, y];
 CXRule[x_String, CXRule[op_, y_]] := CXRule[#[x], CXRule[op, y]];
@@ -209,7 +210,7 @@ CQuery[q_, lst_:"null"] := Module[{list, query},
     query = query /. {Not :> CNot, Or :> COr, And :> CAnd, RuleDelayed :> CApply, Rule -> CRule} /. {CRule :> CXRule};
     query = With[{f = query}, Function[f] ] /. {CAnd :> CXAnd, COr :> CXOr, CNot :> CXNot};
 
-    query = query //. {CStamp[x_, y_] :> x[y]};
+    query = query //. {CStamp[x_, y_] :> x[y], Equal -> SameQ};
 
    
 
@@ -222,7 +223,7 @@ CQuery[q_, lst_:"null"] := Module[{list, query},
     query = query /. {Not :> CNot, Or :> COr, And :> CAnd, RuleDelayed :> CApply, Rule -> CRule} /. {CRule :> CXRule};
     query = With[{f = query}, Function[f] ] /. {CAnd :> CXAnd, COr :> CXOr, CNot :> CXNot};
 
-    query = query //. {CStamp[x_, y_] :> x[y]};
+    query = query //. {CStamp[x_, y_] :> x[y], Equal -> SameQ};
 
     
     

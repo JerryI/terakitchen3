@@ -17,7 +17,7 @@ Import/@FileNames["lib.wls", "services", 2];
 (*check*)
 If[FileExistsQ["running.lock"],
   console["log", ">>crashed before"];
-  PushNotification["Server", "Wolfram Engine crashed. We are sorry &#128546;"];
+  PushNotification["kitchen", "Wolfram Engine crashed. We are sorry &#128546;"];
 ];
 
 (*clear pages*)
@@ -70,7 +70,7 @@ CronTasks["timestamp"] = SessionSubmit[
   Quantity[1, "Days"]]];  *)
 
 CronTasks["timestamp"] = SessionSubmit[
- ScheduledTask[PushNotification["Me", "Terakitchen betriebszeit erreicht 5 Tag &#127874;", "duration" -> Quantity[1, "Days"]],
+ ScheduledTask[PushNotification["kitchen", "Terakitchen betriebszeit erreicht 5 Tag &#127874;", "duration" -> Quantity[1, "Days"]],
   Quantity[5, "Days"]]];  
 
 CronTasks["forecast"] = SessionSubmit[

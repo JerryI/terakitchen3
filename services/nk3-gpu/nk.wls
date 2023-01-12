@@ -4,7 +4,7 @@ phaseCorr = 0;
 amplify = 1;
 thicknessAccuracy = 0; 
 
-If[Length[input] == 0, PushNotification["services/nk", "nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["NK","nothing to do..."]; $Die];
 
 (*debug*)
 If[debug, $Messages = {OpenWrite[Method -> "Toast"]} ];
@@ -28,7 +28,7 @@ Do[
         ];
 
         If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
-            PushNotification["services/nk", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
+            PushNotification["NK extractor", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
             Continue[];
         ];
 
@@ -118,7 +118,7 @@ startDialog[uuid_] := (
                 "postHandler"  -> ProcessEventEmitt[$id]
             ];
 
-            PushNotification["services/nk", "Entscheidung erforderlich. Select the range with the less absorbtion, where the FP oscillations are clear <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+            PushNotification["NK", "Entscheidung erforderlich. Select the range with the less absorbtion, where the FP oscillations are clear <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 
 
 
@@ -154,16 +154,16 @@ startDialog[uuid_] := (
         ]; 
     ]];
 
-    PushNotification["services/nk", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    PushNotification["NK", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 );
 
 Warn["anomaly refractive index"] := (
-    PushNotification["services/nk", "<span class=\"badge badge-warning\">Anomaly refractive index</span> was detected which might create an artificial features in the absorption spectrum. Please, consider to cut the noisy part of the spectrum or use <a class=\"badge badge-info\" href=\"service.wsp?id=transmittance\">transmittance</a> service instead."];
+    PushNotification["NK", "<span class=\"badge badge-warning\">Anomaly refractive index</span> was detected which might create an artificial features in the absorption spectrum. Please, consider to cut the noisy part of the spectrum or use <a class=\"badge badge-info\" href=\"service.wsp?id=transmittance\">transmittance</a> service instead."];
     Warn["anomaly refractive index"] = Null;
 );
 
 Warn["phase was unwrapped"] := (
-    PushNotification["services/nk", "<span class=\"badge badge-info\">The phase was alredy unwrapped</span> We will skip this procedure for the sample signal."];
+    PushNotification["NK", "<span class=\"badge badge-info\">The phase was alredy unwrapped</span> We will skip this procedure for the sample signal."];
     Warn["phase was unwrapped"] = Null;
 );
 
@@ -186,7 +186,7 @@ startVisor[uuuid_, ll_, rr_, st_] := (
         "eventHandler" -> ProcessEventEmitt[$id, "event"]
     ];
 
-    PushNotification["services/nk", "Webvisor. Live preview by the link <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    PushNotification["NK", "Webvisor. Live preview by the link <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
     
     EventBind["submit", Function[{cli, data},
         Switch[data["action"],
@@ -206,7 +206,7 @@ startVisor[uuuid_, ll_, rr_, st_] := (
 
             "More iterations",
                 recursionNumber = 1;
-                PushNotification["services/nk", "One more round"];
+                PushNotification["NK", "One more round"];
                 startVisor[$next, lL, rL, step];,
 
             "Continue without FP subtraction",
@@ -328,7 +328,7 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
                             , {j, 1,2}];
                         ];
 
-                        PushNotification["services/nk", StringTemplate["Search region was extended `` +/- `` mm"][10(lL + rL)/2//N, 10(rL - lL)/2//N]];
+                        PushNotification["NK", StringTemplate["Search region was extended `` +/- `` mm"][10(lL + rL)/2//N, 10(rL - lL)/2//N]];
                     ,
                         Break[];
                     ];
@@ -371,12 +371,12 @@ correctThickness[left_, right_, istep_] := (
     "nominima",
         EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[stack//Flatten]]; WebSocketSend[cli, NoMinima[]];]];
         WebSocketPublish[NoMinima[], $uid]; 
-        PushNotification["services/nk", "No minimum was found. The procedure was suspended.<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
+        PushNotification["NK", "No minimum was found. The procedure was suspended.<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
     "phaseerror",
         EventBind["event", Function[{cli, data}, WebSocketSend[cli, UpdateGraphMulti[stack//Flatten]]; WebSocketSend[cli, PhaseError[errorWithFP - sorted[[minimal, 3]]]];]];
         WebSocketPublish[PhaseError[errorWithFP - sorted[[minimal, 3]]], $uid];
-        PushNotification["services/nk", "Overcompensation was detected. FP subtraction failed. <br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
+        PushNotification["NK", "Overcompensation was detected. FP subtraction failed. <br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
     "done",
         EventBind["event", Function[{cli, data}, Null;]];
@@ -400,10 +400,10 @@ correctThickness[left_, right_, istep_] := (
             ]];
         ];  
 
-        PushNotification["services/nk", "Optimal thickness is "<>ToString[10 L //N//DecimalForm]<>" mm. TDS scaling is "<>ToString[amplify//N//DecimalForm]<>"<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
+        PushNotification["NK", "Optimal thickness is "<>ToString[10 L //N//DecimalForm]<>" mm. TDS scaling is "<>ToString[amplify//N//DecimalForm]<>"<br><a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];,
     
     "skip",
-        PushNotification["services/nk", "Stopped"];   
+        PushNotification["NK", "Stopped"];   
     ];
 
 );
@@ -411,7 +411,7 @@ correctThickness[left_, right_, istep_] := (
 ApplyToAll := (
     initialParameters = {thickness, amplify};
 
-    If[autocorrect//TrueQ, PushNotification["services/nk", "<span class=\"badge badge-success\">autocorrection is activated</span> It will take some time"]];
+    If[autocorrect//TrueQ, PushNotification["NK", "<span class=\"badge badge-success\">autocorrection is activated</span> It will take some time"]];
     
     Do[
         With[{i=it},
@@ -419,7 +419,7 @@ ApplyToAll := (
           Module[{sam = CGet[i], ref = With[{uid = i}, CEval[collection[collection[uid]["ref"]]]]},
 
             If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
-                PushNotification["services/nk", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
+                PushNotification["NK extractor", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
                 Continue[];
             ];
 
@@ -443,7 +443,7 @@ ApplyToAll := (
                    
                     variants = {};
                     resultcode = correctThicknessModule[thickness, thickness, thickness, ProcessNKQuet]
-                    PushNotification["services/nk",
+                    PushNotification["NK",
          
                             StringTemplate["autocorected <span class=\"badge badge-info\">scale=``</span> for <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>. The quality of the process graded as <i>``</i>"][
                                 amplify, i,i, resultcode
@@ -452,7 +452,7 @@ ApplyToAll := (
                     ];
                     variants = {};
                     resultcode = correctThicknessModule[thickness (1 - 0.05), thickness (1 + 0.05), thickness (0.1) / 10, ProcessNKQuet];
-                    PushNotification["services/nk",
+                    PushNotification["NK",
                         
                             StringTemplate["autocorected <span class=\"badge badge-warning\">d=`` mm</span> for <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>. The quality of the process graded as <i>``</i>"][
                                 ThicknessNormalise["mm"][thickness], i, i, resultcode
@@ -556,7 +556,7 @@ ApplyToAll := (
     , {it, samples}];   
 
     LoopSubmit[
-        PushNotification["services/nk", "Done! <style>
+        PushNotification["NK", "Done! <style>
                                         .wave {
                                           animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
                                           animation-duration: 2.5s;        /* Change to speed up or slow down */

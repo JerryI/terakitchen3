@@ -4,7 +4,7 @@ phaseCorr = 0;
 amplify = 1;
 thicknessAccuracy = 0; 
 
-If[Length[input] == 0, PushNotification["Transmittance","nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["services/transmittance","nothing to do..."]; $Die];
 
 
 
@@ -29,7 +29,7 @@ Do[
         ];
 
         If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
-            PushNotification["T extractor", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
+            PushNotification["services/transmittance", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
             Continue[];
         ];
 
@@ -127,7 +127,7 @@ startDialog[uuid_] := (
         ]; 
     ]];
 
-    PushNotification["Transmittance", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    PushNotification["services/transmittance", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 );
 
 
@@ -176,7 +176,7 @@ ApplyToAll := (
         With[{sam = CGet[i], ref = With[{uid = i}, CEval[collection[collection[uid]["ref"]]]]},
 
             If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
-                PushNotification["Transmittance", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
+                PushNotification["services/transmittance", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 
                 Continue[];
             ];
 
@@ -243,7 +243,7 @@ ApplyToAll := (
 
     , {i, samples}];   
 
-    PushNotification["Transmittance", "Done! <style>
+    PushNotification["services/transmittance", "Done! <style>
                                     .wave {
                                       animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
                                       animation-duration: 2.5s;        /* Change to speed up or slow down */

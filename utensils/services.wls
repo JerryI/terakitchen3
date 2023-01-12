@@ -26,7 +26,7 @@ CallService[args_]:=
 
       (*check errors*)
       If[StringQ[err],
-        PushNotification[args["service"], StringTemplate["An error occured. &#129488; Check the field <i> ``</i>"][err]];
+        PushNotification["utensils/services/callservice", StringTemplate["An error occured. &#129488; Check the field <i> ``</i>"][err]];
       ];
   ];
 
@@ -61,7 +61,7 @@ ValidateService[parameters_, args_] :=
 
 ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, services, item, diff, unit, pipe, firstpipe,firstservice, service, deps, sequence, err},
 
-  PushNotification["Server", "Started to process "<>ToString[args["files"]//Length]<>" files"];
+  PushNotification["utensils/services/processfiles", "Started to process "<>ToString[args["files"]//Length]<>" files"];
 
   (*fetching for the first service*)
     
@@ -71,6 +71,10 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
   diff = args["files"];
 
   err = Catch[
+    If[KeyExistsQ[args, "thickness"], 
+      If[(ThicknessNormalise["mm"][args["thickness"] ])//NumberQ,  Throw[StringTemplate["`` is not a valid thickness value"][args["thickness"] ] ] ];
+    ]; 
+
     diff = Table[ImportFile[i, args], {i, diff}];
 
     console["log", ">> imported ``", #]/@diff;
@@ -89,7 +93,7 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
         deps = StringDrop[deps,-1];
 
-        PushNotification["Import", "Dependencies are not matched for "<>service<>"."<>"<br>Need: "<>deps];
+        PushNotification["utensils/services/processfiles", "<span class=\"badge badge-danger\">Dependencies are not matched</span> for "<>service<>"."<>"<br>Need: "<>deps<>" Skipping..."];
         Continue[];
       ];
 
@@ -110,12 +114,13 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
     sequence = sequence // Flatten;
 
+
     With[{e = args["exp"]},
       Module[
         {
           parent = Hold[
             experiments[e, "date"] = Now;
-            PushNotification["Server", "Finished. Click here <br>"<>"<a class=\"btn btn-outline-info\"  href=\"http://"<>$env["addr"]<>"/experiment/index.wsp?id="<>e<>"\">open</a>"];
+            PushNotification["utensils/services/processfiles", "Finished. Click here <br>"<>"<a class=\"btn btn-outline-info\"  href=\"http://"<>$env["addr"]<>"/experiment/index.wsp?id="<>e<>"\">open</a>"];
             (*PushNotification["Server", "Backing up the database in 7 minutes..."];
             SessionSubmit[ ScheduledTask[CBackup, {Quantity[7, "Minutes"]}, AutoRemove->True] ];*)
           ]
@@ -123,7 +128,7 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
         With[{a = Join[#, <|"after"->parent|>]},
 
-          parent = Hold[SessionSubmit[CallService[a]]];
+          parent = Hold[SessionSubmit[CallService[a]] ];
 
         ]&/@Reverse[sequence];
 
@@ -134,7 +139,7 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
 
   (*checking for errors*)
   If[StringQ[err],
-    PushNotification["Import", StringTemplate["An error has occured &#128511; The evaluation was stopped <i>``</i>. Try again, please."][err]];
+    PushNotification["Import", StringTemplate["<span class=\"badge badge-danger\">An error has occured</span> &#128511; The evaluation was stopped <i>``</i>. Try again, please."][err] ];
   ];
 ];
 
@@ -191,7 +196,7 @@ ImportFile[file_, args_] := Module[{input, fields, TransferField, TransferTheRes
         If[!NumberQ[tds[[1,1]]], Throw[StringTemplate["imported cell `` is not a number"][tds[[1,1]]]]];
 
         If[Length[First@tds] > 2,
-          PushNotification["Import", StringTemplate["An extra `` columns were found. For the TD signal we will ignore them."][Length[tds[[2]]] - 2] ];
+          PushNotification["utensils/services/importfiles", StringTemplate["An extra `` columns were found. For the TD signal we will ignore them."][Length[tds[[2]]] - 2] ];
           tds = Take[#,2]&/@tds;     
         ];
 

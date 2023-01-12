@@ -2,7 +2,7 @@ Print[">> Shared Libs V1"];
 
 ShutDown := With[{}, 
     console["log", "stopping all tasks..."];
-    PushNotification["Cron", "Server was down"];
+    PushNotification["utensils/misc/shutdown", "Server was down"];
     TaskRemove/@Values@CronTasks; 
     CBackup;
     DeleteFile["running.lock"];
@@ -53,7 +53,7 @@ DefineOutputStreamMethod[
         {Length@bytes, state}] ] ] ]}
 ];
 
-Forecast := PushNotification["Weather", 
+Forecast := PushNotification["utensils/misc/weather", 
   StringDrop[(StringJoin@(StringTemplate["`` ```` C<br>"][
        CityData[#, "Name"], 
        With[{temp = 
@@ -89,5 +89,5 @@ TagCloud :=
 
   url = StringJoin["http://", $env["storagehost"], "/trashcan/", uid, 
     ".svg"]; 
-  PushNotification["Recent", StringJoin["<a href=\"recent.wsp?id=Null\">", "<img style=\"cursor:pointer\" src=\"",url,"\">", "</a>"], 
+  PushNotification["utensils/misc/recent", StringJoin["<a href=\"recent.wsp?id=Null\">", "<img style=\"cursor:pointer\" src=\"",url,"\">", "</a>"], 
    "duration" -> Quantity[12, "Hours"] ] ];

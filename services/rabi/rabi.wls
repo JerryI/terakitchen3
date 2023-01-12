@@ -1,6 +1,6 @@
 input = $data["list"];
 
-If[Length[input] == 0, PushNotification["Rabi", "nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["services/rabi", "nothing to do..."]; $Die];
 
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
@@ -40,7 +40,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
     If[plotAlpha,
         If[Not[CEval[KeyExistsQ[collection[ssamid, "data"], "alpha" ]//TrueQ ] ] ,
-            PushNotification["Rabi", "<span class=\"badge badge-warning\">no <span class=\"badge badge-light\">alpha</span> field was found</span>"];
+            PushNotification["services/rabi", "<span class=\"badge badge-warning\">no <span class=\"badge badge-light\">alpha</span> field was found</span>"];
             plotAlpha = False;
         ];
 
@@ -50,7 +50,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
        
         If[NumberQ[scale],
             tdsscale = scale;
-            PushNotification["Rabi", StringTemplate["<span class=\"badge badge-info\"> The scalling factor of <span class=\"badge badge-light\">``</span>  was found</span> It will be applied to the modelled curves."][scale] ];
+            PushNotification["services/rabi", StringTemplate["<span class=\"badge badge-info\"> The scalling factor of <span class=\"badge badge-light\">``</span>  was found</span> It will be applied to the modelled curves."][scale] ];
         ];
     ];
 
@@ -66,7 +66,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
     ];
 
 
-    PushNotification["Rabi", StringTemplate["Processing <a class=\"badge badge-info\" href=\"item/index.wsp?id=``\">``</a>"][samid, samid] ];
+    PushNotification["services/rabi", StringTemplate["Processing <a class=\"badge badge-info\" href=\"item/index.wsp?id=``\">``</a>"][samid, samid] ];
 
     
 
@@ -80,7 +80,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
         regions = sam["rabi-reg"];
 
         If[!NumberQ[First@peaks] || !NumberQ[First@peaks],
-            PushNotification["Rabi", StringTemplate["Wrong data was provided. Program was terminated. <i> `` </i> is not a number"][peaks//Compress] ];
+            PushNotification["services/rabi", StringTemplate["Wrong data was provided. Program was terminated. <i> `` </i> is not a number"][peaks//Compress] ];
             $Die;
         ];
 
@@ -98,7 +98,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
     ];
     
 
-    PushNotification["Rabi", "Let's dig for some Rabi &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    PushNotification["services/rabi", "Let's dig for some Rabi &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 
     postRedirect[next_] := Function[data, If[data["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"] ];
 
@@ -150,7 +150,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
         peaks = Sort @ (ToExpression /@ peaks);
 
         If[!NumberQ[First@range] || !NumberQ[First@peaks] || !NumberQ[First@peaks],
-            PushNotification["Rabi", StringTemplate["Wrong data was provided. Program was terminated. <i> `` or `` </i> is not a number"][range//Compress, peaks//Compress] ];
+            PushNotification["services/rabi", StringTemplate["Wrong data was provided. Program was terminated. <i> `` or `` </i> is not a number"][range//Compress, peaks//Compress] ];
             $Die;
         ];
 
@@ -208,7 +208,7 @@ startFitting := (
         "eventHandler" -> ProcessEventEmitt[$id, "event"]
     ];
 
-    PushNotification["Rabi", "Fitting procedure started <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    PushNotification["services/rabi", "Fitting procedure started <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 
     EventBind["submit", Function[{cli, data}, 
         If[data["action"] != "Ok", $Die]; 
@@ -270,13 +270,13 @@ startFitting := (
             ]
         ];
 
-        If[Length[samples] == 0, PushNotification["Rabi", "Done! Check the tickets to Stockholm &#127881;"]; $Die];
+        If[Length[samples] == 0, PushNotification["services/rabi", "Done! Check the tickets to Stockholm &#127881;"]; $Die];
 
         startDialog[$next, CGet[samples//First, "data"], samples//First];
 
         samples = Drop[samples, 1];
 
-        PushNotification["Rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
+        PushNotification["services/rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
     ]];  
 
     stack = ExportString[{{0},{0}}, "JSON"];    
@@ -297,7 +297,7 @@ startFitting := (
                    
                     Simulate;
                 ,
-                    PushNotification["Rabi", StringTemplate["Invalid input parameters! ❌`` is not a number"][badvalue]];
+                    PushNotification["services/rabi", StringTemplate["Invalid input parameters! ❌`` is not a number"][badvalue]];
                 ];
 
                 
@@ -317,17 +317,17 @@ startFitting := (
 prepareRabi := (
 
    If[MissingQ[ref = CGet[CGet[samid, "ref"], "data"]],
-        PushNotification["Rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
+        PushNotification["services/rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
         $Die;
     ];
 
     If[MissingQ[thickness = CGet[samid, "thickness"]],
         thickness = With[{id = CGet[samid, "experiment"]}, CEval[experiments[id, "thickness"]]];
-        If[MissingQ[thickness], PushNotification["Rabi", "No thickness was specified. Die."]; $Die];
+        If[MissingQ[thickness], PushNotification["services/rabi", "No thickness was specified. Die."]; $Die];
     ];
 
     thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
-    If[!NumberQ[thickness], PushNotification["Rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
+    If[!NumberQ[thickness], PushNotification["services/rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
 
     sam["tds"] = sam["tds"];
     sam["freqs"] = sam["freqs"];
@@ -449,13 +449,13 @@ fitRabi := (
 
 
     If[MissingQ[ref = CGet[CGet[samid, "ref"], "data"]],
-        PushNotification["Rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
+        PushNotification["services/rabi", StringTemplate["The problem with the reference of `` occured. Shutting down..."][samid]];
         $Die;
     ];
 
     If[MissingQ[thickness = CGet[samid, "thickness"]],
         thickness = With[{id = CGet[samid, "experiment"]}, CEval[experiments[id, "thickness"]]];
-        If[MissingQ[thickness], PushNotification["Rabi", "No thickness was specified. Die."]; $Die];
+        If[MissingQ[thickness], PushNotification["services/rabi", "No thickness was specified. Die."]; $Die];
     ];
 
     sam["tds"] = sam["tds"];
@@ -466,7 +466,7 @@ fitRabi := (
     ref["fft"] = ref["fft"];     
 
     thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
-    If[!NumberQ[thickness], PushNotification["Rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
+    If[!NumberQ[thickness], PushNotification["services/rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
 
 
     t0sam = (MaximalBy[sam["tds"], Abs[#[[2]]] &] // First // First) - 
@@ -596,7 +596,7 @@ fitRabi := (
 
      , {ll, 1, 10}];    
 
-     PushNotification["Rabi", "Auto-search has finished"]; 
+     PushNotification["services/rabi", "Auto-search has finished"]; 
 
 );
 

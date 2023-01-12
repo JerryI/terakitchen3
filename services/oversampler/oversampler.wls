@@ -1,6 +1,6 @@
 input = $data["list"];
 
-If[Length[input] == 0, PushNotification["Oversampler","nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["services/oversampler","nothing to do..."]; $Die];
 
 resample[data_, "Average", "Linear"] := Module[{nPoints, ifun, delta, t0, t1},
     {t0, t1} = #[[1]] & /@ data[[{1, -1}]];
@@ -28,7 +28,7 @@ With[{tds = CGet[#, "data", "tds"]},
 
     
     With[{plot = If[supress, "", ExportString[ListLinePlot[Differences[tds[[All,1]]], AxesLabel->"ps", ImageSize->Small, AspectRatio->1.2],"SVG"]<>"<br> <br>" ] },
-      PushNotification["Oversampler", StringTemplate["<span class=\"badge badge-warning\">Time jitter</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. ``"][#,#,plot, Round[std,0.0000001]100000, If[irregularfix//TrueQ, "A linear approximation will be applied to the average.", ""] ] ];
+      PushNotification["services/oversampler", StringTemplate["<span class=\"badge badge-warning\">Time jitter</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. ``"][#,#,plot, Round[std,0.0000001]100000, If[irregularfix//TrueQ, "A linear approximation will be applied to the average.", ""] ] ];
     ];
 
     supress = True;
@@ -47,7 +47,7 @@ initial = With[{uid = #}, CEval[ collection[uid, "data", "tds"][[ 1, 1 ]] ] ]&/@
 lengths = With[{uid = #}, CEval[ collection[uid, "data", "tds"]//Length ] ]&/@ input; 
 steps   = With[{uid = #}, CEval[ (collection[uid, "data", "tds"][[{1,-1}, 1]]//Differences//Abs//Last)/(Length[collection[uid, "data", "tds"]] - 1) ] ]&/@ input; 
 
-PushNotification["Oversampler", 
+PushNotification["services/oversampler", 
 "<table>
     <thead>
         <tr>
@@ -76,7 +76,7 @@ With[{if = ifuns},
 ];
 
 
-PushNotification["Oversampler", StringTemplate["Resampling all to <span class=\"badge badge-info\">`` ps</span> with <span class=\"badge badge-info\">`` ps</span> window"][newstep, newwindow] ];
+PushNotification["services/oversampler", StringTemplate["Resampling all to <span class=\"badge badge-info\">`` ps</span> with <span class=\"badge badge-info\">`` ps</span> window"][newstep, newwindow] ];
 
 
 
@@ -102,7 +102,7 @@ Do[
 (*checking the lengths*)
 lengths = With[{uid = #}, CEval[ collection[uid, "data", "tds"]//Length ] ]&/@ input; 
 
-PushNotification["Oversampler", "The new lengths are "<>StringJoin[Table[StringTemplate["<span class=\"adge badge-light\">``</span> "][i], {i, lengths}] ]<>" points. Done"];
+PushNotification["services/oversampler", "The new lengths are "<>StringJoin[Table[StringTemplate["<span class=\"adge badge-light\">``</span> "][i], {i, lengths}] ]<>" points. Done"];
 
 (*check consistensy*)
 With[{tds = CGet[#, "data", "tds"]},
@@ -110,7 +110,7 @@ With[{tds = CGet[#, "data", "tds"]},
 
     
     With[{plot = If[supress, "", ExportString[ListLinePlot[Differences[tds[[All,1]]], AxesLabel->"ps", ImageSize->Small, AspectRatio->1.2],"SVG"]<>"<br> <br>" ] },
-      PushNotification["Oversampler Debug", StringTemplate["<span class=\"badge badge-warning\">Irregular samplerate</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. A linear approximation will be applied to the average."][#,#,plot, Round[std,0.0000001]100000] ];
+      PushNotification["services/oversampler", StringTemplate["<span class=\"badge badge-warning\">Irregular samplerate</span> was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>.  `` The standart deviation is <span class=\"badge badge-info\">``E5</span>. A linear approximation will be applied to the average."][#,#,plot, Round[std,0.0000001]100000] ];
     ];
 
     supress = True;

@@ -3,7 +3,7 @@ iterator = 1;
 globalpoints = {};
 
 
-If[Length[$data["list"]] == 0, PushNotification["Background","nothing to do..."]; $Die];
+If[Length[$data["list"]] == 0, PushNotification["services/background","nothing to do..."]; $Die];
 
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
@@ -72,10 +72,10 @@ startDialog[uuid_, ssam_, ssamid_] := (
     If[tdswrite,
     
         ref = CGet[samid, "ref"];
-        If[!StringQ[ref], PushNotification["Background", "No refs found! 🛠"]; tdswrite = False; ];
+        If[!StringQ[ref], PushNotification["services/background", "No refs found! 🛠"]; tdswrite = False; ];
         ref = CGet[ref, "data"];
 
-        If[!AssociationQ[ref],  PushNotification["Background", "No refs found! 🛠"]; tdswrite = False; ];
+        If[!AssociationQ[ref],  PushNotification["services/background", "No refs found! 🛠"]; tdswrite = False; ];
     ];
 
     $next = CreateUUID[];
@@ -132,7 +132,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
         
 
         If[Length[samples] == 0,
-            PushNotification["Background", "Done"];
+            PushNotification["services/background", "Done"];
             $Die;
         ];
 
@@ -161,7 +161,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
 startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
 samples = Drop[samples, 1];
 
-PushNotification["Background", "Open an editor <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+PushNotification["services/background", "Open an editor <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 
 
             

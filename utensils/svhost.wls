@@ -87,9 +87,9 @@ ProcessCheck[id_] := With[{},
         console["log", "process >> END OF FILE"];
 
         If[TrueQ[ProcessStatus[settings["processes", id, "pid"]] == "Finished"],
-            PushNotification["SV Daemon", StringTemplate["Process `` crashed. We will try to restart it"][settings["processes"][id]["name"]]];
+            PushNotification["utensils/svhost/processcheck", StringTemplate["Process `` crashed. We will try to restart it"][settings["processes"][id]["name"]]];
         ,
-            PushNotification["SV Daemon", StringTemplate["Process `` is freezed. We will try to restart it"][settings["processes"][id]["name"]]];
+            PushNotification["utensils/svhost/processcheck", StringTemplate["Process `` is freezed. We will try to restart it"][settings["processes"][id]["name"]]];
         ];
 
         KillProcess[settings["processes", id, "pid"]];
@@ -101,7 +101,7 @@ ProcessCheck[id_] := With[{},
 
 
         If[settings["processes"][id]["trials"] > 2,
-            PushNotification["SV Daemon", StringTemplate["Process `` cannot be created for some reason. We are sorry."][settings["processes"][id]["name"]]];
+            PushNotification["utensils/svhost/processcheck", StringTemplate["Process `` cannot be created for some reason. We are sorry."][settings["processes"][id]["name"]]];
             ProcessUpdateStatus[id, "failed"];
             settings["processes"][id] = .;
 

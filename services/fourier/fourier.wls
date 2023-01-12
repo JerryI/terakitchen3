@@ -1,6 +1,6 @@
 input = $data["list"];
 
-If[Length[input] == 0, PushNotification["Fourier","nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["services/fourier","nothing to do..."]; $Die];
 
 FFT := (
     samplerate = First[Round[1/Abs[Differences[$sample[[1 ;; 2]][[All,1]]]]]]; 
@@ -59,9 +59,9 @@ Module[{},
     (*check consistensy*)
     If[(std = StandardDeviation@Differences@($sample[[All,1]])) > 0.00008,
       With[{plot = ExportString[ListLinePlot[Differences[$sample[[All,1]]], AxesLabel->"ns", ImageSize->Small, AspectRatio->1.2],"SVG"] },
-        PushNotification["Fourier", StringTemplate["Irregular samplerate was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>. <br> <br> `` <br> The standart deviation is <span class=\"badge badge-info\">``E5</span>. A linear approximation will be applied."][#,#,plot, Round[std,0.0000001]100000 ] ];
+        PushNotification["services/fourier", StringTemplate["Irregular samplerate was detected in <a href=\"item/index.wsp?id=``\" class=\"badge badge-light\">``</a>. <br> <br> `` <br> The standart deviation is <span class=\"badge badge-info\">``E5</span>. You shoud consider to rerun it with an <a class=\"badge badge-info\" href=\"service.wsp?id=oversampler\">oversampler</a>"][#,#,plot, Round[std,0.0000001]100000 ] ];
       ];
-      NUFFT;
+      If[interpolate === True, NUFFT, FFT];
     ,
       FFT
     ];    
@@ -77,7 +77,7 @@ Module[{},
   ];
 ] &  /@ input; 
           
-PushNotification["Fourier", "Fourier transform is done"]; 
+PushNotification["services/fourier", "Fourier transform is done"]; 
 
 $Die;
 

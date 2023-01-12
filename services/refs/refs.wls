@@ -7,7 +7,7 @@ manualsamples = CQuery["$manual" :> Exist -> Equal -> True, $data["list"] ];
 
 samples = CQuery["type" -> Equal -> "sample", $data["list"]];
 
-If[Length[samples] == 0 && Length[manualsamples] == 0, PushNotification["Ref","nothing to do..."]; $Die];
+If[Length[samples] == 0 && Length[manualsamples] == 0, PushNotification["services/ref","nothing to do..."]; $Die];
 
 Module[{refs, sm}, 
   sm = CGet[#]; 
@@ -39,7 +39,7 @@ Module[{refs, sm},
 norefs = CQuery[{"ref" -> Equal -> "noref"} :> And, samples]; 
 norefs = Join[norefs, manualsamples];
 
-If[Length[norefs] == 0, PushNotification["Ref", StringTemplate["`` samples and references are connected"][samples//Length]]; $Die];
+If[Length[norefs] == 0, PushNotification["services/ref", StringTemplate["`` samples and references are connected"][samples//Length]]; $Die];
 
 (*norefs*)
 
@@ -51,7 +51,7 @@ CreatePage[
 
 EventBind["submit", Function[{cli, data}, ConnectRest[data]; $Die]];
 
-PushNotification["Ref", StringTemplate["We coundn't connect all samples and references. Please, try to do it manually for the remaining part <a class=\"btn btn-outline-info\" href=\"window.wsp?id=``\">Fix</a>"][$uid]];
+PushNotification["services/ref", StringTemplate["We coundn't connect all samples and references. Please, try to do it manually for the remaining part <a class=\"btn btn-outline-info\" href=\"window.wsp?id=``\">Fix</a>"][$uid]];
 
 ConnectRest[input_] := Module[{data = input},
   If[data["action"] === "Ok",

@@ -4,7 +4,7 @@
     "priority"-> 0,
     "dependencies"->{"fourier", "refs"},
     
-    "description"-> "An algorithm for the complex refractive index extraction. It stores values into [\"nk\"] as pairs. See DOI: 10.1117/12.612946",
+    "description"-> "GPU accelerated algorithm for the complex refractive index extraction and the thickness/amplitude correction. It stores values into [\"nk\"] as pairs. See DOI: 10.1117/12.612946",
     "parameters"-> {
         <|
             "symbol"->"iterations",

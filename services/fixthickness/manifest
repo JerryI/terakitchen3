@@ -1,0 +1,15 @@
+<|
+   "priority"-> 100,
+   "dependencies"->{},
+
+
+    "description"-> "Things got messy? Tired to compare um and mm? Use this tool to fix the units of the thickness",
+    "parameters"-> {   
+        <|
+            "symbol"->"units", 
+            "desc"->"The default units. Enter cm, mm or um", 
+            "value"-> "mm",
+            "type"->"text"
+        |>  
+    }
+|>

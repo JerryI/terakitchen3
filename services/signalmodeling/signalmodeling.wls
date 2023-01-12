@@ -1,6 +1,6 @@
 input = $data["list"];
 
-If[Length[input] == 0, PushNotification["Signal modeling", "nothing to do..."]; $Die];
+If[Length[input] == 0, PushNotification["services/signalmodelling", "nothing to do..."]; $Die];
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
 Import["services/signalmodeling/functions.wls"];
@@ -135,7 +135,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
     method = "alpha";
 
     If[!KeyExistsQ[sample, "alpha"],
-        PushNotification["Signalmodelling", "<span class=\"badge badge-info\">alpha field is absent</span> The transmittance filed will be used instead."];
+        PushNotification["services/signalmodelling", "<span class=\"badge badge-info\">alpha field is absent</span> The transmittance filed will be used instead."];
         method = "transmission";
     ];   
 
@@ -172,7 +172,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
         startDialog[$next, CGet[samples//First, "data"], samples//First];
         samples = Drop[samples, 1];
 
-        PushNotification["Signal modeling", "Dialog window &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+        PushNotification["services/signalmodelling", "Dialog window &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
     ]];   
 
     EventBind["event", Function[{cli, data}, 
@@ -213,4 +213,4 @@ fpmodel = True;
 startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
 samples = Drop[samples, 1];
 
-PushNotification["Signal modeling", "Dialog window &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+PushNotification["services/signalmodelling", "Dialog window &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
