@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center">
+            <div class="col-lg-10 col-md-8 mx-left">
+              <h2 class="fw-light">Window is loading...</h2>
+            
+
+             <div id="cooking">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div id=area>
+            <div id="sides">
+                <div id="pan"></div>
+                <div id="handle"></div>
+            </div>
+            <div id="pancake">
+                <div id="pastry"><img height="88" id="logoico" src="http://<?wsp  $env["storagehost"] ?>/mathematicaIcon.svg" /></div>
+            </div>
+        </div>
+    </div>
+
+            </div>
+        </div>    
+    </div> 

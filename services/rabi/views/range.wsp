@@ -15,7 +15,7 @@
           
           
       
-          <form action="window.wsp" method="post" id="dialog">
+          <form action="wpost.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">
             <input type="number" step=any name="lpeak" value=0 id="lpeak">
             <input type="number" step=any name="rpeak" value=0 id="rpeak">
@@ -33,14 +33,15 @@
   </div>
  
   <script>
-    var tds = document.getElementById('tds');
-    var fft = document.getElementById('fft');
+    {
+    let tds = document.getElementById('tds');
+    let fft = document.getElementById('fft');
 
-    var color1      = '#7b3294';
+    let color1      = '#7b3294';
 
-    var color1Light = '#c2a5cf';
-    var colorX      = '#ffa7b5';
-    var colorY      = '#fdae61';
+    let color1Light = '#c2a5cf';
+    let colorX      = '#ffa7b5';
+    let colorY      = '#fdae61';
 
     let data = 
             {
@@ -161,9 +162,9 @@
     }
 
     function check() {
-        var points = document.getElementById('points').value;
+        let points = document.getElementById('points').value;
 
-        var q = `
+        let q = `
                 PageEmitt["<?wsp $uid ?>"]["${points}"]
                 `;
 
@@ -172,4 +173,21 @@
           
         socket.send(q);
     }
+
+    document.getElementById('dialog').addEventListener('submit', e => {
+
+// Store reference to form to make later code easier to read
+const form = e.target;
+
+// Post data using the Fetch API
+fetch(form.getAttribute("action"), {
+  method: form.method,
+  body: new FormData(form)
+})
+
+// Prevent the default form submit
+e.preventDefault();
+});      
+    
+}  
   </script>

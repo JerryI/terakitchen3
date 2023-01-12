@@ -8,7 +8,7 @@
     
           <div id="plot"></div>
 
-          <form action="window.wsp" method="post" id="dialog">
+          <form action="wpost.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">
 
             <div class="form-group">
@@ -84,6 +84,7 @@
 
 
   <script>
+    {
         let fq = <?wsp ExportString[fq//N,"JSON"] ?>;
 
         let data1 = {
@@ -126,7 +127,7 @@
 
         
 
-        var id = '<?wsp $uid ?>';
+        let id = '<?wsp $uid ?>';
 
 
         Plotly.newPlot('plot', [data1, data2], layout);
@@ -170,4 +171,20 @@
             socket.send(q);
             //
         }
+
+        document.getElementById('dialog').addEventListener('submit', e => {
+
+// Store reference to form to make later code easier to read
+const form = e.target;
+
+// Post data using the Fetch API
+fetch(form.getAttribute("action"), {
+  method: form.method,
+  body: new FormData(form)
+})
+
+// Prevent the default form submit
+e.preventDefault();
+});    
+    }     
   </script>

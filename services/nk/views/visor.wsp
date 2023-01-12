@@ -10,7 +10,7 @@
 
           <div id="debug"></div>
 
-          <form action="window.wsp" method="post" id="dialog">
+          <form action="wpost.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">   
   
             <div style="display:none" class="form-group" id="thicknessField">
@@ -52,15 +52,16 @@
 
 
   <script>
-    var graphDiv = document.getElementById('plot');
+    {
+    let graphDiv = document.getElementById('plot');
 
 
 
-    var color1 = '#7b3294';
+    let color1 = '#7b3294';
 
-    var color1Light = '#c2a5cf';
-    var colorX = '#ffa7b5';
-    var colorY = '#fdae61';
+    let color1Light = '#c2a5cf';
+    let colorX = '#ffa7b5';
+    let colorY = '#fdae61';
 
     Plotly.plot(graphDiv, [{
         type: 'scatter',
@@ -105,7 +106,7 @@
                 zeroline: true,
             }});
 
-    var id = '<?wsp $uid ?>';
+    let id = '<?wsp $uid ?>';
 
     function onLoad() {
         console.log("onload");
@@ -267,5 +268,19 @@
 
     onLoad();
 
+    document.getElementById('dialog').addEventListener('submit', e => {
 
+        // Store reference to form to make later code easier to read
+        const form = e.target;
+
+        // Post data using the Fetch API
+        fetch(form.getAttribute("action"), {
+          method: form.method,
+          body: new FormData(form)
+        })
+
+        // Prevent the default form submit
+        e.preventDefault();
+    });
+}
   </script>

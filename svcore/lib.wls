@@ -18,7 +18,12 @@ Protect[storage];
 
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 
+
 CreatePage[xs___] := JTPClientEvaluate[kitchen, CreatePage[xs]];
+PageDelete[id_] := JTPClientEvaluate[kitchen, DeletePage[id]];
+DeletePage[id_] := JTPClientEvaluate[kitchen, DeletePage[id]];
+PagePlaceholder[xs___] := JTPClientEvaluate[kitchen, PagePlaceholder[xs]];
+
 EventBind[type_, handler_] := (EventHandlers[type] = handler);
 EmittedEvent[type_, cli_, data_] := Withh[{err=MemoryConstrained[EventHandlers[type][cli, data], MEMORYLimit]}, If[err === $Aborted, PushNotification["svcore/lib/eventemitt", StringTemplate["<span style=\"badge badge-danger\">Event handler failed</span> <i>``</i>."]["Out of Memory"] ]; ] ];
 

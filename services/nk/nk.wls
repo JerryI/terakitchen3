@@ -12,6 +12,8 @@ If[debug, $Messages = {OpenWrite[Method -> "Toast"]} ];
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
 Import["services/nk/functions.wls"];
 
+$uid = CreateUUID[];
+
 samples = CQuery[{"type"->Equal->"sample"}:>And, input];
 console["log", "number: "<>ToString[samples//Length]];
 
@@ -49,11 +51,7 @@ Do[
     ]
 , {i, samples}];
 
-$uid = CreateUUID[];
-
 startDialog[uuid_] := (
-    $uid = uuid;
-
     result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
 
     If[Min[result[[2]][[All,2,1]]] < 0, Warn["anomaly refractive index"] ];
@@ -84,8 +82,11 @@ startDialog[uuid_] := (
         "eventHandler" -> ProcessEventEmitt[$id, "event"]
     ];
 
+    Warn["start"];
+
     EventBind["submit", Function[{cli, data}, 
-        If[data["action"] != "Ok", $Die];
+        If[data["action"] != "Ok", PageDelete[$uid]; $Die];
+        PagePlaceholder[$uid];
 
         {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = ToExpression/@data/@{"lo","hi","fp","ph","amp", "phtresh"};
 
@@ -95,10 +96,9 @@ startDialog[uuid_] := (
 
         If[!thicknessCorrection,
             ApplyToAll;
-            LoopSubmit[$Die];
+            LoopSubmit[PageDelete[$uid]; $Die];
         ,
-            $uid = $next;
-            $next = CreateUUID[];
+
 
             result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}][[2]];
 
@@ -118,11 +118,9 @@ startDialog[uuid_] := (
                 "postHandler"  -> ProcessEventEmitt[$id]
             ];
 
-            PushNotification["services/nk", "Entscheidung erforderlich. Select the range with the less absorbtion, where the FP oscillations are clear <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
-
-
 
             EventBind["submit", Function[{cli, data},  
+                PagePlaceholder[$uid];
                 deviation = data["dev"]//ToExpression;
                 recursionNumber = data["recur"]//ToExpression; 
 
@@ -154,7 +152,6 @@ startDialog[uuid_] := (
         ]; 
     ]];
 
-    PushNotification["services/nk", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 );
 
 Warn["anomaly refractive index"] := (
@@ -167,10 +164,14 @@ Warn["phase was unwrapped"] := (
     Warn["phase was unwrapped"] = Null;
 );
 
+Warn["start"] := (
+    PushNotification["services/nk", "Entscheidung erforderlich. Set up the procedure <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+    Warn["start"] = Null;
+);
+
 
 startVisor[uuuid_, ll_, rr_, st_] := (
-    $uid = uuuid;
-    $next = CreateUUID[];
+
 
     postRedirect[next_] := Function[data, If[data["action"]==="Ok" || data["action"]==="Cancel" || data["action"]==="Continue without FP subtraction", "index.wsp", "window.wsp?id="<>next]];
     content = LoadPage["services/nk/views/visor.wsp"];
@@ -185,19 +186,18 @@ startVisor[uuuid_, ll_, rr_, st_] := (
         "postHandler"  -> ProcessEventEmitt[$id],
         "eventHandler" -> ProcessEventEmitt[$id, "event"]
     ];
-
-    PushNotification["services/nk", "Webvisor. Live preview by the link <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
-    
+  
     EventBind["submit", Function[{cli, data},
+        PagePlaceholder[$uid];
         Switch[data["action"],
             "Cancel",
                 TaskAbort[process];
-                $Die,
+                PageDelete[$uid]; $Die,
 
             "Ok",
                 thickness = L;
                 ApplyToAll; 
-                LoopSubmit[$Die];
+                LoopSubmit[PageDelete[$uid]; $Die];
                 ,
 
             "Retry",
@@ -212,7 +212,7 @@ startVisor[uuuid_, ll_, rr_, st_] := (
             "Continue without FP subtraction",
                 numberFP = 0;
                 ApplyToAll; 
-                LoopSubmit[$Die];
+                LoopSubmit[PageDelete[$uid]; $Die];
                 ,
 
             "Continue with a new thickness",
@@ -256,16 +256,17 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
     rL = right;
     step = istep;
     L = thickness;
+    PushNotification["services/nk", "started"];
 
     variants = {};
 
     Module[{},
       If[lL == rL,
 
-        If[This["status"] != "running", Return["skip", Module]];
+        If[This["status"] != "running", Return["skip", Module] ];
 
         Do[
-            If[This["status"] != "running", Break[]];
+            If[This["status"] != "running", Break[] ];
 
             amplify = scale;
 
@@ -287,12 +288,13 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
       
       ,
         (*go recursively*)
+        PushNotification["services/nk", "reqursion started"];
         Do[
             trials = 0;
             (*probe every point*)
 
             Do[
-                If[This["status"] != "running", Break[]];
+                If[This["status"] != "running", Break[] ];
 
                 (*skip existing*)
                 (*If[(Length@Select[#["thickness"] & /@ Flatten[variants], (Abs[# - LL] < (LL/15/8)) &]) > 0, Continue[]];*)
@@ -301,7 +303,7 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
             , {LL, lL, rL, step}];
 
             While[trials < 3,
-                If[This["status"] != "running", Break[]];
+                If[This["status"] != "running", Break[] ];
                 variants = variants // Flatten;
 
                 (*analyse it*)
@@ -317,25 +319,25 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
                         If[minimal <= 2,
                             Do[
                                 lL = lL - dL;
-                                If[This["status"] != "running", Return["skip", Module]];
+                                If[This["status"] != "running", Return["skip", Module] ];
                                 processing@First@ExtractNK[probesam["data"], proberef["data"], lL, {locutoff, hicutoff}, checkregion];
                             , {j, 1,2}];
                         ,
                             Do[
                                 rL = rL + dL;
-                                If[This["status"] != "running", Return["skip", Module]];
+                                If[This["status"] != "running", Return["skip", Module] ];
                                 processing@First@ExtractNK[probesam["data"], proberef["data"], rL, {locutoff, hicutoff}, checkregion];
                             , {j, 1,2}];
                         ];
 
-                        PushNotification["services/nk", StringTemplate["Search region was extended `` +/- `` mm"][10(lL + rL)/2//N, 10(rL - lL)/2//N]];
+                        PushNotification["services/nk", StringTemplate["Search region was extended `` +/- `` mm"][10(lL + rL)/2//N, 10(rL - lL)/2//N] ];
                     ,
                         Break[];
                     ];
                 ];
             ];
 
-            If[This["status"] != "running", Return["skip", Module]];
+            If[This["status"] != "running", Return["skip", Module] ];
 
             (*check number of trials*)
             If[trial >= 3,
@@ -357,6 +359,7 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
 
         thicknessAccuracy = ToString[10 step/2 //N// DecimalForm]<>" mm";
         thickness = L;
+        PushNotification["services/nk", "finished"];
 
         Return["done", Module];
       ];
@@ -365,7 +368,10 @@ correctThicknessModule[left_, right_, istep_, processing_: ProcessNK] := (
 
 correctThickness[left_, right_, istep_] := (
     Switch[
-        correctThicknessModule[left, right, istep]
+        With[{state=correctThicknessModule[left, right, istep]},
+            PushNotification["services/nk", "state: "<>state];
+            state
+        ]
     ,
     
     "nominima",

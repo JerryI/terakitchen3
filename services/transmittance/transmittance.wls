@@ -6,6 +6,7 @@ thicknessAccuracy = 0;
 
 If[Length[input] == 0, PushNotification["services/transmittance","nothing to do..."]; $Die];
 
+$uid = CreateUUID[];
 
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
@@ -40,10 +41,10 @@ Do[
     ]
 , {i, samples}];
 
-$uid = CreateUUID[];
+
 
 startDialog[uuid_] := (
-    $uid = uuid;
+
 
     result = ExtractTransmittance[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}];
 
@@ -77,7 +78,9 @@ startDialog[uuid_] := (
     ];
 
     EventBind["submit", Function[{cli, data}, 
-        If[data["action"] != "Ok", $Die];
+        If[data["action"] != "Ok", PageDelete[$uid]; $Die];
+
+        PagePlaceholder[$uid];
 
         {locutoff, hicutoff, phaseCorr, amplify, PhaseTrashhold} = ToExpression/@data/@{"lo","hi","ph","amp", "phtresh"};
 
@@ -107,7 +110,9 @@ startDialog[uuid_] := (
             
                       
         ,
+            PageDelete[$uid];
             ApplyToAll;
+            
             $Die;        
         ];
 
@@ -127,7 +132,6 @@ startDialog[uuid_] := (
         ]; 
     ]];
 
-    PushNotification["services/transmittance", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 );
 
 
@@ -271,4 +275,7 @@ ApplyToAll := (
 
 startDialog[$uid];
 If[askall, samples = Drop[samples, 1] ];
+
+PushNotification["services/transmittance", "Entscheidung erforderlich. Check the range <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
+
 

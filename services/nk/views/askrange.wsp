@@ -8,7 +8,7 @@
     
           <div id="plot"></div>
 
-          <form action="window.wsp" method="post" id="dialog">
+          <form action="wpost.wsp" method="post" id="dialog3">
             <input type="hidden" name="id" value="<?wsp $uid ?>">
 
             <div class="form-group">
@@ -81,8 +81,8 @@
 
           <button class="btn btn-secondary" onclick="check()">Update preview</button>
 
-          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
-          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog3" >
+          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog3" >
   
      
           <p class="lead text-muted">By clicking submit you will apply the same settings for all spectras.</p>
@@ -92,6 +92,7 @@
 
 
   <script>
+    {
         let data1 = {
             x: <?wsp ExportString[DropHalf@alpha[[1]],"JSON"]   ?>,
             y: <?wsp ExportString[DropHalf@alpha[[2]],"JSON"] ?>,
@@ -144,7 +145,7 @@
 
         
 
-        var id = '<?wsp $uid ?>';
+        let id = '<?wsp $uid ?>';
 
         <?wsp If[fpnumber > 0 , ?>
             Plotly.newPlot('plot', [data1, data3, data2 ], layout);
@@ -199,4 +200,22 @@
             socket.send(q);
             //
         }
+
+        document.getElementById('dialog3').addEventListener('submit', e => {
+
+            // Store reference to form to make later code easier to read
+            const form = e.target;
+            console.log(form);
+            console.log(form.action);
+
+            // Post data using the Fetch API
+            fetch(form.getAttribute("action"), {
+              method: form.method,
+              body: new FormData(form)
+            })
+
+            // Prevent the default form submit
+            e.preventDefault();
+        });   
+    }     
   </script>

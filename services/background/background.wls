@@ -5,7 +5,7 @@ globalpoints = {};
 
 If[Length[$data["list"]] == 0, PushNotification["services/background","nothing to do..."]; $Die];
 
-
+$uid = CreateUUID[];
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
 
 samples = CQuery[{"type"->Equal->"sample"}:>And, $data["list"]];
@@ -65,7 +65,7 @@ GenTDS[cutted_] := Module[{nk = sam["nk"], thickness},
 ];
 
 startDialog[uuid_, ssam_, ssamid_] := (
-    $uid = uuid;
+
     sam = ssam;
     samid = ssamid;
 
@@ -78,7 +78,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
         If[!AssociationQ[ref],  PushNotification["services/background", "No refs found! 🛠"]; tdswrite = False; ];
     ];
 
-    $next = CreateUUID[];
+    
 
     If[Length[samples] > 1,
         postRedirect[next_] := Function[d, If[d["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"]]; 
@@ -106,7 +106,8 @@ startDialog[uuid_, ssam_, ssamid_] := (
     ];
 
     EventBind["submit", Function[{cli, data}, 
-        If[data["action"] != "Ok", $Die];
+        If[data["action"] != "Ok", PageDelete[$uid]; $Die];
+        PagePlaceholder[$uid];
 
         globalpoints = With[{new = ImportString[data["points"],"JSON"]},  If[Length[new] == 0, globalpoints,  (MinMax /@ FindClusters[new, CriterionFunction -> "CalinskiHarabasz"])]];
         cutoff = ToExpression[data["cut"]];
@@ -133,6 +134,7 @@ startDialog[uuid_, ssam_, ssamid_] := (
 
         If[Length[samples] == 0,
             PushNotification["services/background", "Done"];
+            PageDelete[$uid];
             $Die;
         ];
 

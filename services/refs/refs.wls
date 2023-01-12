@@ -49,7 +49,7 @@ CreatePage[
     "postHandler"->ProcessEventEmitt[$id]
 ];  
 
-EventBind["submit", Function[{cli, data}, ConnectRest[data]; $Die]];
+EventBind["submit", Function[{cli, data}, ConnectRest[data]; PageDelete[$uid]; $Die]];
 
 PushNotification["services/ref", StringTemplate["We coundn't connect all samples and references. Please, try to do it manually for the remaining part <a class=\"btn btn-outline-info\" href=\"window.wsp?id=``\">Fix</a>"][$uid]];
 

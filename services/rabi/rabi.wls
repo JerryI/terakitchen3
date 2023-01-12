@@ -5,6 +5,8 @@ If[Length[input] == 0, PushNotification["services/rabi", "nothing to do..."]; $D
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
 
+$uid = CreateUUID[];
+
 samples = CQuery[{"type"->Equal->"sample"}:>And, input];
 console["log", "number: "<>ToString[samples//Length]];
 
@@ -34,7 +36,7 @@ tdsscale = 1;
 startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
 
-    $uid = uuid;
+   
     sam = ssam;
     samid = ssamid;
 
@@ -74,7 +76,7 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
     (*need a fool check*)
     If[noSurgery,
-        $next = $uid;
+  
 
         peaks = {sam["rabi-fit-freq"] - (sam["rabi-splitting"]/2), sam["rabi-fit-freq"]+(sam["rabi-splitting"]/2)};
         regions = sam["rabi-reg"];
@@ -138,7 +140,9 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
 
     EventBind["submit", Function[{cli, data}, 
-        If[data["action"] != "Ok", $Die];
+        If[data["action"] != "Ok", PageDelete[$uid]; $Die];
+
+        PagePlaceholder[$uid];
 
     
 
@@ -183,7 +187,7 @@ startFitting := (
     fourier[sam["tds"][[regions[[1]] ;; regions[[2]]]]];
 
 
-    $uid = $next;
+
     $next = CreateUUID[];
 
     prepareRabi;
@@ -211,9 +215,9 @@ startFitting := (
     PushNotification["services/rabi", "Fitting procedure started <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
 
     EventBind["submit", Function[{cli, data}, 
-        If[data["action"] != "Ok", $Die]; 
+        If[data["action"] != "Ok", PageDelete[$uid]; $Die]; 
 
-
+        PagePlaceholder[$uid];
 
         EventBind["event", Function[{cli, data}, Null;]];
         EventBind["submit", Function[{cli, data}, Null;]];
@@ -270,13 +274,13 @@ startFitting := (
             ]
         ];
 
-        If[Length[samples] == 0, PushNotification["services/rabi", "Done! Check the tickets to Stockholm &#127881;"]; $Die];
+        If[Length[samples] == 0, PushNotification["services/rabi", "Done! Check the tickets to Stockholm &#127881;"]; PageDelete[$uid]; $Die];
 
         startDialog[$next, CGet[samples//First, "data"], samples//First];
 
         samples = Drop[samples, 1];
 
-        PushNotification["services/rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
+        
     ]];  
 
     stack = ExportString[{{0},{0}}, "JSON"];    
@@ -679,4 +683,6 @@ Simulate := (
 
 startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
 samples = Drop[samples, 1];
+
+PushNotification["services/rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
 

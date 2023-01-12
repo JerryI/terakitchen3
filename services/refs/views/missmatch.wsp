@@ -7,7 +7,7 @@
     
          
 
-          <form action="window.wsp" method="post" id="dialog">
+          <form action="wpost.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">
 
             <?wsp Table[ ?>
@@ -41,11 +41,24 @@
   </div>
 
   <script>
-    function check() {
-      socket.send('PageEmitt["<?wsp $uid ?>"]["A random message"]');
-    }
+
 
     core.UpdateField = function(args, env) {
       document.getElementById("param").value = interpretate(args[0]);
     }
+
+    document.getElementById('dialog').addEventListener('submit', e => {
+
+    // Store reference to form to make later code easier to read
+    const form = e.target;
+
+    // Post data using the Fetch API
+    fetch(form.getAttribute("action"), {
+      method: form.method,
+      body: new FormData(form)
+    })
+
+    // Prevent the default form submit
+    e.preventDefault();
+    });     
   </script>

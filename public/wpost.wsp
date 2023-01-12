@@ -1,0 +1,15 @@
+<?wsp
+    If[session["method"] == "POST",
+        
+        session["dynID"] = session["data"]["id"];
+
+        session["Redirect"] = "index.wsp";
+
+        window[session["dynID"], "postHandler"]@@{Null, session["data"]};
+        
+        console["log", ">>>>>>>>>>>>>> redirecting to ``", session["Redirect"]];
+        "300"
+    ,
+        "don't go here via GET"
+    ]
+?>

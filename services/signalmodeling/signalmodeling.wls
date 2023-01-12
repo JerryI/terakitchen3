@@ -168,9 +168,14 @@ startDialog[uuid_, ssam_, ssamid_] := (
             ];            
         ]; 
 
+        PageDelete[$uid];
+        $Die;
+
         If[Length[samples] == 0, $Die];
         startDialog[$next, CGet[samples//First, "data"], samples//First];
         samples = Drop[samples, 1];
+
+
 
         PushNotification["services/signalmodelling", "Dialog window &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];
     ]];   

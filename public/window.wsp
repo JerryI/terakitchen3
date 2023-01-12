@@ -1,22 +1,4 @@
-<?wsp
-    If[session["method"] == "POST",
-        
-        session["dynID"] = session["data"]["id"];
-
-        session["Redirect"] = window[session["dynID"], "postRedirect"]@session["data"];
-
-        window[session["dynID"], "postHandler"]@@{Null, session["data"]};
-        
-        console["log", ">>>>>>>>>>>>>> redirecting to ``", session["Redirect"]];
-
-        window[session["dynID"]] = .;
-    ,
-        session["dynID"] =  session["Query", "id"]//StringUnfix;
-
-       
-    ];
-    ""
-?>
+<?wsp  session["dynID"] =  session["Query", "id"]//StringUnfix;  " " ?>
 
 <?wsp LoadPage["assets/header.wsp"] ?>
 
@@ -27,64 +9,10 @@
 
     <?wsp LoadPage["assets/navigation.wsp"] ?>
 
-    <?wsp If[KeyExistsQ[window, session["dynID"]], window[session["dynID"]]["content"], " "] ?>
-
-    <?wsp If[!KeyExistsQ[window, session["dynID"]], ?>
-
     <div id = "<?wsp session[ToString[dynID]] ?>">
-        
-        <div class="d-flex align-items-center">
-            <div class="col-lg-10 col-md-8 mx-left">
-              <h2 class="fw-light">Window is loading...</h2>
-              <!--<div class="dino">
+        <?wsp If[KeyExistsQ[window, session["dynID"]], window[session["dynID"]]["content"], "Window is loading..."] ?>
 
-                <div class="dino__head">
-                  <div class="dino__head__back"></div>
-                  <div class="dino__head__topfront"></div>
-                  <div class="dino__head__mouth"></div>
-                  <div class="dino__head__throat"></div>
-                  <div class="dino__head__eye"></div>
-                </div>
 
-                <div class="dino__body">
-                  <div class="dino__body__mid"></div>
-                  <div class="dino__arm"></div>
-                </div>
-
-                <div class="dino__back-leg"></div>
-
-                <div class="dino__tail"></div>
-
-                <div class="dino__bottom"></div>
-                <div class="dino__bottom__shadow"></div>
-
-                <div class="dino__front-leg"></div>
-
-                <div>
-
-                <div class="floor"></div>
-            -->
-
-            <div id="cooking">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div id=area>
-            <div id="sides">
-                <div id="pan"></div>
-                <div id="handle"></div>
-            </div>
-            <div id="pancake">
-                <div id="pastry"><img height="88" id="logoico" src="http://<?wsp  $env["storagehost"] ?>/mathematicaIcon.svg" /></div>
-            </div>
-        </div>
-    </div>
-
-            </div>
-        </div>    
-    </div>
 
     <script>
 
@@ -93,33 +21,32 @@
         var q = 'Tinyweb`WebSocketSubscribe[server, "<?wsp session[ToString[dynID]] ?>", client]';
 
         if (socket.readyState != 1) {
-            setTimeout(subscribeOnLoad, 500);
+            setTimeout(subscribeOnLoad, 300);
         } else {
             socket.send(q);
-            document.getElementById('logoFlames').style = "display: block";    
-            document.getElementById('bigFlames').style = "opacity: 0.2"; 
+            //document.getElementById('logoFlames').style = "display: block";    
+            //document.getElementById('bigFlames').style = "opacity: 0.2"; 
         }
     };
 
     
 
     core.LoadDynamicPage = function(args, env) {
-        clearTimeout(myTimeout);
+        document.getElementById('<?wsp session[ToString[dynID]] ?>').innerHTML = "";
         setInnerHTML(document.getElementById('<?wsp session[ToString[dynID]] ?>'), interpretate(args[0]));
-        document.getElementById('logoFlames').style = "display: none";    
-        document.getElementById('bigFlames').style = "opacity: 0";    
+        //document.getElementById('logoFlames').style = "display: none";    
+        //document.getElementById('bigFlames').style = "opacity: 0";    
 
     };
 
-    function reload() {
-        location.reload();
-    };
+    core.PageRedirect = function(args, env) {
+        const addr = interpretate(args[0]);
+        window.location.replace(addr);
+    }
         
     subscribeOnLoad();
-    var myTimeout = setTimeout(reload, 4000);
+    //var myTimeout = setTimeout(reload, 4000);
     </script>    
-
-    <?wsp , " "] ?>
 </div>
 
 <?wsp LoadPage["assets/footer.wsp"] ?>
