@@ -64,7 +64,7 @@
                     <?wsp LoadPage["experiment/components/"<>FileNameTake[i]] ?>
                             
                    
-                    <?wsp ] ,{i, SortBy[FileNames[All, $publicpath<>"/experiment/components"], StringPart[#,-5]&]}] ?>
+                    <?wsp ] ,{i, cache[SortBy[FileNames[All, $publicpath<>"/experiment/components"], StringPart[#,-5]&]]}] ?>
 
 
 
@@ -92,7 +92,7 @@
 
                           
                    
-                    <?wsp ] ,{i, FileNames[All, $publicpath<>"/experiment/async"]}] ?>
+                    <?wsp ] ,{i, cache[FileNames[All, $publicpath<>"/experiment/async"]]}] ?>
 
                 </div>
             </div>

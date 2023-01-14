@@ -85,7 +85,7 @@
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <?wsp Table[   ?>
               <li><a href="service.wsp?id=<?wspi?>&q=<?wsp session[urlExtend] ?>" class="link-dark rounded"><?wspi?></a></li>
-            <?wsp , {i, SortBy[FileNameTake /@ FileNames[All, "services"], StringLength]}] ?>       
+            <?wsp , {i, cache[SortBy[FileNameTake /@ FileNames[All, "services"], StringLength]]}] ?>       
           </ul>
         </div>
       </li>
@@ -98,7 +98,7 @@
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <?wsp Table[   ?>
               <li><a href="docs/<?wspi?>" class="link-dark rounded"><?wspFileBaseName[i]?></a></li>
-            <?wsp , {i, FileNameTake /@ FileNames[All, $publicpath<>"/docs"]}] ?>       
+            <?wsp , {i, cache[FileNameTake /@ FileNames[All, $publicpath<>"/docs"]]}] ?>       
           </ul>
         </div>
       </li>      
