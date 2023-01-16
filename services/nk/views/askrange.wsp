@@ -8,9 +8,30 @@
     
           <div id="plot"></div>
 
+          <button class="btn btn-secondary" onclick="check()">Update preview</button><br><br>
           <form action="wpost.wsp" method="post" id="dialog3">
+           
             <input type="hidden" name="id" value="<?wsp $uid ?>">
-
+            <div class="form-group">
+  
+                <label class="form-group-label" for="thck">
+                    Thickness
+                </label>
+  
+                
+                <input id="thck" type="text" class="form-control form-control" value="<?wsp thickness?>" name="thck">
+            </div>            
+            <small>Use cm or mm or um units.</small><br><br>              
+            <div class="form-group">
+  
+                <label class="form-group-label" for="amp">
+                    Amplification
+                </label>
+  
+                
+                <input id="amp" type="text" class="form-control form-control" value="<?wspamp?>" name="amp">
+            </div>            
+            <small>Use the multiplier to adjust the stength of the sample's signal.</small><br><br>    
             <div class="form-group">
   
                 <label class="form-group-label" for="lo">
@@ -40,17 +61,8 @@
                 
                 <input id="fp" type="text" class="form-control form-control" value="<?wspfp?>" name="fp">
             </div>            
-            <small>The number of interations for the alogorithm</small><br><br>    
-            <div class="form-group">
-  
-                <label class="form-group-label" for="amp">
-                    Amplification
-                </label>
-  
-                
-                <input id="amp" type="text" class="form-control form-control" value="<?wspamp?>" name="amp">
-            </div>            
-            <small>Use the multiplier to adjust the stength of the sample's signal.</small><br><br>            
+            <small>The number of interations for the alogorithm</small><br><br>   
+        
             <div class="form-group">
   
                 <label class="form-group-label" for="ph">
@@ -79,7 +91,7 @@
 
      
 
-          <button class="btn btn-secondary" onclick="check()">Update preview</button>
+          
 
           <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog3" >
           <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog3" >
@@ -186,12 +198,13 @@
             var fp = document.getElementById('fp').value;
             var ph = document.getElementById('ph').value;
             var amp = document.getElementById('amp').value;
+            var tch = document.getElementById('thck').value;
 
             var PhaseTrashhold = document.getElementById('phtresh').value;
             
 
             var q = `
-                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi}, ${fp}, ${ph}, ${amp}, ${PhaseTrashhold}}]
+                    PageEmitt["<?wsp $uid ?>"][{${lo}, ${hi}, ${fp}, ${ph}, ${amp}, ${PhaseTrashhold}, ${tch}}]
                     `;
 
             document.getElementById('logoFlames').style = "display: block";

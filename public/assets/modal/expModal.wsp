@@ -21,7 +21,7 @@
             <div class="form-group">
               <label for="thickness">Thickness</label>
               <input id="thickness" type="text" class="form-control" name="thickness" id="thickness" placeholder="XX mm">
-              <small>Use metric units "mm" or "cm". Or just leave it empty and specify for the each set of data.</small>
+              <small><span class="badge badge-danger">Not recommended to set!</span> Use metric units "mm" or "cm". Or just leave it empty and specify for the each set of data.</small>
             </div>
             <div class="form-group" id="form-exp">
               <label>Filename parser settings</label>

@@ -371,13 +371,17 @@ ProcessNK[calculated_] := With[
                     }
              },
             (*publish*)
-           
+            
+
             With[{rr = ExportString[r, "JSON"], id = $uid}, 
                 WebSocketPublish[UpdateGraph[rr], $uid];
                 stack = {stack, rr};
             ];
         ];
     ) & /@ calculated;  
+
+    
+    If[debug, calculated >>> "services/nk/debug.log"; ];
     (*update sampling graph*)
     With[{r = DropHalf/@{#["first"][[All,1]], Function[x,((x[[2, 2]] 4 \[Pi] 10^12 x[[1]])/(33.356 2.9979 10^10))]/@(#["first"]), #["sampling"]}},
         WebSocketPublish[UpdateSamplingGraph[ExportString[r, "JSON"]], $uid];        

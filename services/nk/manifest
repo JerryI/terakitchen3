@@ -65,10 +65,16 @@
         <|
             "symbol"->"debug", 
             "desc"->"Debug information", 
+            "value"-> False,
+            "type"->"bool"
+        |>,
+         
+        <|
+            "symbol"->"manualmode", 
+            "desc"->"Manual control of the thickness. Overrides the automatic fitting", 
             "value"-> True,
             "type"->"bool"
-        |>        
-                         
+        |>                         
     }
 
 |>

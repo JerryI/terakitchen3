@@ -54,7 +54,7 @@
                 <label class="form-group-label" for="$service_<?wspi?>_<?wsp p[symbol//ToString] ?>">
                   <?wspp["desc"]?>
                 </label>
-                <input id="<?wsp p[symbol//ToString] ?>" <?wsp <|"symbol"->StringTemplate["type=\"text\" value=\"``\""][p["value"]], "real"->StringTemplate["type=\"number\" step=any value=\"``\""][p["value"]], "integer"->StringTemplate["type=\"number\" step=1 value=\"``\""][p["value"]], "text"->StringTemplate["type=\"text\" value=\"``\""][p["value"]], "bool"->"class=\"form-check\" type=\"checkbox\" "<>If[p["value"], "checked", ""]|>@p["type"] ?> class="form-control form-control" name="<?wsp p[symbol//ToString] ?>">
+                <input id="<?wsp p[symbol//ToString] ?>" <?wsp <|"symbol"->StringTemplate["type=\"text\" value=\"``\""][p["value"]], "real"->StringTemplate["type=\"number\" step=any value=\"``\""][p["value"]], "integer"->StringTemplate["type=\"number\" step=1 value=\"``\""][p["value"]], "text"->StringTemplate["type=\"text\" value=\"``\""][p["value"]], "bool"->"class=\"form-check\" type=\"checkbox\" "<>If[p["value"], "checked ", " "]|>@p["type"] ?> <?wsp " " ?> class=" form-control form-control" name="<?wsp p[symbol//ToString] ?>">
 
                 <?wsp , {p, session["service"]["parameters"]}] ?>
               </div>

@@ -7,7 +7,7 @@ thicknessAccuracy = 0;
 If[Length[input] == 0, PushNotification["services/nk", "nothing to do..."]; $Die];
 
 (*debug*)
-If[debug, $Messages = {OpenWrite[Method -> "Toast"]} ];
+If[debug, DeleteFile["services/nk/debug.log"]; ToString[Now] >>> "services/nk/debug.log"; ];
 
 Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"];
 Import["services/nk/functions.wls"];
@@ -88,10 +88,14 @@ startDialog[uuid_] := (
         If[data["action"] != "Ok", PageDelete[$uid]; $Die];
         PagePlaceholder[$uid];
 
-        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = ToExpression/@data/@{"lo","hi","fp","ph","amp", "phtresh"};
+        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold, thickness} = ToExpression/@data/@{"lo","hi","fp","ph","amp", "phtresh", "thck"};
 
         (*check for errors*)
         (If[!NumberQ[#//N], Throw[StringTemplate["`` is not a number at checking the range"][#]]]) &/@ {locutoff, hicutoff, numberFP, phaseCorr, amplify};
+
+        thickness = ThicknessNormalise["cm"][thickness];
+
+        (If[!NumberQ[#//N], Throw[StringTemplate["`` is not a number at checking the range"][#]]]) &/@ {thickness};
 
 
         If[!thicknessCorrection,
@@ -138,7 +142,8 @@ startDialog[uuid_] := (
     ]];
 
     EventBind["event", Function[{cli, data}, 
-        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold} = data;
+        {locutoff, hicutoff, numberFP, phaseCorr, amplify, PhaseTrashhold, thickness} = data;
+        thickness = ThicknessNormalise["cm"][thickness];
 
         result = ExtractNK[probesam["data"], proberef["data"], thickness, {locutoff, hicutoff}, {locutoff, hicutoff}];
 
@@ -439,7 +444,7 @@ ApplyToAll := (
             (*If[KeyExistsQ[sam["data"], "unwrapped-phase"], sam["data", "unwrapped-phase"] = With[{uuid = sam["id"] }, CEval[collection[uuid]["data"]["unwrapped-phase"] ] ]; ];      *)
             (*cause a bug when open a sample file again*)       
 
-            If[!thicknessCorrection || numberFP == 0,
+            If[((!thicknessCorrection || numberFP == 0) && !TrueQ[manualmode]) || numberFP == 0,
                 If[KeyExistsQ[sam,"thickness"],
                     console["log", "custom thickness: "<>sam["thickness"] ];
                     thickness = Block[{mm = 0.1, cm = 1, um = 10^(-4)}, ToExpression[sam["thickness"] ] ];

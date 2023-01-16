@@ -50,7 +50,7 @@
                       <button class="btn btn-secondary my-2" onclick="$('#addFolder').modal('show')">New folder</button>
                     </div>
 
-                    <p class="lead"><?wsp session["experiment"]["describtion"] ?></p>
+                    <p class="lead" id="desc-info" contenteditable="true"><?wsp session["experiment"]["describtion"] ?></p>
                 
                 </div>
                    
@@ -173,6 +173,10 @@
         },
       }      
     });
+
+    document.getElementById("desc-info").addEventListener("input", function(e) {
+      socket.send('experiments["<?wsp session["experiment"]["sample"] ?>"]["describtion"] = "'+e.target.innerText+'"; ');
+    }, false);
 
 </script>
 
