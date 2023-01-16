@@ -175,7 +175,7 @@
     });
 
     document.getElementById("desc-info").addEventListener("input", function(e) {
-      socket.send('experiments["<?wsp session["experiment"]["sample"] ?>"]["describtion"] = "'+e.target.innerText+'"; ');
+      socket.send('experiments["<?wsp session["experiment"]["sample"] ?>"]["describtion"] = "'+e.target.innerText.replaceAll('\"','\\"')+'"; ');
     }, false);
 
 </script>
