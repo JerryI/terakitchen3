@@ -1,4 +1,4 @@
-Options[ProcessStart] = {"task"->Null, "init"->Null, "list"->Null, "name"->"Untitled", "after"->Null};  
+Options[ProcessStart] = {"task"->Null, "init"->{}, "pre"->Null, "list"->{}, "name"->"Untitled", "after"->Null};  
 
 ProcessStart[id_, OptionsPattern[]] :=   
 With[{},      
@@ -8,6 +8,7 @@ With[{},
         settings["processes"][id]["task"]  = OptionValue["task"];
         settings["processes"][id]["init"]  = OptionValue["init"];
         settings["processes"][id]["list"]  = OptionValue["list"];
+        settings["processes"][id]["pre"]   = OptionValue["pre"];
         settings["processes"][id]["after"] = OptionValue["after"];
 
         console["log", "process `` is about to start. Generated id is ``", OptionValue["name"], id];
@@ -112,6 +113,9 @@ ProcessCheck[id_] := With[{},
     ]
 ];
 
+RemoteEvaluator[id_][exp_, rules_, storage_, block_, callback_] := (
+    JTPClientSend[settings["processes", id, "listener"], SimpleEvaluator[exp, rules, storage, block, callback ] ];
+);
 
 
 ProcessUpdateStatus[personal_, mess_] := With[{}, 

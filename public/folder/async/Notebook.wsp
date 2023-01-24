@@ -1,0 +1,36 @@
+<div id="editor-place">
+
+
+</div>
+
+<?wsp If[KeyExistsQ[folders[folder], "notebook"], With[{u = folders[folder, "notebook"]},  ?> <br><br><button onclick="removeNotebook('<?wsp u ?>')" class="btn btn-sm btn-outline-secondary">Remove</button> <?wsp ], "" ] ?>
+<?wsp If[!KeyExistsQ[folders[folder], "notebook"], ?> <button onclick="newNotebook()" class="btn btn-sm btn-outline-secondary">New</button> <?wsp , "" ] ?>
+
+
+<script>
+    function removeNotebook(id) {
+      if (confirm('Are you sure?')) {
+        // Save it!
+        WSPHttpQuery(`NotebookRemove["${id}"]; "The item ${id} was removed!"`, alert, 'String');
+        document.getElementById(id).remove();
+      } else {
+        // Do nothing!
+        console.log('Aborted');
+      }         
+    }
+
+    function loadEditor(id) {
+        WSPHttpQuery(`LoadPage["assets/notebooks/compacteditor.wsp", {notebookid="${id}"}, "base"->$env["path"]]`, function(result) {
+          setInnerHTML(document.getElementById("editor-place"), result);
+        }, 'String');      
+    }
+
+    function newNotebook() {
+      const id = '<?wsp folder ?>';
+      WSPHttpQuery(`With[{ex = "${id}", uid = CreateUUID[]},  folders[ex, "notebook"] = uid; NotebookCreate["id"->uid, "name"->"Untitled", "pre"->Hold[this=CQuery[{True,Infinity,ex}];], "sandboxed"->True, "data"->"this", "ref"-><|"id"->ex, "type"->"folder"|>]]`, loadEditor, 'String');
+    }
+
+    <?wsp If[KeyExistsQ[folders[folder], "notebook"], ?>
+      loadEditor('<?wsp folders[folder, "notebook"] ?>');
+    <?wsp , ""] ?>
+</script>

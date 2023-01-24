@@ -15,7 +15,9 @@
         
           <form action="wpost.wsp" method="post" id="dialog">
             <input type="hidden" name="id" value="<?wsp $uid ?>">                               
-          </form>      
+          </form>  
+          
+          
 
           <div class="form-group">
   
@@ -58,6 +60,28 @@
           </div> 
 
           <div class="form-group">
+  
+                <label class="form-group-label" for="tdsscale">
+                   tds scale
+                </label>
+
+                <input id="tdsscale" type="text" class="form-control form-control" value="<?wsp tdsscale ?>" name="tdsscale">
+            
+          </div>
+
+          <div class="form-group">
+  
+                <label class="form-group-label" for="thickness">
+                  thickness
+                </label>
+
+                <input id="thickness" type="text" class="form-control form-control" value="<?wsp thickness ?>" name="thickness">
+            
+          </div>          
+
+          
+
+          <div class="form-group">
             <small>Include FP reflections</small><br>
           
             <input id="fpmodel" name="fpmodel" type="checkbox" form="dialog" checked>
@@ -91,7 +115,7 @@
         var fp = document.getElementById("fpmodel").checked;
         if (fp) {fp="True";} else {fp="False";}
 
-        var q = `PageEmitt["<?wsp $uid ?>"][{"update", ${document.getElementById("epsinf").value}, ${document.getElementById("omegap").value}, ${document.getElementById("omega0").value}, ${document.getElementById("gamma").value}, ${fp}}];`;   
+        var q = `PageEmitt["<?wsp $uid ?>"][{"update", ${document.getElementById("epsinf").value}, ${document.getElementById("omegap").value}, ${document.getElementById("omega0").value}, ${document.getElementById("gamma").value}, ${fp}, ${document.getElementById("tdsscale").value}, "${document.getElementById("thickness").value}"}];`;   
 
         socket.send(q);
 

@@ -1,0 +1,23 @@
+<link href="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/styles.css" rel="stylesheet">
+<script src="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/bundle.js"></script>
+<label class="form-group-label" for="function">
+                  Wolfram Language
+                </label>
+  <?wsp LoadPage["assets/notebooks/kernel.wsp", {id = notebookid}]  ?>
+
+  <div id="<?wsp notebookid ?>">
+                
+  </div>
+                
+  <script>
+    function AddCell(id) {
+      var q = 'Block[{fireEvent = CellEventFire[client]}, CellObjCreateAfter[CellObj["'+id+'"]]]';
+      socket.send(q);
+    }
+
+    var global;
+    var last;
+
+    socket.send('NotebookOpen["<?wsp notebookid ?>"]');
+
+  </script>

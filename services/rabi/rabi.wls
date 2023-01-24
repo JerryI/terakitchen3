@@ -104,9 +104,6 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
     postRedirect[next_] := Function[data, If[data["action"] === "Ok", "window.wsp?id="<>next, "index.wsp"] ];
 
-    If[KeyExistsQ[sam, "alpha-with-fp"], 
-        sam["tds"] = Transpose[{Drop[sam["tds"][[All,1]], Length[sam["tds-no-fp"] ] - Length[sam["tds"] ] ], sam["tds-no-fp"]} ];
-    ];
 
  
 
@@ -242,7 +239,7 @@ startFitting := (
 
         If[plotAlpha, realNK = (semiClassicalMaterialParameters@@{\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma] // Abs}); ];     
 
-        With[{f = freq, nksim = realNK, pA=plotAlpha, tracefft = simFFT, tracefftNoFP = simFFTnoFP, trace = simTDS, traceNoFP = simTDSnoFP, a = fft, id = samid, reg = regions, split = Abs[peaks[[1]]-peaks[[2]]], central = \[Omega]0, epsilon = \[Epsilon]\[Infinity], gamma = \[Gamma], strength = \[Omega]p},
+        With[{th = ThicknessNormalise["mm"][thickness], sc = tdsscale, f = freq, nksim = realNK, pA=plotAlpha, tracefft = simFFT, tracefftNoFP = simFFTnoFP, trace = simTDS, traceNoFP = simTDSnoFP, a = fft, id = samid, reg = regions, split = Abs[peaks[[1]]-peaks[[2]]], central = \[Omega]0, epsilon = \[Epsilon]\[Infinity], gamma = \[Gamma], strength = \[Omega]p},
             CEval[  
                 
                 collection[id, "data", "rabi-fft-abs"]  = Abs[a];
@@ -250,6 +247,10 @@ startFitting := (
                 collection[id, "data", "rabi-reg"]  = reg;
                 collection[id, "data", "rabi-splitting"]  = split;
                 collection[id, "rabi-freq"]  = ToString[split]<>" cm";
+
+                collection[id, "thickness"]  = ToString[th]<>" mm";
+
+                If[sc != 1, collection[id, "tds-scale"] = sc];
 
                 collection[id, "data", "rabi-fit-freq"]  = central;
                 collection[id, "data", "rabi-fit-epsilon"] = epsilon;
@@ -292,10 +293,12 @@ startFitting := (
    
         Switch[data[[1]],
             "update",
-                {\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma], FP} = data[[2 ;; ]];
+                {\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma], FP, tdsscale, thickness} = data[[2 ;; ]];
+
+                thickness = ThicknessNormalise["cm"][thickness];
 
                 badvalue = False;
-                (If[!NumberQ[#], badvalue = #])&/@{\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma]};
+                (If[!NumberQ[#], badvalue = #])&/@{\[Epsilon]\[Infinity], \[Omega]p, \[Omega]0, \[Gamma], tdsscale, thickness};
 
                 If[badvalue === False,
                    
@@ -330,7 +333,8 @@ prepareRabi := (
         If[MissingQ[thickness], PushNotification["services/rabi", "No thickness was specified. Die."]; $Die];
     ];
 
-    thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
+    thickness = ThicknessNormalise["cm"][thickness];
+
     If[!NumberQ[thickness], PushNotification["services/rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
 
     sam["tds"] = sam["tds"];
@@ -469,7 +473,7 @@ fitRabi := (
     ref["freqs"] = ref["freqs"];
     ref["fft"] = ref["fft"];     
 
-    thickness = Block[{cm = 1, mm = 0.1, um = 10^(-4)}, ToExpression@thickness]//N;
+    thickness = ThicknessNormalise["cm"][thickness];
     If[!NumberQ[thickness], PushNotification["services/rabi", StringTemplate["Thickness `` is not a number. Die."][thickness]]; $Die];
 
 
@@ -683,6 +687,4 @@ Simulate := (
 
 startDialog[CreateUUID[], CGet[samples//First, "data"], samples//First];
 samples = Drop[samples, 1];
-
-PushNotification["services/rabi", "Don't miss some Rabi diamonds! &#9935; <br>"<>"<a class=\"btn btn-outline-info\" href=\"window.wsp?id="<>$uid<>"\">open</a>"];            
 

@@ -1,0 +1,39 @@
+<button onclick="newNotebook()" class="btn btn-sm btn-outline-secondary">New</button>
+<p></p>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"><a class="link-dark rounded">id</a></th>
+      <th scope="col"><a class="link-dark rounded">name</a></th>
+      <th scope="col"><a class="link-dark rounded"> </a></th>
+    </tr>
+  </thead>
+  <tbody>
+  <?wsp Table[ With[{name = notebooks[key, "name"], ref = notebooks[key, "ref", "id"], type = notebooks[key, "ref", "path"]}, ?>                    
+    <tr id="<?wsp key ?>">
+      <td><a class="badge badge-info" href="notebook/index.wsp?id=<?wsp key ?>"><?wsp key?></a></td>
+      <td><a class="badge badge-light" href="notebook/index.wsp?id=<?wsp key ?>"><?wsp name ?></a></td>
+      <td><span onclick="removeNotebook('<?wsp key ?>')" style="cursor: pointer" class="badge badge-danger">x</span></td>
+    </tr>
+  <?wsp ], {key, If[ListQ[#], #, {}] &@ experiments[experiment, "notebooks"]}] ?>
+      
+  </tbody>
+</table>
+<script>
+    function removeNotebook(id) {
+      if (confirm('Are you sure?')) {
+        // Save it!
+        WSPHttpQuery(`NotebookRemove["${id}"]; "The item ${id} was removed!"`, alert, 'String');
+        document.getElementById(id).remove();
+      } else {
+        // Do nothing!
+        console.log('Aborted');
+      }         
+    }
+
+    function newNotebook() {
+      const id = '<?wsp experiment ?>';
+      WSPHttpQuery(`With[{ex = "${id}", uid = CreateUUID[]}, If[!KeyExistsQ[experiments[ex], "notebooks"], experiments[ex, "notebooks"] = {};]; experiments[ex, "notebooks"] = {experiments[ex, "notebooks"], uid}//Flatten; NotebookCreate["id"->uid, "name"->"Untitled", "pre"->Hold[this=CQuery["experiment"->Equal->ex];], "sandboxed"->True, "data"->"this", "ref"-><|"id"->ex, "type"->"experiment"|>]]`, function(ev) {window.location = "notebook/index.wsp?id="+ev}, 'String');
+    }
+</script>

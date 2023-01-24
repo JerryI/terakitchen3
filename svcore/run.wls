@@ -24,6 +24,8 @@ $Die := With[{uid = $id, l = Flatten[logs]},
 
 $Messages = {OpenWrite[Method -> "Toast"]};
 
+$data["pre"]//ReleaseHold;
+
 With[{symbol = Symbol[#["symbol"]], val = #["value"]}, Set[symbol, val]] &/@ $data["init"];
 
 If[MemoryConstrained[Import[$data["task"]], MEMORYLimit] === $Aborted, PushNotification["svcore/run/import", "<span style=\"badge badge-danger\">Memory limit was exeeded</span>"]; $Die];

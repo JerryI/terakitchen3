@@ -25,7 +25,8 @@
       </style>
 
     <link rel="icon" type="image/png" href="http://<?wsp  $env["storagehost"] ?>/favicon.png"/>
-
+    
+    <script src="http://<?wsp  $env["storagehost"] ?>/assets/core.js"></script>
     <script src="http://<?wsp  $env["storagehost"] ?>/assets/framework.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.js"></script>

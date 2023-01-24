@@ -8,6 +8,9 @@ Import["utensils/notifications.wls"];
 Import["utensils/svhost.wls"];
 Import["utensils/services.wls"];
 Import["utensils/window.wls"];
+
+(*notebooks support*)
+Import["utensils/converter.wls"];
 Import["utensils/cells.wls"];
 Import["utensils/notebook.wls"];
 

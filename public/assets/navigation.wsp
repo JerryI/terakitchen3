@@ -41,6 +41,7 @@
             <li><a href="bucket.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Plotter</a></li>
             <li><a href="map.wsp?q=<?wsp session[urlExtend] ?>" class="link-dark rounded">Map</a></li>
             <li><a href="console.wsp" class="link-dark rounded">Console</a></li>
+            <li><a href="sandbox.wsp" class="link-dark rounded">Sandbox</a></li>
           </ul>
         </div>
       </li>

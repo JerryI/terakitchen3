@@ -24,7 +24,7 @@
 <script>
 
     function backupnow() {
-      socket.send('PushNotification["DB", "starting backing up..."]; CBackup;');
+      socket.send('PushNotification["assets/widgets/backup", "starting backing up..."]; CBackup;');
     }
 
 </script>

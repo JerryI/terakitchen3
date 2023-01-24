@@ -50,14 +50,40 @@
                   <?wsp With[{qq = session["q"]//StringUnfix//ToExpression}, LoadPage["assets/table.wsp", {q = qq, exclude = {}}] ]?>
                 </div>
                 
+                <?wsp Table[ 
+                        Block[{uid = StringTake[CreateUUID[],4]}, 
+                    ?>
 
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingOne<?wspuid?>">
+                          <h4 class="panel-title">
+                              <button onclick="openComponent('<?wsp uid ?>', '<?wsp FileNameTake[i] ?>')" class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#collapse<?wspuid?>" aria-expanded="false">
+                                  <?wsp StringDrop[FileNameTake[i], -4] ?>
+                              </button>
+                          </h4>
+                          
+                      </div>
+                      <div id="collapse<?wspuid?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne<?wspuid?>">
+                          <div class="panel-body" id="<?wsp uid ?>">
+                             
+                              
+                          </div>
+                      </div>
+                      
+                  </div>                    
 
+                          
+                   
+              <?wsp ] ,{i, cache[FileNames[All, $publicpath<>"/folder/async"]]}] ?>
+
+              <br>
 
               <div class="panel-body" style="background: #fff;border-top: none;font-size: 15px;color: #6f6f6f;line-height: 28px;letter-spacing: 1px;">
                 Danger zone!
     
             </div><br>
-              <button type="button" class="btn btn-outline-danger" onclick="removeFolder()">Remove</button>
+              <button type="button" class="btn btn-outline-danger" onclick="removeFolder()">Remove folder</button>
+              <button type="button" class="btn btn-outline-danger" onclick="removeFolderAndContent()">Remove content and folder</button>
             
             </div>
 
@@ -83,10 +109,27 @@ function exportPromise(e) {
   function removeFolder() {
     var folderid = '<?wsp session["Query", "id"] ?>';
 
-    WSPHttpQuery(`folders["${folderid}"] = .; "Please, go to the main page."`, alert);
+    WSPHttpQuery(`folders["${folderid}"] = .;  "Please, go to the main page."`, alert);
 
   }
 
+  function removeFolderAndContent() {
+    var folderid = '<?wsp session["Query", "id"] ?>';
+
+    WSPHttpQuery(`Function[x,collection[x]=.]/@ folders["${folderid}", "list"]; folders["${folderid}"] = .;  "Please, go to the main page."`, alert);
+
+  }
+
+  var components = {};
+
+  function openComponent(uid, path) {
+    if(components[uid] !== true) {
+      components[uid] = true;
+      WSPHttpQuery(`LoadPage["/folder/async/${path}", {folder="<?wsp session["Query", "id"] ?>"}, "base"->$env["path"]]`, function(result) {
+        setInnerHTML(document.getElementById(uid), result);
+      }, 'String');
+    }
+  }
 
   function del(iid) {
     var folderid = '<?wsp session["Query", "id"] ?>';

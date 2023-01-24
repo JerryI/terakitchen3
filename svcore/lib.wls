@@ -18,6 +18,8 @@ Protect[storage];
 
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 
+LoopBack[obj_] := JTPClientEvaluate[kitchen, obj];
+SetAttributes[LoopBack, HoldAll];
 
 CreatePage[xs___] := JTPClientEvaluate[kitchen, CreatePage[xs]];
 PageDelete[id_] := JTPClientEvaluate[kitchen, DeletePage[id]];

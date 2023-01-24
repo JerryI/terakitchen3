@@ -1,7 +1,7 @@
 var WSPHost;
 
-let socket = new WebSocket("ws://"+window.location.hostname+':'+window.location.port);
-
+let socket;
+socket = new WebSocket("ws://"+window.location.hostname+':'+window.location.port);
 socket.onopen = function(e) {
   console.log("[open] Соединение установлено");
 }; 
@@ -16,6 +16,9 @@ socket.onclose = function(event) {
   console.log(event);
   console.log('Connection lost. Please, update the page to see new changes.');
 };
+
+
+
 
 
 function WSPHttpQueryQuite(command, promise, type = "String") {
@@ -173,69 +176,6 @@ function WSPPost(path, payload, promise) {
   http.send(data);
 }
 
-
-
-var core, interpretate;
-
-core = {};
-
-core.List = function(args, env) {
-  var copy, e, i, len, list;
-  copy = Object.assign({}, env);
-  list = [];
-  for (i = 0, len = args.length; i < len; i++) {
-    e = args[i];
-    list.push(interpretate(e, copy));
-  }
-  return list;
-};
-
-core.Association = function(args, env) {
-  var copy, e, i, len, list;
-  copy = Object.assign({}, env);
-  copy.association = {};
-  
-  for (i = 0, len = args.length; i < len; i++) {
-    interpretate(args[i], copy);
-  }
-  
-  return copy.association;
-};
-
-core.Rule = function(args, env) {
-  env.association[args[0]] = args[1];
-};
-
-core.SetStatus = function(args, env) {
-  console.log("set status!");
-  console.log(args);
-};
-
-
-
-interpretate = function(d, env = {}) {
-  if (typeof d === 'undefined') {
-    throw 'undefined type (not an object or string!): duaring the parsing';
-  }
-  if (typeof d === 'string') {
-    return d.slice(1, -1);
-  }
-  if (typeof d === 'number') {
-    return d;
-  }
-  
-  this.name = d[0];
-  this.args = d.slice(1, d.length);
-  return core[this.name](this.args, env);
-};
-
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-  });
-}
-
 var modalsLoaded = [];
     
 function modalLoad (id, params = "{}") {
@@ -281,3 +221,4 @@ var setInnerHTML = function(elm, html) {
     oldScript.parentNode.replaceChild(newScript, oldScript);
   });
 };
+
