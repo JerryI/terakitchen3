@@ -1,5 +1,8 @@
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <link href="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/styles.css" rel="stylesheet">
 <script src="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/bundle.js"></script>
+<script src="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/ext.js"></script>
+
 <label class="form-group-label" for="function">
                   Wolfram Language
                 </label>

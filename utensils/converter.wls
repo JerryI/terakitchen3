@@ -1,4 +1,4 @@
-$SupportedGraphicsObjectList = {Graphics3D, HTMLForm};
+$SupportedGraphicsObjectList = {Graphics3D, HTMLForm, WListPloty};
 
 $conversionTemplate = Table[
  With[{item = i},
@@ -10,4 +10,3 @@ $conversionTemplate = Table[
  , {i, $SupportedGraphicsObjectList}];
 
  
- SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;

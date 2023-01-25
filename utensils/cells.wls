@@ -1,3 +1,5 @@
+Needs["CodeParser`"];
+
 Options[CellObj] = {
     "type" -> "input",
     "child" -> Null,
