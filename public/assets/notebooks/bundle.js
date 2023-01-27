@@ -66521,6 +66521,7 @@ core.FrontEndCreateCell = function (args, env) {
       syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
       bracketMatching(),
       closeBrackets(),
+      EditorView.lineWrapping,
       autocompletion(),
       rectangularSelection(),
       crosshairCursor(),

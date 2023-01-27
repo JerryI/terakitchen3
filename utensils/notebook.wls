@@ -93,7 +93,7 @@ CellEventFire[addr_]["NewCell"][cell_] := (
                         "id"->cell[[1]], 
                         "sign"->cell["sign"],
                         "type"->cell["type"],
-                        "data"->If[cell["data"]//NullQ, "", cell["data"]],
+                        "data"->If[cell["data"]//NullQ, "", ExportString[cell["data"], "String", CharacterEncoding -> "UTF8"] ],
                         "child"->If[NullQ[ cell["child"] ], "", cell["child"][[1]]],
                         "parent"->If[NullQ[ cell["parent"] ], "", cell["parent"][[1]]],
                         "next"->If[NullQ[ cell["next"] ], "", cell["next"][[1]]],

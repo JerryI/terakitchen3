@@ -7,8 +7,9 @@ socket.onopen = function(e) {
 }; 
 
 socket.onmessage = function(event) {
+  console.log(event.data);
   let data = JSON.parse(event.data);
-  console.log(data);
+  
   interpretate(data);
 };
 

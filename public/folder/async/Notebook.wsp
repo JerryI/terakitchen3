@@ -27,7 +27,7 @@
 
     function newNotebook() {
       const id = '<?wsp folder ?>';
-      WSPHttpQuery(`With[{ex = "${id}", uid = CreateUUID[]},  folders[ex, "notebook"] = uid; NotebookCreate["id"->uid, "name"->"Untitled", "pre"->Hold[this=CQuery[{True,Infinity,ex}];], "sandboxed"->True, "data"->"this", "ref"-><|"id"->ex, "type"->"folder"|>]]`, loadEditor, 'String');
+      WSPHttpQuery(`With[{ex = "${id}", uid = CreateUUID[]},  folders[ex, "notebook"] = uid; NotebookCreate["id"->uid, "name"->folders[ex, "name"], "pre"->Hold[this=CQuery[{True,Infinity,ex}];], "sandboxed"->True, "data"->"this", "ref"-><|"id"->ex, "type"->"folder"|>]]`, loadEditor, 'String');
     }
 
     <?wsp If[KeyExistsQ[folders[folder], "notebook"], ?>
