@@ -1,5 +1,5 @@
 # Terakitchen 3
-private repositiory for Toptica THz data processing/storage/managing server written on pure Wolfram Language
+private repositiory for Toptica THz (or simillar time-domain setup working in THz range) data processing/storage/managing server written on pure Wolfram Language
 
 - accurate material parameters extraction (n, k, absorption, thickness correction, etc)
 - GPU accelerated (CUDA support)
