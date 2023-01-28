@@ -10,7 +10,7 @@ ClearAll[NotebookEvaluate];
 Options[NotebookCreate] = {
     "name" -> "Untitled",
     "id" :> CreateUUID[],
-    "evaluator" -> SimpleEvaluator.
+    "evaluator" -> SimpleEvaluator,
     "ref" -> Null,
     "sandboxed" -> False,
     "data" -> "1+1",
@@ -53,10 +53,10 @@ NotebookRemove[id_] := (
 
 (*access only via websockets*)
 NotebookAttach[id_, proc_, init_:Null] := Module[{pid = proc},
-    If[proc === "master", notebooks[id]["evaluator"] = SimpleEvaluator; Return["master", Module] ];
+    If[proc === "master", notebooks[id]["evaluator"] = SimpleEvaluator; PushNotification["utensils/notebook", "<span class=\"badge badge-danger\">Master kernel attached</span>"]; Return["master", Module] ];
     If[proc === "Null"  ,
         pid = CreateUUID[];
-        ProcessStart[pid, "name" -> "sandbox", "task" -> "svcore/sandbox.wls", "pre" -> notebooks[id]["pre"]];
+        ProcessStart[pid, "name" -> "sandbox", "task" -> "svcore/sandbox.wls", "pre" -> notebooks[id]["pre"] ];
         WebSocketSend[client, FrontEndAddKernel[pid, "sandbox"] ];
     ,
         JTPClientSend[settings["processes", proc, "listener"], Import["svcore/sandbox.wls"]; ];
@@ -147,7 +147,7 @@ CellEventFire[addr_]["CellError"][cell_, text_] := WebSocketSend[addr, FrontEndC
 
 CellEventFire[addr_]["CellMove"][cell_, parent_] := (
     With[
-        {   template = LoadPage["public/assets/input.wsp", {id = cell[[1]]}],
+        {   template = LoadPage["public/assets/cells/input.wsp", {id = cell[[1]]}],
             obj = <|
                     "cell"-> <|
                         "id"->cell[[1]], 

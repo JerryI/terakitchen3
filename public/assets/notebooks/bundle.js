@@ -66484,6 +66484,10 @@ core.FrontEndCellError = function (args, env) {
   alert(interpretate(args[1]));
 };
 
+core.FrontEndTruncated = function (args, env) {
+    env.element.innerHTML = interpretate(args[0]) + " ...";
+}
+
 core.FrontEndCreateCell = function (args, env) {
   var template = interpretate(args[0]);
   var input = JSON.parse(interpretate(args[1]));
@@ -66536,7 +66540,7 @@ core.FrontEndCreateCell = function (args, env) {
       EditorView.updateListener.of((v) => {
         if (v.docChanged) {
           console.log(v.state.doc.toString());
-          socket.send(`CellObj["${uid}"]["data"] = "${v.state.doc.toString().replaceAll('\"', '\\"')}";`);
+          socket.send(`CellObj["${uid}"]["data"] = "${v.state.doc.toString().replaceAll('\\\"', '\\\\\"').replaceAll('\"', '\\"')}";`);
         }
       })
     ],
@@ -66548,7 +66552,7 @@ core.FrontEndCreateCell = function (args, env) {
 function celleval(ne, id, cell) {
   console.log(ne);
   global = ne;
-  var fixed = ne.replaceAll('\"', '\\"');
+  var fixed = ne.replaceAll('\\\"', '\\\\\"').replaceAll('\"', '\\"');
   console.log(fixed);
 
   var q = `CellObj["${cell}"]["data"]="${fixed}"; NotebookEvaluate["${id}", "${cell}"]`;

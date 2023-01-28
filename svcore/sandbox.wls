@@ -1,8 +1,10 @@
+EvaluatorTemporaryStorage = <||>;
+
 SimpleEvaluator[exp_, rules_, storage_, block_, callback_] := (
 
     Block[{$$$evaluated, $$$storage = <||>},
         Block[  {
-                    FrontEndExecutable = Function[uid, ImportString[storage[uid], "ExpressionJSON"] ], 
+                    FrontEndExecutable = Function[uid, If[KeyExistsQ[EvaluatorTemporaryStorage, uid], EvaluatorTemporaryStorage[uid]//ToExpression, ImportString[storage[uid], "ExpressionJSON"] ]  ], 
                     Print = Function[x, callback@@{ToString[x/.rules, InputForm], $$$storage}]
                 },
 
@@ -13,7 +15,21 @@ SimpleEvaluator[exp_, rules_, storage_, block_, callback_] := (
 
         With[{$$$result = $$$evaluated /.rules}, 
             With[{$$$sresult = ToString[$$$result, InputForm], $$$sstorage = $$$storage, c = callback},
-                CEval[ c@@{$$$sresult, $$$sstorage}; ];
+                If[StringLength[$$$sresult] > 1000,
+                    With[{dumpid = CreateUUID[], len = StringLength[$$$sresult], short = StringTake[$$$sresult, 50]},
+                        EvaluatorTemporaryStorage[dumpid] = $$$sresult;
+                        $$$storage[dumpid] = ExportString[FrontEndTruncated[short, len], "ExpressionJSON"];
+
+                        With[{$$$xstorage = $$$storage, $$$xsresult = "FrontEndExecutable[\""<>dumpid<>"\"]"},
+                            CEval[ c@@{$$$xsresult, $$$xstorage}; ];
+                        ]
+                    ]
+                ,
+                    CEval[ c@@{$$$sresult, $$$sstorage}; ];
+                ]
+                
             ]
         ];   
     ]);
+
+PushNotification["svcore/sandbox", "<span class=\"badge badge-info\">Kernel attached</span>"];

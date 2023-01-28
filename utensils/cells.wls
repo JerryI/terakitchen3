@@ -8,7 +8,9 @@ Options[CellObj] = {
     "prev" -> Null,
     "display" -> Null,
     "data" -> Null,
+    "dump" -> "",
     "storage" -> <||>,
+    "props" -> <||>,
     "sign" :> CreateUUID[]
 };
 
@@ -22,6 +24,8 @@ CellObj[OptionsPattern[]] := With[{cell = CreateUUID[]},
     CellObj[cell]["display"] = OptionValue["display"];
     CellObj[cell]["data"]    = OptionValue["data"];
     CellObj[cell]["sign"]    = OptionValue["sign"];
+    CellObj[cell]["dump"]    = OptionValue["dump"];
+    CellObj[cell]["props"]    = OptionValue["props"];
     CellObj[cell]["storage"]    = OptionValue["storage"];
 
     CellObj[cell]
@@ -147,6 +151,8 @@ CellObjRemove[CellObj[cell_]] := (
     Unset[CellObj[cell]["prev"]];
     Unset[CellObj[cell]["parent"]];
     Unset[CellObj[cell]["sign"]];
+    Unset[CellObj[cell]["props"]];
+    Unset[CellObj[cell]["dump"]];
     Unset[CellObj[cell]["storage"]];
 
     If[CellObj[cell]["child"] =!= Null,
@@ -283,10 +289,12 @@ CellObjGenerateTree[CellObj[cell_]] := (
 Unprotect[FrontEndExecutable];
 ClearAll[FrontEndExecutable];
 
+EvaluatorTemporaryStorage = <||>;
+
 SimpleEvaluator[exp_, rules_, storage_, block_, callback_] := 
     Block[{$$$evaluated, $$$storage = <||>},
         Block[  {
-                    FrontEndExecutable = Function[uid, ImportString[storage[uid], "ExpressionJSON"] ], 
+                    FrontEndExecutable = Function[uid, If[KeyExistsQ[EvaluatorTemporaryStorage, uid], EvaluatorTemporaryStorage[uid]//ToExpression, ImportString[storage[uid], "ExpressionJSON"] ]  ], 
                     Print = Function[x, callback@@{ToString[x/.rules, InputForm], $$$storage}]
                 },
 
@@ -296,7 +304,19 @@ SimpleEvaluator[exp_, rules_, storage_, block_, callback_] :=
         ];
 
         With[{$$$result = $$$evaluated /.rules}, 
-            callback@@{ToString[$$$result, InputForm], $$$storage} 
+            With[{$string = ToString[$$$result, InputForm]},
+                If[StringLength[$string] > 1000,
+                    With[{dumpid = CreateUUID[], len = StringLength[$string], short = StringTake[$string, 50]},
+                        EvaluatorTemporaryStorage[dumpid] = $string;
+                        $$$storage[dumpid] = ExportString[FrontEndTruncated[short, len], "ExpressionJSON"];
+                        callback@@{"FrontEndExecutable[\""<>dumpid<>"\"]", $$$storage}
+                    ]
+                    
+                ,
+                    callback@@{$string, $$$storage} 
+                ]
+            ]
+            
         ];   
     ];
 
