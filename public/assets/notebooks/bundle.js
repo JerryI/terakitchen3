@@ -66549,6 +66549,8 @@ core.FrontEndCreateCell = function (args, env) {
 
 };
 
+var notebookkernel = false;
+
 function celleval(ne, id, cell) {
   console.log(ne);
   global = ne;
@@ -66556,6 +66558,11 @@ function celleval(ne, id, cell) {
   console.log(fixed);
 
   var q = `CellObj["${cell}"]["data"]="${fixed}"; NotebookEvaluate["${id}", "${cell}"]`;
+  if(!notebookkernel) {
+    alert("no kernel was attached");
+    return;
+  }
+
   socket.send(q);
 }
 

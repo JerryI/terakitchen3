@@ -15,7 +15,7 @@ ListPloty[x_List, OptionsPattern[]] := Module[{transp},
             transp = ( Transpose[FilterRange[#, OptionValue[PlotRange] ] ] ) &/@ x
         ,
         2,
-            transp = x;
+            transp = {Table[i, {i, 1, Length[x]}], x}
     ];
 
     WListPloty[ExportString[transp//N, "JSON"] ]
@@ -27,10 +27,13 @@ Options[Ploty] = {
 
 Ploty[function_, range_, OptionsPattern[] ] := Module[{transp, data},
     With[{ite = range[[1]], it = Join[range, {range[[3]]-range[[2]]}/200//N]},
-    
-        data = Table[{ite, function}, it ];
-    ];
-    transp = { (Transpose[FilterRange[data, OptionValue[PlotRange] ] ])}
-
-    WListPloty[ExportString[transp//N, "JSON"] ]
+        With[{fn = #},
+            Table[{ite, fn}, it ]
+        ] &/@ Flatten[{function}]
+    ]//ListPloty
 ];
+
+WebExport[name_, exp_, frmt_:Automatic] := (
+    Export["public/trashcan/"<>name, exp, frmt];
+    StringTemplate["<a href=\"trashcan/``\" class=\"badge badge-warning\">Download ``</a>"][name, name]//HTMLForm
+);

@@ -1,4 +1,4 @@
-Options[ProcessStart] = {"task"->Null, "init"->{}, "pre"->Null, "list"->{}, "name"->"Untitled", "after"->Null};  
+Options[ProcessStart] = {"task"->Null, "init"->{}, "prolog"->Null,"epilog"->Null, "list"->{}, "name"->"Untitled", "after"->Null};  
 
 ProcessStart[id_, OptionsPattern[]] :=   
 With[{},      
@@ -8,7 +8,8 @@ With[{},
         settings["processes"][id]["task"]  = OptionValue["task"];
         settings["processes"][id]["init"]  = OptionValue["init"];
         settings["processes"][id]["list"]  = OptionValue["list"];
-        settings["processes"][id]["pre"]   = OptionValue["pre"];
+        settings["processes"][id]["prolog"]   = OptionValue["prolog"];
+        settings["processes"][id]["epilog"]   = OptionValue["epilog"];
         settings["processes"][id]["after"] = OptionValue["after"];
 
         console["log", "process `` is about to start. Generated id is ``", OptionValue["name"], id];

@@ -53,13 +53,15 @@ NotebookRemove[id_] := (
 
 (*access only via websockets*)
 NotebookAttach[id_, proc_, init_:Null] := Module[{pid = proc},
-    If[proc === "master", notebooks[id]["evaluator"] = SimpleEvaluator; PushNotification["utensils/notebook", "<span class=\"badge badge-danger\">Master kernel attached</span>"]; Return["master", Module] ];
-    If[proc === "Null"  ,
-        pid = CreateUUID[];
-        ProcessStart[pid, "name" -> "sandbox", "task" -> "svcore/sandbox.wls", "pre" -> notebooks[id]["pre"] ];
-        WebSocketSend[client, FrontEndAddKernel[pid, "sandbox"] ];
-    ,
-        JTPClientSend[settings["processes", proc, "listener"], Import["svcore/sandbox.wls"]; ];
+    If[proc === "master", notebooks[id]["evaluator"] = SimpleEvaluator; WebSocketSend[client, FrontEndAddKernel[pid, "sandbox"] ]; PushNotification["utensils/notebook", "<span class=\"badge badge-danger\">Master kernel attached</span>"]; Return["master", Module] ];
+    With[{c = client, p = pid},
+        If[proc === "Null"  ,
+            pid = CreateUUID[];
+            ProcessStart[pid, "name" -> "sandbox", "task" -> "svcore/sandbox.wls", "epilog"->Hold[WebSocketSend[c, FrontEndAddKernel[p, "sandbox"] ];], "prolog" -> notebooks[id]["pre"] ];
+        
+        ,
+            JTPClientSend[settings["processes", proc, "listener"], Import["svcore/sandbox.wls"]; WebSocketSend[c, FrontEndAddKernel[proc, "sandbox"] ]; ];
+        ];
     ];
 
     
