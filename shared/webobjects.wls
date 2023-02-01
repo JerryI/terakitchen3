@@ -2,12 +2,12 @@ SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;
 
 JSRun[x_String, name_String:"JS"] := (StringTemplate["<div class=\"badge badge-danger\">``</div><script>``</script>"][name, x])//HTMLForm;
 
-Options[ListPloty] = {
+Options[ListLinePloty] = {
     PlotRange -> {{-Infinity, Infinity}, {-Infinity, Infinity}}
 };
-
-ListPloty[x_List, OptionsPattern[]] := Module[{transp},
-    Switch[Depth[x],
+ 
+ListLinePloty[x_List, OptionsPattern[]] := Module[{transp},
+    Switch[Depth[x//N],
         3,
             transp = { (Transpose[FilterRange[x, OptionValue[PlotRange] ] ])}
         ,
@@ -30,10 +30,21 @@ Ploty[function_, range_, OptionsPattern[] ] := Module[{transp, data},
         With[{fn = #},
             Table[{ite, fn}, it ]
         ] &/@ Flatten[{function}]
-    ]//ListPloty
-];
+    ]//ListLinePloty
+]; 
 
-WebExport[name_, exp_, frmt_:Automatic] := (
-    Export["public/trashcan/"<>name, exp, frmt];
-    StringTemplate["<a href=\"trashcan/``\" class=\"badge badge-warning\">Download ``</a>"][name, name]//HTMLForm
+Options[WebExport] = {
+    Popup -> False 
+};
+
+WebOpen[url_] := (
+    WebSocketSend[client, FrontEndJSEval[StringTemplate["window.open('``', '_blank')"][url] ] ];
 );
+
+WebExport[name_, exp_, OptionsPattern[]] := (
+    Export["public/trashcan/"<>name, exp];
+    If[OptionValue[Popup],
+        WebSocketSend[client, FrontEndJSEval[StringTemplate["window.open('http://'+window.location.hostname+':'+window.location.port+'/trashcan/``', '_blank')"][name]]];
+    ];
+    StringTemplate["<a href=\"/trashcan/``\" class=\"badge badge-warning\">Download ``</a>"][name, name]//HTMLForm
+); 

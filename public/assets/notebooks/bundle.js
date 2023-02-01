@@ -66488,6 +66488,10 @@ core.FrontEndTruncated = function (args, env) {
     env.element.innerHTML = interpretate(args[0]) + " ...";
 }
 
+core.FrontEndJSEval = function (args, env) {
+    eval(interpretate(args[0]));
+  } 
+
 core.FrontEndCreateCell = function (args, env) {
   var template = interpretate(args[0]);
   var input = JSON.parse(interpretate(args[1]));
@@ -66551,6 +66555,11 @@ core.FrontEndCreateCell = function (args, env) {
 
 var notebookkernel = false;
 
+core.FrontEndAddKernel = function(args, env) {
+  document.getElementById('kernel-status').classList.add('btn-info');
+  notebookkernel = true;
+}
+
 function celleval(ne, id, cell) {
   console.log(ne);
   global = ne;
@@ -66565,6 +66574,25 @@ function celleval(ne, id, cell) {
 
   socket.send(q);
 }
+
+//2D Plot using Ploty.js
+core.WListPloty = function(args, env) {
+    const arr = JSON.parse(interpretate(args[0]));
+    console.log("Ploty.js");
+    console.log(arr);
+    let newarr = [];
+    arr.forEach(element => {
+        newarr.push({x: element[0], y: element[1]});
+    });
+    Plotly.newPlot(env.element, newarr, {autosize: false, width: 500, height: 300, margin: {
+        l: 30,
+        r: 30,
+        b: 30,
+        t: 30,
+        pad: 4
+      }});
+}
+
 
 core.HTMLForm = function (args, env) {
     setInnerHTML(env.element, interpretate(args[0]));

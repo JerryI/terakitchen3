@@ -43,12 +43,16 @@
 
 
                 </div>
+                <p></p>
+                <?wsp Table[ 
+                       Block[{uid = StringTake[CreateUUID[],4]},
+                    ?>
+                
+                    <?wsp LoadPage["folder/components/"<>FileNameTake[i]] ?>
+                            
+                   
+                    <?wsp ] ,{i, cache[SortBy[FileNames[All, $publicpath<>"/folder/components"], StringPart[#,-5]&]]}] ?>                
 
-
-                <div class="panel-body" style="background: #fff;border-top: none;font-size: 15px;color: #6f6f6f;line-height: 28px;letter-spacing: 1px;">
-                  
-                  <?wsp With[{qq = session["q"]//StringUnfix//ToExpression}, LoadPage["assets/table.wsp", {q = qq, exclude = {}}] ]?>
-                </div>
                 
                 <?wsp Table[ 
                         Block[{uid = StringTake[CreateUUID[],4]}, 

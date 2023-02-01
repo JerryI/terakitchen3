@@ -116,6 +116,21 @@ __global__ void solveNK (
     _dest[2] = k;
 }
 
+__global__ void movingAverage (
+    float4 * src, float * dest, mint len
+) {
+    float* _dest1 = &dest[(threadIdx.x << 2)];
+    float* _dest2 = &dest[(threadIdx.x << 2) + (1 >> 3)];
+
+    _dest2[1] = (_dest2[1] + _dest1[1])*0.5f;
+    _dest2[2] = (_dest2[2] + _dest1[2])*0.5f;
+
+    __syncthreads();
+
+    _dest1[1] = (_dest2[1] + _dest1[1])*0.5f;
+    _dest1[2] = (_dest2[2] + _dest1[2])*0.5f;
+}
+
 __global__ void initialise (
     float4 * src, float * dest, mint len
 ) {
@@ -135,7 +150,7 @@ __global__ void initialise (
 
     float* _dest = &dest[threadIdx.x << 3];
 
-    float n = 1.0f + (0.159152f * one.z * fT);
+    float n = 1.0f + (0.159152f * (one.z + params.w) * fT);
     float k = - (0.159152f * logT * fT);
 
     if (!isfinite(n))
@@ -149,6 +164,6 @@ __global__ void initialise (
     _dest[2] = k;
 
     _dest[3] = one.y;
-    _dest[4] = one.z;
+    _dest[4] = one.z + params.w;
 
 }

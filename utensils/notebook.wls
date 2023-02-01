@@ -53,7 +53,12 @@ NotebookRemove[id_] := (
 
 (*access only via websockets*)
 NotebookAttach[id_, proc_, init_:Null] := Module[{pid = proc},
-    If[proc === "master", notebooks[id]["evaluator"] = SimpleEvaluator; WebSocketSend[client, FrontEndAddKernel[pid, "sandbox"] ]; PushNotification["utensils/notebook", "<span class=\"badge badge-danger\">Master kernel attached</span>"]; Return["master", Module] ];
+    If[proc === "master", 
+        notebooks[id]["evaluator"] = SimpleEvaluator; 
+        WebSocketSend[client, FrontEndAddKernel[pid, "sandbox"] ]; 
+        PushNotification["modules/notebook", "<span class=\"badge badge-danger\">Master kernel attached</span> <p>If we die, we die</p>"]; 
+        Return["master", Module] 
+    ];
     With[{c = client, p = pid},
         If[proc === "Null"  ,
             pid = CreateUUID[];
@@ -64,9 +69,21 @@ NotebookAttach[id_, proc_, init_:Null] := Module[{pid = proc},
         ];
     ];
 
-    
-
     notebooks[id]["evaluator"] = RemoteEvaluator[pid];
+];
+
+NotebookExport[id_] := Module[{content, file = notebooks[id, "name"]<>StringTake[CreateUUID[], 3]<>".html"},
+    content = Block[{session = <|"Query"-><|"id"->id|>|>, commandslist = {}},
+        Block[{WebSocketSend = Function[{addr, data}, commandslist={commandslist, data};], fireEvent = CellEventFire[""]},
+            CellObjGenerateTree[notebooks[id, "cell"]];
+        ];
+        commandslist = ExportString[commandslist//Flatten, "ExpressionJSON"];
+
+        LoadPage["notebook/export/entire.wsp", {}, "base"->"public"]
+    ];
+
+    Export["public/trashcan/"<>file, content, "String"];
+    WebSocketSend[client, FrontEndJSEval[StringTemplate["downloadByURL('http://'+window.location.hostname+':'+window.location.port+'/trashcan/``', '``')"][file, file]]];
 ];
 
 NotebookOpen[id_] := (

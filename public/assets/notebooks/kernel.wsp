@@ -13,6 +13,7 @@
         <div class="dropdown-divider"></div>
         <button class="dropdown-item" onclick='attachProcess("Null")'>Start a new process</button>
       </div>
+      <button class="btn btn-light btn-sm" onclick="exportNotebook()" type="button">Export</button>
     </div>
 
 <script>
@@ -25,5 +26,10 @@
       document.getElementById('kernel-status').classList.add('btn-info');
       notebookkernel = true;
     }
+
+    function exportNotebook() {
+        socket.send('NotebookExport["<?wsp id ?>"]');
+
+    }  
 </script>
 
