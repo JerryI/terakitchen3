@@ -434,6 +434,8 @@ ApplyToAll := (
                 Continue[];
             ];
 
+            PushNotification["services/nk", StringTemplate["processing <a class=\"badge badge-light\" href=\"item/index.wsp?id=``\">``</a>"][i, i] ];
+
             sam["data", "freqs"]   = sam["data", "freqs"];
             sam["data", "fft"]     = sam["data", "fft"];
             sam["data", "tds"]     = sam["data", "tds"];

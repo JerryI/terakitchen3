@@ -1,13 +1,36 @@
-
-__global__  void subtractFP (
-    float4 * src, float * dest, mint len
+__device__ void movingAverage (
+    float4 * src, float * dest
 ) {
-    const float4 params = src[1000];
+    if (threadIdx.x > 1024 - 2) return;
+
+    float* _dest = &dest[ threadIdx.x << 3];
+    float* _next = &dest[(threadIdx.x + 1) << 3];
+
+    _dest[1] = (_next[1] + _dest[1])/2.0f;
+    _dest[2] = (_next[2] + _dest[2])/2.0f;
+}
+
+__device__  void subtractFP (
+    float4 * src, float * dest
+) {
+    float4 params;
+        params.x = dest[(1024 << 3)];     //n0
+        params.y = dest[(1024 << 3) + 1]; //thickness
+        params.z = dest[(1024 << 3) + 2]; //scale
+        params.w = dest[(1024 << 3) + 3];
+    //[0] - n0
+    //[1] - thickness
+    //[2] - scale
+    //[3] - phase shift
+    //
+    float4 one = src[threadIdx.x];
+
+    //scaling
+    one.y = one.y * params.z;
+
     float* _dest = &dest[threadIdx.x << 3];
 
     const float thickness = params.y;
-
-    float4 one    = src[threadIdx.x];
 
     //optimised using Experimental`OptimizedExpression on Wolfram Language
     const float n    = _dest[1];
@@ -55,14 +78,24 @@ __global__  void subtractFP (
     _dest[5] = abs;
     _dest[6] = arg;
 
-    _dest[3] = one.y * abs;
-    _dest[4] = one.z - arg;
+    if (one.y * abs > 1.0f) {
+        _dest[3] = 1.0f;
+        _dest[4] = 0.0f;
+    } else {
+        _dest[3] = one.y * abs;
+        _dest[4] = one.z - arg + params.w;
+    }
 }
 
-__global__ void solveNK (
-    float4 * src, float * dest, mint len
+__device__ void solveNK (
+    float4 * src, float * dest
 ) {
-    const float4 params = src[1000];
+    float4 params;
+        params.x = dest[(1024 << 3)];
+        params.y = dest[(1024 << 3) + 1];
+        params.z = dest[(1024 << 3) + 2];
+        params.w = dest[(1024 << 3) + 3];
+
     float* _dest = &dest[threadIdx.x << 3];
 
     const float n0 = params.x;
@@ -116,28 +149,31 @@ __global__ void solveNK (
     _dest[2] = k;
 }
 
-__global__ void movingAverage (
-    float4 * src, float * dest, mint len
+__global__ void k_solveNK (
+    float4 * src, float * dest
 ) {
-    float* _dest1 = &dest[(threadIdx.x << 2)];
-    float* _dest2 = &dest[(threadIdx.x << 2) + (1 >> 3)];
+    solveNK(src, dest);
+}
 
-    _dest2[1] = (_dest2[1] + _dest1[1])*0.5f;
-    _dest2[2] = (_dest2[2] + _dest1[2])*0.5f;
+__global__ void k_subtractFP (
+    float4 * src, float * dest
+) {
+    subtractFP(src, dest);
+}
 
-    __syncthreads();
-
-    _dest1[1] = (_dest2[1] + _dest1[1])*0.5f;
-    _dest1[2] = (_dest2[2] + _dest1[2])*0.5f;
+__global__ void k_movingAverage (
+    float4 * src, float * dest
+) {
+    movingAverage(src, dest);
 }
 
 __global__ void initialise (
-    float4 * src, float * dest, mint len
+    float4 * src, float * dest
 ) {
     //__shared__ float4 transmission[1000];
-    if (threadIdx.x > len) return;
+    if (threadIdx.x > 1023) return;
 
-    const float4 params = src[1000];
+    const float4  params = src[1024];
     float4 one    = src[threadIdx.x];
     //one.x - freq, 
     //one.y - abs, 
@@ -149,6 +185,13 @@ __global__ void initialise (
     const float logT = logf(one.y);
 
     float* _dest = &dest[threadIdx.x << 3];
+
+    if (threadIdx.x + blockIdx.x * blockDim.x == 0) {
+        _dest[1024 << 3]     = params.x;
+        _dest[(1024 << 3) + 1] = params.y;
+        _dest[(1024 << 3) + 2] = params.z;
+        _dest[(1024 << 3) + 3] = params.w;
+    }
 
     float n = 1.0f + (0.159152f * (one.z + params.w) * fT);
     float k = - (0.159152f * logT * fT);
@@ -165,5 +208,98 @@ __global__ void initialise (
 
     _dest[3] = one.y;
     _dest[4] = one.z + params.w;
+
+}
+
+__global__ void generateTDS (
+    float4 * src, 
+    float * dest, 
+    mint cycles_dry, 
+    mint cycles_wet,
+    float2 *dataset
+) {
+
+}    
+
+__device__ void cpyDest (
+    float * dest_local, float * dest
+) {
+    const int shift = blockIdx.x * (1025 * 8);
+
+    dest[(threadIdx.x << 3) + shift] = dest_local[(threadIdx.x << 3)];
+    dest[(threadIdx.x << 3) + shift + 1] = dest_local[(threadIdx.x << 3) + 1];
+    dest[(threadIdx.x << 3) + shift + 2] = dest_local[(threadIdx.x << 3) + 2];
+    dest[(threadIdx.x << 3) + shift + 3] = dest_local[(threadIdx.x << 3) + 3];
+    dest[(threadIdx.x << 3) + shift + 4] = dest_local[(threadIdx.x << 3) + 4];
+    dest[(threadIdx.x << 3) + shift + 5] = dest_local[(threadIdx.x << 3) + 5];
+    dest[(threadIdx.x << 3) + shift + 6] = dest_local[(threadIdx.x << 3) + 6];
+    dest[(threadIdx.x << 3) + shift + 7] = dest_local[(threadIdx.x << 3) + 7];    
+}
+
+__global__ void autorun (
+    float4 * src, 
+    float * dest, 
+    mint cycles_dry, 
+    mint cycles_wet,
+    float3 *dataset
+) {
+    __shared__ float _local_dest[1024*8 + 8];
+
+    const float4  params = src[1024];
+    float4 one    = src[threadIdx.x];
+    //one.x - freq, 
+    //one.y - abs, 
+    //one.z - ph
+    const float n0 = params.x;
+    const float thickness = dataset[blockIdx.x].x;
+    const float scale = dataset[blockIdx.x].y;
+    const float phase = dataset[blockIdx.x].z;
+    
+    const float fT = 1.0f/(thickness * one.x);
+    const float logT = logf(one.y * scale);
+
+    float* _dest = &_local_dest[threadIdx.x << 3];
+
+    if (threadIdx.x == 0) {
+        _dest[1024 << 3]       = params.x;
+        _dest[(1024 << 3) + 1] = dataset[blockIdx.x].x;
+        _dest[(1024 << 3) + 2] = dataset[blockIdx.x].y;
+        _dest[(1024 << 3) + 3] = phase;
+    }
+
+    float n = 1.0f + (0.159152f * (one.z + phase) * fT);
+    float k = - (0.159152f * logT * fT);
+
+    if (!isfinite(n))
+        n = n0;
+    
+    if (!isfinite(k))
+        k = 0.0f;    
+
+    _dest[0] = one.x;
+    _dest[1] = n;
+    _dest[2] = k;
+
+    _dest[3] = one.y * scale;
+    _dest[4] = one.z + phase;
+
+    __syncthreads();
+
+    solveNK(src, _local_dest);
+
+    for (int i=0; i<cycles_dry; ++i) { 
+      subtractFP(src, _local_dest);
+      solveNK(src, _local_dest);
+    }
+
+    for (int i=0; i<cycles_wet; ++i) { 
+      subtractFP(src, _local_dest);
+      solveNK(src, _local_dest);
+      __syncthreads();
+      movingAverage(src, _local_dest);
+    } 
+
+    __syncthreads();
+    cpyDest(_local_dest, dest);
 
 }

@@ -71,9 +71,9 @@ ProcessFiles[args_] := Module[{descid = CreateUUID[], donelist, pipeline, servic
   diff = args["files"];
 
   err = Catch[
-    If[KeyExistsQ[args, "thickness"], 
-      If[Not[(ThicknessNormalise["mm"][args["thickness"] ])//NumberQ//TrueQ],  Throw[StringTemplate["`` is not a valid thickness value"][args["thickness"] ] ] ];
-    ]; 
+   
+    If[Not[(ThicknessNormalise["mm"][args["thickness"] ])//NumberQ//TrueQ],  Throw[StringTemplate["`` is not a valid thickness value"][args["thickness"] ] ] ];
+
 
     diff = Table[ImportFile[i, args], {i, diff}];
 
@@ -181,6 +181,7 @@ ImportFile[file_, args_] := Module[{input, fields, TransferField, TransferTheRes
       ];
      
       record["experiment"] = exp; 
+      record["attributes"] = <|"usable-range"->Sequence[All]|>;
      
       If[KeyExistsQ[args, "descid"], record["description"] = args["descid"]];
       

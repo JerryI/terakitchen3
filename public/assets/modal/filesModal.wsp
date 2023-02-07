@@ -62,7 +62,7 @@
             <br>
             <div class="form-group">
               <label>Attach files</label>
-              <input type="file" name="files" multiple>
+              <input type="file" name="files" multiple required>
             </div>
             <br>
             <div class="form-group">
@@ -121,8 +121,8 @@
               <label class="form-group-label" for="thickness">
                 Thickness
               </label>
-              <input id="thickness" type="text" class="form-control form-control-lg" placeholder="XX cm" name="thickness">
-              <small>Use metric units "mm" or "cm" (by default if not specified). Or leave it empty and the thickness defined in the chosen experiment will be used.</small>
+              <input id="thickness" type="text" class="form-control form-control-lg" placeholder="XX cm" name="thickness" required>
+              <small>Use metric units "mm", "um" or "cm" (by default if not specified)</small>
             </div>    
             <div class="form-group"> 
               <label class="form-group-label" for="thickness">

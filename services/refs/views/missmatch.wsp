@@ -42,11 +42,6 @@
 
   <script>
 
-
-    core.UpdateField = function(args, env) {
-      document.getElementById("param").value = interpretate(args[0]);
-    }
-
     document.getElementById('dialog').addEventListener('submit', e => {
 
     // Store reference to form to make later code easier to read

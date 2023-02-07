@@ -21,6 +21,6 @@
     var global;
     var last;
 
-    socket.send('NotebookOpen["<?wsp notebookid ?>"]');
+    setTimeout(function() {socket.send('NotebookOpen["<?wsp notebookid ?>"]')}, 2000);
 
   </script>

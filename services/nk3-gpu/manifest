@@ -5,67 +5,71 @@
     "dependencies"->{"fourier", "refs"},
     
     "description"-> "GPU accelerated algorithm for the complex refractive index extraction and the thickness/amplitude correction. It stores values into [\"nk\"] as pairs. See DOI: 10.1117/12.612946",
-    "parameters"-> {
+    "parameters"-> {      
         <|
-            "symbol"->"iterations",
-            "desc"->"Number of iterations",
-            "value"-> 30,
-            "type"->"integer"
+            "symbol"->"corrections", 
+            "desc"->"Thickness and amplitude corrections", 
+            "value"-> False,
+            "type"->"bool"
         |>,
         <|
-            "symbol"->"PhaseTrashhold",
-            "desc"->"Phase threshold",
-            "value"-> 5.3,
-            "type"->"symbol"
+            "symbol"->"applyfp", 
+            "desc"->"Apply Fabry-Perot subtraction procedure", 
+            "value"-> True,
+            "type"->"bool"
         |>,        
         <|
-            "symbol"->"locutoff", 
-            "desc"->"lower cutoff frequency (cm-1)", 
+            "symbol"->"applyforall", 
+            "desc"->"Apply the same setting for all", 
+            "value"-> False,
+            "type"->"bool"
+        |>, 
+        <|
+            "symbol"->"locut", 
+            "desc"->"low cutoff frequency (cm<sup>-1</sup>)", 
             "value"-> 10,
-            "type"->"symbol"
+            "type"->"real"
         |>,
         <|
-            "symbol"->"hicutoff", 
-            "desc"->"higer cutoff frequency (cm-1)", 
+            "symbol"->"hicut", 
+            "desc"->"high cutoff frequency (cm<sup>-1</sup>)", 
             "value"-> 125,
-            "type"->"symbol"
+            "type"->"real"
         |>,
         <|
-            "symbol"->"numberFP", 
-            "desc"->"FP subtraction cycles", 
+            "symbol"->"pthresh", 
+            "desc"->"Phase unwrapping threshold (rad)", 
+            "value"-> 5.7,
+            "type"->"real"
+        |>, 
+        <|
+            "symbol"->"varythicknessrange", 
+            "desc"->"The expected error of the measured thickness (in %)", 
+            "value"-> 15,
+            "type"->"real"
+        |>,  
+        <|
+            "symbol"->"varyscalerange", 
+            "desc"->"The expected error in the amplitude of TDS from the sample (in %)", 
+            "value"-> 50,
+            "type"->"real"
+        |>,              
+        <|
+            "symbol"->"drycycles", 
+            "desc"->"Number of \"dry\"-cycles", 
+            "value"-> 0,
+            "type"->"real"
+        |>, 
+        <|
+            "symbol"->"wetcycles", 
+            "desc"->"Number of \"wet\"-cycles", 
             "value"-> 8,
-            "type"->"integer"
-        |>   
-        ,
-        <|
-            "symbol"->"thicknessCorrection", 
-            "desc"->"Thickness correction", 
-            "value"-> False,
-            "type"->"bool"
-        |>,
-        <|
-            "symbol"->"autocorrect", 
-            "desc"->"Apply weak correction for other samples (don't use with different samples/experiments)", 
-            "value"-> False,
-            "type"->"bool"
-        |>    
-        ,
-        <|
-            "symbol"->"deviation", 
-            "desc"->"variation in +-%", 
-            "value"-> 10,
-            "type"->"integer"
-        |>,        
-        <|
-            "symbol"->"recursionNumber", 
-            "desc"->"recursion number (accuracy)", 
-            "value"-> 1,
-            "type"->"integer"
-        |>,
+            "type"->"real"
+        |>,                                          
         <|
             "symbol"->"debug", 
-            "desc"->"Debug information", 
-            "value"-> True,
+            "desc"->"Developer mode", 
+            "value"-> False,
             "type"->"bool"
         |>        
                          

@@ -51,7 +51,7 @@
 
                     <div class="d-flex justify-content-between align-items-left mb-3">
                      <div class="align-items-sm-baseline align-items-left">
-                        <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, CKey[key]["view"] ], {key, Complement[session["item"]//Keys, {"type","descid", "data","date", "id", "description", "ref", "experiment"}]   }]  ?>
+                        <?wsp  Table[  Block[{key = key, keydata = session["item"][key]}, CKey[key]["view"] ], {key, Complement[session["item"]//Keys, {"type","descid", "data","date", "id", "description", "ref", "experiment", "attributes"}]   }]  ?>
                         <?wsp  Table[  Block[{key = key, keydata = Missing[]}, CKey[key]["view"] ], {key, Complement[Part[#,-2]&@StringSplit[#,"/"]&/@Select[cache[FileNames["*","public/assets/keys", 3]], Function[x, FileBaseName[x]=="suggested"]], session["item"]//Keys]   }]  ?>
                       </div>
                     </div>
@@ -119,7 +119,7 @@
   function loadField(exp, callback) {
     var id = '<?wsp session["item"]["id"] ?>'; 
     var query = `
-        Block[{data = collection["${id}"]["data"]},
+        Block[{data = collection["${id}", "data"], attributes = collection["${id}", "attributes"], uid = "${id}"},
           ${exp}
         ]
     `;

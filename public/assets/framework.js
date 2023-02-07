@@ -7,7 +7,7 @@ socket.onopen = function(e) {
 }; 
 
 socket.onmessage = function(event) {
-  console.log(event.data);
+
   let data = JSON.parse(event.data);
   
   interpretate(data);
@@ -104,10 +104,12 @@ formData.append('command', command);
 
 const request = new XMLHttpRequest();
 request.open("POST", url);
+
+
+
 request.send(formData);
 
-promise("OK");
-
+promise("Ok");
 
 
 }

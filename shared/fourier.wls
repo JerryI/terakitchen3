@@ -25,3 +25,5 @@ ClusterPhase =
     
     
     phase], CompilationTarget -> "C"];
+
+GetFFTPhase[data_, cut_, ph_] := ClusterPhase[Arg[data["fft"] ] - (((MaximalBy[data["tds"]//Abs, Last] // First // First) - data["tds"][[1, 1]]) 2 Pi (1/33.356) data["freqs"] ), cut, Length[data["fft"] ], ph];  

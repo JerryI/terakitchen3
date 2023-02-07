@@ -1,0 +1,12 @@
+<p id="textField" class="lead text-muted">Thickness and scaling correction</p>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="varythicknessrange">Thickness variation (%)</label>
+      <input type="number" class="form-control form-control-sm" name="varythicknessrange" id="varythicknessrange" value="<?wsp varythicknessrange ?>">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="varyscalerange">TDS amplitude variation (%)</label>
+      <input type="number" class="form-control form-control-sm" name="varyscalerange" id="varyscalerange" value="<?wsp varyscalerange ?>">
+    </div>                               
+</div> 

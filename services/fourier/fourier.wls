@@ -68,9 +68,10 @@ Module[{},
   ];
 
   console["log", sm["id"]]; 
-  With[{uid = sm["id"], fft = sm["data", "fft"], freqs = sm["data"]["freqs"]},
+  With[{uid = sm["id"], fft = sm["data", "fft"], freqs = sm["data"]["freqs"], len = Floor[Length[sm["data", "fft"] ]/2 ]},
     CEval[
       collection[uid, "data", "fft"] = fft;
+      collection[uid, "attributes", "usable-range"] = Sequence[;; len];
       collection[uid, "data", "freqs"] = freqs;
       collection[uid, "data", "fft-abs"] = With[{id=uid},collection[id,"data","fft"]//Abs];
     ]

@@ -22,6 +22,16 @@
             <input id="points" type="hidden" class="form-control form-control" value="[]" name="points">                                 
           </form>      
 
+          <div class="form-group">
+  
+            <label class="form-group-label" for="phase">
+                phase border
+            </label>
+
+            <input id="phase" type="text" class="form-control form-control" value="<?wsp phasetr ?>" name="phase">
+
+         </div>
+
           <button class="btn btn-secondary" onclick="check()">Update preview</button>
 
           <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog">
@@ -45,8 +55,8 @@
 
     let data = 
             {
-                x: <?wsp ExportString[freq, "JSON"]   ?>,
-                y: <?wsp ExportString[(fft//Abs)^2, "JSON"]   ?>,
+                x: [0],
+                y: [0],
                 mode: 'lines',
                 name: 'cut'
             };
@@ -58,7 +68,15 @@
                 mode: 'lines',
                 name: 'full',
                 yaxis: 'y2'
-            };            
+            };    
+            
+    let data1 = {
+                x: [0],
+                y: [0],
+                mode: 'lines',
+                name: 'phase',
+                yaxis: 'y3'
+            };  
         
     let layout = {
         xaxis: {
@@ -80,10 +98,18 @@
                 overlaying: 'y',
                 side: 'right'
 
-            } 
+            } ,yaxis3: {
+    title: 'phase rad',
+    titlefont: {color: '#d62728'},
+    tickfont: {color: '#d62728'},
+    anchor: 'x',
+    overlaying: 'y',
+    side: 'right',
+    position: 0.65
+  }
     };
         
-    Plotly.plot(fft, [dataO, data], layout);
+    Plotly.plot(fft, [dataO, data1, data], layout);
 
     Plotly.plot(tds, [{
         type: 'scatter',
@@ -136,8 +162,8 @@
         document.getElementById('rpeak').value = pt[0][0];
         document.getElementById('lpeak').value = pt[1][0];
 
-        Plotly.deleteTraces(fft, [-1]);
-        Plotly.addTraces(fft, [{x:r[0] , y: r[1], name:"cut"}]);
+        Plotly.deleteTraces(fft, [-1, -2]);
+        Plotly.addTraces(fft, [{x:r[0] , y: r[1], name:"cut"}, {x:r[0] , y: r[2], name:"phase", yaxis: 'y3'}]);
                 
         document.getElementById('logoFlames').style = "display: none"; 
         document.getElementById('bigFlames').style = "opacity: 0";
@@ -163,9 +189,10 @@
 
     function check() {
         let points = document.getElementById('points').value;
+        let phasetr = document.getElementById('phase').value;
 
         let q = `
-                PageEmitt["<?wsp $uid ?>"]["${points}"]
+                PageEmitt["<?wsp $uid ?>"][{"${points}", ${phasetr}}]
                 `;
 
         document.getElementById('logoFlames').style = "display: block";

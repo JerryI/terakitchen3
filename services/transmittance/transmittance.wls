@@ -19,8 +19,6 @@ console["log", "number: "<>ToString[samples//Length]];
 thickness = With[{id = First[input]}, CEval[ Block[{cm = 1, mm = 0.1, um = 10^(-4)}, experiments[collection[id]["experiment"], "thickness"]//ToExpression ]  ] ];
 console["log", "T calculations: "<>ToString[thickness]<>"  cm - thickness"];
 
-
-
 (*take a random sample*)
 Do[
     With[{sam = CGet[i], ref = With[{uid = i}, CEval[collection[collection[uid]["ref"]]]]},
@@ -28,6 +26,8 @@ Do[
             console["log", "custom thickness: "<>sam["thickness"]];
             thickness = Block[{mm = 0.1, cm = 1, um = 10^(-4)}, ToExpression[sam["thickness"]] ];
         ];
+
+        
 
         If[With[{uid = i}, CEval[!KeyExistsQ[collection, collection[uid]["ref"]]]], 
             PushNotification["services/transmittance", StringTemplate["Problem with `` has occured. No reference was found."][i]]; 

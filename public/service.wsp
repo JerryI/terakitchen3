@@ -1,4 +1,6 @@
 <?wsp
+    session["Query", "q"] =  session["Query", "q"]//StringUnfix;
+
     session["q"] = session["Query", "q"];
 
     session[searchquery] =  session["Query", "q"];
@@ -16,8 +18,8 @@
         SessionSubmit[CallService[args]];
       ];
 
-      PushNotification["Tinyweb", 
-         "Session submit " <> session["Query", "id"] <> "was created"];
+      PushNotification["public/service", 
+         "Session submit " <> session["Query", "id"] <> " was created"];
       ];
 
 

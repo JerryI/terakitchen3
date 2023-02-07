@@ -94,7 +94,7 @@ Do[
       uid = input[[n]]
     },
 
-    CEval[ collection[uid, "data", "tds"] = tdsu; ]
+    CEval[ collection[uid, "data", "tds"] = tdsu; collection[uid, "attributes", "usable-range"] = Sequence[All]; ]
 
   ]
 , {n, 1, Length[input]}];

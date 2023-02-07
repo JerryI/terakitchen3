@@ -10,7 +10,11 @@ $uid = CreateUUID[];
 samples = CQuery[{"type"->Equal->"sample"}:>And, input];
 console["log", "number: "<>ToString[samples//Length]];
 
+phasetr = 5.3;
+
 FP = True;
+
+st0 = 0;
 
 fourier[data_] := With[{},
     tds = data;
@@ -29,6 +33,8 @@ fourier[data_] := With[{},
     fft[[1]] = 0.;
     fft[[2]] = 0.;
     fft[[3]] = 0.;
+
+    zerophase = 2 \[Pi] (1/33.356) st0 # & /@ freq;
 ];
 
 tdsscale = 1;
@@ -165,15 +171,20 @@ startDialog[uuid_, ssam_, ssamid_] := Module[{},
 
     EventBind["event", Function[{cli, data}, 
      
-        range = MinMax @ ImportString[data, "JSON"];
+        range = MinMax @ ImportString[data[[1]], "JSON"];
+        phasetr = data[[2]]//ToExpression;
+
         regions = Partition[
                 Map[Function[x, (Position[sam["tds"][[All,1]], _?((Abs[# - x] < 1) &)] // First // First)], Flatten[range] ]
             , 2] // Flatten;  
+
+        st0 = sam["tds"][[regions[[1]], 1 ]];
+
         fourier[sam["tds"][[regions[[1]] ;; regions[[2]]]]];  
 
         edges = Take[(SortBy[Transpose[{freq, PeakDetect[fft // Abs] fft // Abs}], Last] // Reverse), 2];      
 
-        WebSocketSend[cli, UpdateGraph[ExportString[{freq, (fft//Abs)^2},"JSON"], ExportString[edges, "JSON"] ] ];
+        WebSocketSend[cli, UpdateGraph[ExportString[{freq, (fft//Abs)^2, ClusterPhase[(fft//Arg)-zerophase, 1, Length[fft]-2, phasetr]},"JSON"], ExportString[edges, "JSON"] ] ];
     ] ];
 
 ];

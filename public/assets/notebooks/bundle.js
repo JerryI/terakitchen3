@@ -4121,10 +4121,10 @@ var shift = {
   222: "\""
 };
 
-var chrome$1 = typeof navigator != "undefined" && /Chrome\/(\d+)/.exec(navigator.userAgent);
+var chromee$1 = typeof navigator != "undefined" && /Chrome\/(\d+)/.exec(navigator.userAgent);
 var mac = typeof navigator != "undefined" && /Mac/.test(navigator.platform);
 var ie$1 = typeof navigator != "undefined" && /MSIE \d|Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(navigator.userAgent);
-var brokenModifierNames = mac || chrome$1 && +chrome$1[1] < 57;
+var brokenModifierNames = mac || chromee$1 && +chromee$1[1] < 57;
 
 // Fill in the digit keys
 for (var i = 0; i < 10; i++) base[48 + i] = base[96 + i] = String(i);
@@ -4812,7 +4812,7 @@ const ie_upto10 = /*@__PURE__*//MSIE \d/.test(nav.userAgent);
 const ie_11up = /*@__PURE__*//Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(nav.userAgent);
 const ie = !!(ie_upto10 || ie_11up || ie_edge);
 const gecko = !ie && /*@__PURE__*//gecko\/(\d+)/i.test(nav.userAgent);
-const chrome = !ie && /*@__PURE__*//Chrome\/(\d+)/.exec(nav.userAgent);
+const chromee = !ie && /*@__PURE__*//Chrome\/(\d+)/.exec(nav.userAgent);
 const webkit = "webkitFontSmoothing" in doc.documentElement.style;
 const safari = !ie && /*@__PURE__*//Apple Computer/.test(nav.vendor);
 const ios = safari && (/*@__PURE__*//Mobile\/\w+/.test(nav.userAgent) || nav.maxTouchPoints > 2);
@@ -4824,8 +4824,8 @@ var browser = {
     ie_version: ie_upto10 ? doc.documentMode || 6 : ie_11up ? +ie_11up[1] : ie_edge ? +ie_edge[1] : 0,
     gecko,
     gecko_version: gecko ? +(/*@__PURE__*//Firefox\/(\d+)/.exec(nav.userAgent) || [0, 0])[1] : 0,
-    chrome: !!chrome,
-    chrome_version: chrome ? +chrome[1] : 0,
+    chromee: !!chromee,
+    chromee_version: chromee ? +chromee[1] : 0,
     ios,
     android: /*@__PURE__*//Android\b/.test(nav.userAgent),
     webkit,
@@ -4952,7 +4952,7 @@ function textCoords(text, pos, side) {
         pos = length;
     let from = pos, to = pos, flatten = 0;
     if (pos == 0 && side < 0 || pos == length && side >= 0) {
-        if (!(browser.chrome || browser.gecko)) { // These browsers reliably return valid rectangles for empty ranges
+        if (!(browser.chromee || browser.gecko)) { // These browsers reliably return valid rectangles for empty ranges
             if (pos) {
                 from--;
                 flatten = 1;
@@ -6716,7 +6716,7 @@ class DocView extends ContentView {
         // getSelection than the one that it actually shows to the user.
         // This forces a selection update when lines are joined to work
         // around that. Issue #54
-        if ((browser.ie || browser.chrome) && !this.compositionDeco.size && update &&
+        if ((browser.ie || browser.chromee) && !this.compositionDeco.size && update &&
             update.state.doc.lines != update.startState.doc.lines)
             this.forceSelection = true;
         let prevDeco = this.decorations, deco = this.updateDeco();
@@ -6749,7 +6749,7 @@ class DocView extends ContentView {
             // around the selection, get confused and report a different
             // selection from the one it displays (issue #218). This tries
             // to detect that situation.
-            let track = browser.chrome || browser.ios ? { node: observer.selectionRange.focusNode, written: false } : undefined;
+            let track = browser.chromee || browser.ios ? { node: observer.selectionRange.focusNode, written: false } : undefined;
             this.sync(track);
             this.dirty = 0 /* Dirty.Not */;
             if (track && (track.written || observer.selectionRange.focusNode != track.node))
@@ -6806,7 +6806,7 @@ class DocView extends ContentView {
                 // inside an uneditable node, and not bring it back when we
                 // move the cursor to its proper position. This tries to
                 // restore the keyboard by cycling focus.
-                if (browser.android && browser.chrome && this.dom.contains(domSel.focusNode) &&
+                if (browser.android && browser.chromee && this.dom.contains(domSel.focusNode) &&
                     inUneditable(domSel.focusNode, this.dom)) {
                     this.dom.blur();
                     this.dom.focus({ preventScroll: true });
@@ -7307,7 +7307,7 @@ function domPosInText(node, x, y) {
             let dy = (rect.top > y ? rect.top - y : y - rect.bottom) - 1;
             if (rect.left - 1 <= x && rect.right + 1 >= x && dy < closestDY) {
                 let right = x >= (rect.left + rect.right) / 2, after = right;
-                if (browser.chrome || browser.gecko) {
+                if (browser.chromee || browser.gecko) {
                     // Check for RTL on browsers that support getting client
                     // rects for empty ranges.
                     let rectBefore = textRange(node, i).getBoundingClientRect();
@@ -7386,7 +7386,7 @@ function posAtCoords(view, { x, y }, precise, bias = -1) {
                 ({ startContainer: node, startOffset: offset } = range);
                 if (!view.contentDOM.contains(node) ||
                     browser.safari && isSuspiciousSafariCaretResult(node, offset, x) ||
-                    browser.chrome && isSuspiciousChromeCaretResult(node, offset, x))
+                    browser.chromee && isSuspiciousChromeCaretResult(node, offset, x))
                     node = undefined;
             }
         }
@@ -7541,7 +7541,7 @@ class InputState {
         this.lastFocusTime = 0;
         this.lastScrollTop = 0;
         this.lastScrollLeft = 0;
-        this.chromeScrollHack = -1;
+        this.chromeeScrollHack = -1;
         // On iOS, some keys need to have their default behavior happen
         // (after which we retroactively handle them and reset the DOM) to
         // avoid messing up the virtual keyboard state.
@@ -7589,17 +7589,17 @@ class InputState {
             if (event.target == view.scrollDOM)
                 handleEvent(handlers.mousedown, event);
         });
-        if (browser.chrome && browser.chrome_version == 102) { // FIXME remove at some point
+        if (browser.chromee && browser.chromee_version == 102) { // FIXME remove at some point
             // On Chrome 102, viewport updates somehow stop wheel-based
             // scrolling. Turning off pointer events during the scroll seems
             // to avoid the issue.
             view.scrollDOM.addEventListener("wheel", () => {
-                if (this.chromeScrollHack < 0)
+                if (this.chromeeScrollHack < 0)
                     view.contentDOM.style.pointerEvents = "none";
                 else
-                    window.clearTimeout(this.chromeScrollHack);
-                this.chromeScrollHack = setTimeout(() => {
-                    this.chromeScrollHack = -1;
+                    window.clearTimeout(this.chromeeScrollHack);
+                this.chromeeScrollHack = setTimeout(() => {
+                    this.chromeeScrollHack = -1;
                     view.contentDOM.style.pointerEvents = "";
                 }, 100);
             }, { passive: true });
@@ -7674,7 +7674,7 @@ class InputState {
         // composition changes. When an enter or backspace key event is
         // seen, hold off on handling DOM events for a bit, and then
         // dispatch it.
-        if (browser.android && browser.chrome && !event.synthetic &&
+        if (browser.android && browser.chromee && !event.synthetic &&
             (event.keyCode == 13 || event.keyCode == 8)) {
             view.observer.delayAndroidKey(event.key, event.keyCode);
             return true;
@@ -8216,7 +8216,7 @@ handlers.compositionend = view => {
     view.inputState.composing = -1;
     view.inputState.compositionEndedAt = Date.now();
     view.inputState.compositionFirstChange = null;
-    if (browser.chrome && browser.android)
+    if (browser.chromee && browser.android)
         view.observer.flushSoon();
     setTimeout(() => {
         // Force the composition state to be cleared if it hasn't already been
@@ -8237,7 +8237,7 @@ handlers.beforeinput = (view, event) => {
     // (preventDefault on beforeinput, though supported in the spec,
     // seems to do nothing at all on Chrome).
     let pending;
-    if (browser.chrome && browser.android && (pending = PendingKeys.find(key => key.inputType == event.inputType))) {
+    if (browser.chromee && browser.android && (pending = PendingKeys.find(key => key.inputType == event.inputType))) {
         view.observer.delayAndroidKey(pending.key, pending.keyCode);
         if (pending.key == "Backspace" || pending.key == "Delete") {
             let startViewHeight = ((_a = window.visualViewport) === null || _a === void 0 ? void 0 : _a.height) || 0;
@@ -9755,7 +9755,7 @@ function applyDOMChange(view, domChange) {
         if (diff) {
             // Chrome inserts two newlines when pressing shift-enter at the
             // end of a line. DomChange drops one of those.
-            if (browser.chrome && view.inputState.lastKeyCode == 13 &&
+            if (browser.chromee && view.inputState.lastKeyCode == 13 &&
                 diff.toB == diff.from + 2 && domChange.text.slice(diff.from, diff.toB) == LineBreakPlaceholder + LineBreakPlaceholder)
                 diff.toB--;
             change = { from: from + diff.from, to: from + diff.toA,
@@ -9790,7 +9790,7 @@ function applyDOMChange(view, domChange) {
             newSel = EditorSelection.single(newSel.main.anchor - 1, newSel.main.head - 1);
         change = { from: sel.from, to: sel.to, insert: Text.of([" "]) };
     }
-    else if (browser.chrome && change && change.from == change.to && change.from == sel.head &&
+    else if (browser.chromee && change && change.from == change.to && change.from == sel.head &&
         change.insert.toString() == "\n " && view.lineWrapping) {
         // In Chrome, if you insert a space at the start of a wrapped
         // line, it will actually insert a newline and a space, causing a
@@ -10092,7 +10092,7 @@ class DOMObserver {
         // reported.
         // Chrome Android has a similar issue when backspacing out a
         // selection (#645).
-        if ((browser.ie && browser.ie_version <= 11 || browser.android && browser.chrome) && !view.state.selection.main.empty &&
+        if ((browser.ie && browser.ie_version <= 11 || browser.android && browser.chromee) && !view.state.selection.main.empty &&
             // (Selection.isCollapsed isn't reliable on IE)
             sel.focusNode && isEquivalentPosition(sel.focusNode, sel.focusOffset, sel.anchorNode, sel.anchorOffset))
             this.flushSoon();
@@ -48698,6 +48698,31 @@ class CylinderBufferGeometry extends BufferGeometry {
 
 }
 
+class CylinderGeometry extends Geometry {
+
+	constructor( radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength ) {
+
+		super();
+		this.type = 'CylinderGeometry';
+
+		this.parameters = {
+			radiusTop: radiusTop,
+			radiusBottom: radiusBottom,
+			height: height,
+			radialSegments: radialSegments,
+			heightSegments: heightSegments,
+			openEnded: openEnded,
+			thetaStart: thetaStart,
+			thetaLength: thetaLength
+		};
+
+		this.fromBufferGeometry( new CylinderBufferGeometry( radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength ) );
+		this.mergeVertices();
+
+	}
+
+}
+
 class PolyhedronBufferGeometry extends BufferGeometry {
 
 	constructor( vertices, indices, radius = 1, detail = 0 ) {
@@ -51019,6 +51044,28 @@ function ParametricGeometry( func, slices, stacks ) {
 
 ParametricGeometry.prototype = Object.create( Geometry.prototype );
 ParametricGeometry.prototype.constructor = ParametricGeometry;
+
+class PolyhedronGeometry extends Geometry {
+
+	constructor( vertices, indices, radius, detail ) {
+
+		super();
+
+		this.type = 'PolyhedronGeometry';
+
+		this.parameters = {
+			vertices: vertices,
+			indices: indices,
+			radius: radius,
+			detail: detail
+		};
+
+		this.fromBufferGeometry( new PolyhedronBufferGeometry( vertices, indices, radius, detail ) );
+		this.mergeVertices();
+
+	}
+
+}
 
 class ShapeBufferGeometry extends BufferGeometry {
 
@@ -66382,7 +66429,7 @@ MapControls.prototype = Object.create( EventDispatcher.prototype );
 MapControls.prototype.constructor = MapControls;
 
 const placeholderMatcher = new MatchDecorator({
-  regexp: /FrontEndExecutable\["(.+)"\]/g,
+  regexp: /FrontEndExecutable\["([^"]+)"\]/g,
   decoration: match => Decoration.replace({
     widget: new PlaceholderWidget(match[1]),
   })
@@ -66430,6 +66477,7 @@ class PlaceholderWidget extends WidgetType {
 
 var $objetsstorage = {};
 
+
 core.FrontEndRemoveCell = function (args, env) {
   var input = JSON.parse(interpretate(args[0]));
   if (input["parent"] === "") {
@@ -66460,7 +66508,7 @@ core.FrontEndMoveCell = function (args, env) {
   document.getElementById(`${input["cell"]["id"]}---input`).appendChild(editor);
   cell.remove();
 
-};
+}; 
 
 core.FrontEndMorphCell = function (args, env) {
   var input = JSON.parse(interpretate(args[0]));
@@ -66486,11 +66534,11 @@ core.FrontEndCellError = function (args, env) {
 
 core.FrontEndTruncated = function (args, env) {
     env.element.innerHTML = interpretate(args[0]) + " ...";
-}
+};
 
 core.FrontEndJSEval = function (args, env) {
-    eval(interpretate(args[0]));
-  } 
+  eval(interpretate(args[0]));
+}; 
 
 core.FrontEndCreateCell = function (args, env) {
   var template = interpretate(args[0]);
@@ -66551,14 +66599,14 @@ core.FrontEndCreateCell = function (args, env) {
     parent: document.getElementById(input["id"]+"---"+input["type"])
   });
 
-};
+};  
 
 var notebookkernel = false;
 
 core.FrontEndAddKernel = function(args, env) {
   document.getElementById('kernel-status').classList.add('btn-info');
   notebookkernel = true;
-}
+};
 
 function celleval(ne, id, cell) {
   console.log(ne);
@@ -66575,52 +66623,81 @@ function celleval(ne, id, cell) {
   socket.send(q);
 }
 
-//2D Plot using Ploty.js
-core.WListPloty = function(args, env) {
-    const arr = JSON.parse(interpretate(args[0]));
-    console.log("Ploty.js");
-    console.log(arr);
-    let newarr = [];
-    arr.forEach(element => {
-        newarr.push({x: element[0], y: element[1]});
-    });
-    Plotly.newPlot(env.element, newarr, {autosize: false, width: 500, height: 300, margin: {
-        l: 30,
-        r: 30,
-        b: 30,
-        t: 30,
-        pad: 4
-      }});
-}
+
+
 
 
 core.HTMLForm = function (args, env) {
     setInnerHTML(env.element, interpretate(args[0]));
 };
 
-var setInnerHTML = function(elm, html) {
-    elm.innerHTML = html;
-    Array.from(elm.querySelectorAll("script")).forEach( oldScript => {
-      const newScript = document.createElement("script");
-      Array.from(oldScript.attributes)
-        .forEach( attr => newScript.setAttribute(attr.name, attr.value) );
-      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-      oldScript.parentNode.replaceChild(newScript, oldScript);
-    });
-  };
+//extensions
 
-function RGBtoColor(i, k, j) {
-  var r = Math.round(255 * i);
-  var g = Math.round(255 * k);
-  var b = Math.round(255 * j);
+//2D Plot using Ploty.js
+core.WListPloty = function(args, env) {
+  const arr = JSON.parse(interpretate(args[0]));
+  console.log("Ploty.js");
+  console.log(arr);
+  let newarr = [];
+  arr.forEach(element => {
+      newarr.push({x: element[0], y: element[1]});
+  });
+  Plotly.newPlot(env.element, newarr, {autosize: false, width: 500, height: 300, margin: {
+      l: 30,
+      r: 30,
+      b: 30,
+      t: 30,
+      pad: 4
+    }});
+};  
 
-  return new Color("rgb(" + r + "," + g + "," + b + ")");
-}
+core.WListContourPloty = function(args, env) {
+  const data = interpretate(args[0], env);
+  Plotly.newPlot(env.element, [{z:data[2], x:data[0], y:data[1], type: 'contour'}],
+  {autosize: false, width: 500, height: 300, margin: {
+    l: 30,
+    r: 30,
+    b: 30,
+    t: 30,
+    pad: 4
+  }});
 
-core.Style = function (args, env) {
+}; 
+
+//TableView
+core.TableForm = function(args, env) {
+  const table = document.createElement('table');
+  table.classList.add("table");
+  table.classList.add("table-sm");
+
+  const list = interpretate(args[0], {...env, hold:true});
+
+  // create a few data rows 
+  for (var i = 0; i < list.length; i++) {
+    const dataRow = document.createElement("tr");
+    const row = interpretate(list[i], {...env, hold:true});
+
+    for (var j = 0; j < row.length; j++) {
+      const dataCell = document.createElement("td");
+      interpretate(row[j], {...env, todom:true, element: dataCell});
+
+      dataRow.appendChild(dataCell);
+    }
+
+
+    table.appendChild(dataRow);
+  }  
+
+  env.element.appendChild(table);
+};
+
+
+
+
+core.Style = (args, env) => {
   var copy = Object.assign({}, env);
 
-  args.forEach(function (el) {
+  args.forEach((el) => {
     interpretate(el, copy);
   });
 };
@@ -66628,73 +66705,82 @@ core.Style = function (args, env) {
  * @description https://threejs.org/docs/#api/en/materials/LineDashedMaterial
  */
 core.Dashing = (args, env) => {
-
+  console.log("Dashing not implemented");
 };
 
-core.Annotation = function (args, env) {
-  args.forEach(function (el) {
+core.Annotation = (args, env) => {
+  args.forEach((el) => {
     interpretate(el, env);
   });
 };
 
-core.GraphicsGroup = function (args, env) {
+core.GraphicsGroup = (args, env) => {
   var group = new Group();
   var copy = Object.assign({}, env);
 
   copy.mesh = group;
 
-  args.forEach(function (el) {
+  args.forEach((el) => {
     interpretate(el, copy);
   });
 
   env.mesh.add(group);
 };
 
-core.RGBColor = function (args, env) {
-  if (args.length !== 3) console.error("RGB values should be triple!");
+core.RGBColor = (args, env) => {
+  if (args.length !== 3 && args.length !== 1) {
+    console.log("RGB format not implemented", args);
+    console.error("RGB values should be triple!");
+    return;
+  }
+  if (args.length === 1) {
+    args = interpretate(args[0], env); // return [r, g, b] , 0<=r, g, b<=1
+  }
+  const r = interpretate(args[0], env);
+  const g = interpretate(args[1], env);
+  const b = interpretate(args[2], env);
 
-  var r = Math.round(255 * interpretate(args[0]));
-  var g = Math.round(255 * interpretate(args[1]));
-  var b = Math.round(255 * interpretate(args[2]));
-
-  env.color = new Color("rgb(" + r + "," + g + "," + b + ")");
+  env.color = new Color(r, g, b);
 };
 
-core.Opacity = function (args, env) {
-  var o = interpretate(args[0]);
+core.Opacity = (args, env) => {
+  var o = interpretate(args[0], env);
   if (typeof o !== "number") console.error("Opacity must have number value!");
   console.log(o);
   env.opacity = o;
 };
 
-core.ImageScaled = function (args, env) { };
+core.ImageScaled = (args, env) => { };
 
-core.Thickness = function (args, env) { };
+core.Thickness = (args, env) => { };
 
-core.Arrowheads = function (args, env) { };
+core.Arrowheads = (args, env) => { };
 
-core.Arrow = function (args, env) {
+core.Arrow = (args, env) => {
   interpretate(args[0], env);
 };
 
-core.Tube = function (args, env) {
-  var arr = interpretate(args[0]);
+core.Tube = (args, env) => {
+  var arr = interpretate(args[0], env);
   if (arr.length === 1) arr = arr[0];
-  if (arr.length !== 2) console.error("Tube must have 2 vectors!");
+  if (arr.length !== 2) {
+    console.error("Tube must have 2 vectors!");
+    return;
+  }
 
-  var points = [
+  const points = [
     new Vector4(...arr[0], 1),
     new Vector4(...arr[1], 1),
   ];
 
-  points.forEach(function (p) {
+  points.forEach((p) => {
     p = p.applyMatrix4(env.matrix);
   });
 
-  var origin = points[0].clone();
-  var dir = points[1].add(points[0].negate());
+  const origin = points[0].clone();
+  const dir = points[1].add(points[0].negate());
 
-  var arrowHelper = new ArrowHelper(
+  const arrowHelper = new ArrowHelper(
     dir.normalize(),
     origin,
     dir.length(),
@@ -66704,20 +66790,20 @@ core.Tube = function (args, env) {
   arrowHelper.line.material.linewidth = env.thickness;
 };
 
-core.Sphere = function (args, env) {
+core.Sphere = (args, env) => {
   var radius = 1;
   if (args.length > 1) radius = args[1];
 
-  var material = new MeshLambertMaterial({
+  const material = new MeshLambertMaterial({
     color: env.color,
     transparent: false,
     opacity: env.opacity
   });
 
   function addSphere(cr) {
-    var origin = new Vector4(...cr, 1);
-    var geometry = new SphereBufferGeometry(radius, 20, 20);
-    var sphere = new Mesh(geometry, material);
+    const origin = new Vector4(...cr, 1);
+    const geometry = new SphereGeometry(radius, 20, 20);
+    const sphere = new Mesh(geometry, material);
 
     sphere.position.set(origin.x, origin.y, origin.z);
 
@@ -66725,7 +66811,7 @@ core.Sphere = function (args, env) {
     geometry.dispose();
   }
 
-  var list = interpretate(args[0]);
+  let list = interpretate(args[0], env);
 
   if (list.length === 1) list = list[0];
   if (list.length === 1) list = list[0];
@@ -66733,23 +66819,23 @@ core.Sphere = function (args, env) {
   if (list.length === 3) {
     addSphere(list);
   } else if (list.length > 3) {
-    list.forEach(function (el) {
+    list.forEach((el) => {
       addSphere(el);
     });
   } else {
     console.log(list);
     console.error("List of coords. for sphere object is less 1");
+    return;
   }
 
   material.dispose();
 };
 
-core.Cuboid = function (args, env) {
+core.Cuboid = (args, env) => {
   //if (params.hasOwnProperty('geometry')) {
   //	var points = [new THREE.Vector4(...interpretate(func.args[0]), 1),
   //				new THREE.Vector4(...interpretate(func.args[1]), 1)];
   //}
-  console.log("Cuboid");
   /**
    * @type {THREE.Vector4}
    */
@@ -66762,8 +66848,8 @@ core.Cuboid = function (args, env) {
 
   if (args.length === 2) {
     var points = [
-      new Vector4(...interpretate(args[0]), 1),
-      new Vector4(...interpretate(args[1]), 1),
+      new Vector4(...interpretate(args[0], env), 1),
+      new Vector4(...interpretate(args[1], env), 1),
     ];
 
     origin = points[0]
@@ -66772,7 +66858,7 @@ core.Cuboid = function (args, env) {
       .divideScalar(2);
     diff = points[0].clone().add(points[1].clone().negate());
   } else if (args.length === 1) {
-    p = interpretate(args[0]);
+    p = interpretate(args[0], env);
     origin = new Vector4(...p, 1);
     diff = new Vector4(1, 1, 1, 1);
 
@@ -66780,10 +66866,11 @@ core.Cuboid = function (args, env) {
     origin.add(diff.clone().divideScalar(2));
   } else {
     console.error("Expected 2 or 1 arguments");
+    return;
   }
 
-  var geometry = new BoxBufferGeometry(diff.x, diff.y, diff.z);
-  var material = new MeshLambertMaterial({
+  const geometry = new BoxGeometry(diff.x, diff.y, diff.z);
+  const material = new MeshLambertMaterial({
     color: env.color,
     transparent: true,
     opacity: env.opacity,
@@ -66792,7 +66879,7 @@ core.Cuboid = function (args, env) {
 
   //material.side = THREE.DoubleSide;
 
-  var cube = new Mesh(geometry, material);
+  const cube = new Mesh(geometry, material);
 
   //var tr = new THREE.Matrix4();
   //	tr.makeTranslation(origin.x,origin.y,origin.z);
@@ -66807,17 +66894,17 @@ core.Cuboid = function (args, env) {
   material.dispose();
 };
 
-core.Center = function (args, env) {
+core.Center = (args, env) => {
   return "Center";
 };
 
-core.Cylinder = function (args, env) {
+core.Cylinder = (args, env) => {
   let radius = 1;
   if (args.length > 1) radius = args[1];
   /**
    * @type {THREE.Vector3}}
    */
-  const coordinates = interpretate(args[0]);
+  const coordinates = interpretate(args[0], env);
 
   const material = new MeshLambertMaterial({
     color: env.color,
@@ -66831,7 +66918,7 @@ core.Cylinder = function (args, env) {
   //direction
   const dp = p2.clone().addScaledVector(p1, -1);
 
-  const geometry = new CylinderBufferGeometry(radius, radius, dp.length(), 20, 1);
+  const geometry = new CylinderGeometry(radius, radius, dp.length(), 20, 1);
 
   //calculate the center (might be done better, i hope BoundingBox doest not envolve heavy computations)
   geometry.computeBoundingBox();
@@ -66873,11 +66960,11 @@ core.Cylinder = function (args, env) {
   material.dispose();
 };
 
-core.Tetrahedron = function (args, env) {
+core.Tetrahedron = (args, env) => {
   /**
    * @type {number[]}
    */
-  var points = interpretate(args[0]);
+  var points = interpretate(args[0], env);
   console.log("Points of tetrahedron:");
   console.log(points);
   var faces = [
@@ -66901,11 +66988,11 @@ core.Tetrahedron = function (args, env) {
   interpretate(fake, env);
 };
 
-core.GeometricTransformation = function (args, env) {
+core.GeometricTransformation = (args, env) => {
   var group = new Group();
   //Если center, то наверное надо приметь matrix
   //к каждому объекту относительно родительской группы.
-  var p = interpretate(args[1]);
+  var p = interpretate(args[1], env);
   var centering = false;
   var centrans = [];
 
@@ -66934,7 +67021,7 @@ core.GeometricTransformation = function (args, env) {
       var matrix = new Matrix4().makeTranslation(...dir, 1);
     } else {
       //make it like Matrix4
-      p.forEach(function (el) {
+      p.forEach((el) => {
         el.push(0);
       });
       p.push([0, 0, 0, 1]);
@@ -66986,17 +67073,17 @@ core.GeometricTransformation = function (args, env) {
   env.mesh.add(group);
 };
 
-core.GraphicsComplex = function (args, env) {
+core.GraphicsComplex = (args, env) => {
   var copy = Object.assign({}, env);
 
   copy.geometry = new Geometry();
 
-  interpretate(args[0]).forEach(function (el) {
+  interpretate(args[0], copy).forEach((el) => {
     if (typeof el[0] !== "number") console.error("not a triple of number" + el);
     copy.geometry.vertices.push(new Vector3(el[0], el[1], el[2]));
   });
 
-  var group = new Group();
+  const group = new Group();
 
   interpretate(args[1], copy);
 
@@ -67004,14 +67091,14 @@ core.GraphicsComplex = function (args, env) {
   copy.geometry.dispose();
 };
 
-core.Polygon = function (args, env) {
+core.Polygon = (args, env) => {
   if (env.hasOwnProperty("geometry")) {
     /**
      * @type {THREE.Geometry}
      */
     var geometry = env.geometry.clone();
 
-    var createFace = function (c) {
+    var createFace = (c) => {
       c = c.map((x) => x - 1);
 
       switch (c.length) {
@@ -67033,15 +67120,27 @@ core.Polygon = function (args, env) {
             new Face3(c[1], c[3], c[4]),
           );
           break;
-
+        /**
+         * 0 1
+         *5    2
+         * 4  3
+         */
+        case 6:
+          geometry.faces.push(
+            new Face3(c[0], c[1], c[5]),
+            new Face3(c[1], c[2], c[5]),
+            new Face3(c[5], c[2], c[4]),
+            new Face3(c[2], c[3], c[4])
+          );
+          break;
         default:
           console.log(c);
           console.log(c.length);
-          console.error("Cant produce complex polygons! at" + c);
+          console.error("Cant produce complex polygons! at", c);
       }
     };
 
-    var a = interpretate(args[0]);
+    var a = interpretate(args[0], env);
     if (a.length === 1) {
       a = a[0];
     }
@@ -67051,16 +67150,17 @@ core.Polygon = function (args, env) {
       createFace(a);
     } else {
       console.log("Create multiple face");
-      console.log(a);
       a.forEach(createFace);
     }
   } else {
     var geometry = new Geometry();
-    var points = interpretate(args[0]);
+    var points = interpretate(args[0], env);
 
-    points.forEach(function (el) {
-      if (typeof el[0] !== "number")
-        console.error("not a triple of number" + el);
+    points.forEach((el) => {
+      if (typeof el[0] !== "number") {
+        console.error("not a triple of number", el);
+        return;
+      }
       geometry.vertices.push(new Vector3(el[0], el[1], el[2]));
     });
 
@@ -67077,14 +67177,30 @@ core.Polygon = function (args, env) {
           new Face3(0, 1, 2),
           new Face3(0, 2, 3));
         break;
-
+      /**
+       *  0 1
+       * 4   2
+       *   3
+       */
       case 5:
         geometry.faces.push(
           new Face3(0, 1, 4),
           new Face3(1, 2, 3),
           new Face3(1, 3, 4));
         break;
-
+      /**
+       * 0  1
+       *5     2
+       * 4   3
+       */
+      case 6:
+        geometry.faces.push(
+          new Face3(0, 1, 5),
+          new Face3(1, 2, 5),
+          new Face3(5, 2, 4),
+          new Face3(2, 3, 4)
+        );
+        break;
       default:
         console.log(points);
         console.error("Cant build complex polygon ::");
@@ -67111,7 +67227,7 @@ core.Polygon = function (args, env) {
   material.dispose();
 };
 
-core.Polyhedron = function (args, env) {
+core.Polyhedron = (args, env) => {
   if (args[1][1].length > 4) {
     //non-optimised variant to work with 4 vertex per face
     interpretate(["GraphicsComplex", args[0], ["Polygon", args[1]]], env);
@@ -67120,15 +67236,15 @@ core.Polyhedron = function (args, env) {
     /**
      * @type {number[]}
      */
-    const indices = interpretate(args[1])
+    const indices = interpretate(args[1], env)
       .flat(4)
       .map((i) => i - 1);
     /**
      * @type {number[]}
      */
-    const vertices = interpretate(args[0]).flat(4);
+    const vertices = interpretate(args[0], env).flat(4);
 
-    const geometry = new PolyhedronBufferGeometry(vertices, indices);
+    const geometry = new PolyhedronGeometry(vertices, indices);
 
     var material = new MeshLambertMaterial({
       color: env.color,
@@ -67144,22 +67260,22 @@ core.Polyhedron = function (args, env) {
   }
 };
 
-core.GrayLevel = function (args, env) { };
+core.GrayLevel = (args, env) => { };
 
-core.EdgeForm = function (args, env) { };
+core.EdgeForm = (args, env) => { };
 
-core.Specularity = function (args, env) { };
+core.Specularity = (args, env) => { };
 
-core.Text = function (args, env) { };
+core.Text = (args, env) => { };
 
-core.Directive = function (args, env) { };
+core.Directive = (args, env) => { };
 
-core.Line = function (args, env) {
+core.Line = (args, env) => {
   if (env.hasOwnProperty("geometry")) {
     const geometry = new Geometry();
 
-    const points = interpretate(args[0]);
-    points.forEach(function (el) {
+    const points = interpretate(args[0], env);
+    points.forEach((el) => {
       geometry.vertices.push((env.geometry.vertices[el - 1]).clone(),);
     });
 
@@ -67180,22 +67296,22 @@ core.Line = function (args, env) {
     geometry.dispose();
     material.dispose();
   } else {
-    let arr = interpretate(args[0]);
+    let arr = interpretate(args[0], env);
     if (arr.length === 1) arr = arr[0];
     //if (arr.length !== 2) console.error( "Tube must have 2 vectors!");
     console.log("points: ", arr.length);
 
     const points = [];
-    arr.forEach(function (p) {
+    arr.forEach((p) => {
       points.push(new Vector4(...p, 1));
     });
     //new THREE.Vector4(...arr[0], 1)
 
-    points.forEach(function (p) {
+    points.forEach((p) => {
       p = p.applyMatrix4(env.matrix);
     });
 
-    const geometry = new BufferGeometry().setFromPoints(points);
+    const geometry = new Geometry().setFromPoints(points);
     const material = new LineBasicMaterial({
       color: env.edgecolor,
       linewidth: env.thickness,
@@ -67205,7 +67321,7 @@ core.Line = function (args, env) {
   }
 };
 
-core.Graphics3D = function (args, env) {
+core.Graphics3D = (args, env) => {
   console.log("GRAPHICS3D");
 
   /*** the part of a code from http://mathics.github.io.  ***/
@@ -67245,89 +67361,69 @@ core.Graphics3D = function (args, env) {
    * @type {HTMLElement}
    */
   var container = env.element;
-
-  var renderer;
   /**
-  * @type {THREE.Mesh}
+  * @type {THREE.Mesh<THREE.Geometry>}
   */
   var boundbox;
-  var hasaxes,
-    isMouseDown = false,
-    onMouseDownPosition,
-    theta,
-    onMouseDownTheta,
-    phi,
-    onMouseDownPhi;
+  var hasaxes;
 
   // Scene
-  var scene = new Scene();
+  const scene = new Scene();
 
-  var group = new Group();
+  const group = new Group();
 
-  var envcopy = Object.assign({}, env);
-
-  envcopy.numerical = true;
-  envcopy.matrix = new Matrix4();
-  envcopy.color = RGBtoColor(1, 1, 1);
-  envcopy.opacity = 1;
-  envcopy.thickness = 1;
-  envcopy.edgecolor = RGBtoColor(0, 0, 0);
-
-  envcopy.matrix.set(
-    1, 0, 0, 0,//
-    0, 1, 0, 0,//
-    0, 0, 1, 0,//
-    0, 0, 0, 1);
-
-  envcopy.mesh = group;
+  const envcopy = {
+    ...env,
+    numerical: true,
+    todom: false,
+    matrix: new Matrix4().set(
+      1, 0, 0, 0,//
+      0, 1, 0, 0,//
+      0, 0, 1, 0,//
+      0, 0, 0, 1),
+    color: new Color(1, 1, 1),
+    opacity: 1,
+    thickness: 1,
+    edgecolor: new Color(0, 0, 0),
+    mesh: group,
+  };
 
   interpretate(args[0], envcopy);
 
-  var bbox = new Box3().setFromObject(group);
-
-  var center = new Vector3()
-    .addVectors(bbox.max, bbox.min)
-    .divideScalar(2);
-  console.log("BBOX CENTER");
-  console.log(center);
-  console.log(bbox);
-  //var	translate = new THREE.Matrix4().makeTranslation(-center.x,-center.y,-center.z,1);
-  //group.applyMatrix(translate);
+  const bbox = new Box3().setFromObject(group);
+  if (!isFinite(bbox.min.x)) {
+    bbox.set(new Vector3(-1, -1, -1), new Vector3(1, 1, 1));
+  }
+  const center = new Vector3();
+  console.log(
+    "BBOX CENTER",
+    center,
+    bbox);
   scene.position = center;
 
-  // Center of the scene
-  //var center = new THREE.Vector3(
-  //  0.5 * (data.extent.xmin + data.extent.xmax),
-  //  0.5 * (data.extent.ymin + data.extent.ymax),
-  //  0.5 * (data.extent.zmin + data.extent.zmax));
+  const focus = center.clone();
 
-  // Where the camera is looking
-  var focus = new Vector3(center.x, center.y, center.z);
+  const viewpoint = new Vector3()
+    .fromArray(data.viewpoint)
+    .sub(focus);
 
-  // Viewpoint
-  var viewpoint = new Vector3(
-    data.viewpoint[0],
-    data.viewpoint[1],
-    data.viewpoint[2],
-  ).sub(focus);
-
-  var ln = new Vector3()
-    .addVectors(bbox.max, bbox.min.clone().negate())
+  const ln = bbox
+    .max
+    .clone()
+    .add(bbox.min.clone().negate())
     .length();
 
-  console.log("Radius is " + ln);
+  console.log("Radius is ", ln);
 
-  viewpoint.x *= ln;
-  viewpoint.y *= ln;
-  viewpoint.z *= ln;
+  viewpoint.multiplyScalar(ln);
 
-  var radius = viewpoint.length();
+  const radius = viewpoint.length();
 
-  onMouseDownTheta = theta = Math.acos(viewpoint.z / radius);
-  onMouseDownPhi = phi =
+  let theta = Math.acos(viewpoint.z / radius);
+  let phi =
     (Math.atan2(viewpoint.y, viewpoint.x) + 2 * Math.PI) % (2 * Math.PI);
 
-  var camera = new PerspectiveCamera(
+  const camera = new PerspectiveCamera(
     35, // Field of view
     1, // Aspect ratio
     0.1 * radius, // Near plane
@@ -67335,9 +67431,10 @@ core.Graphics3D = function (args, env) {
   );
 
   function update_camera_position() {
-    camera.position.x = radius * Math.sin(theta) * Math.cos(phi);
-    camera.position.y = radius * Math.sin(theta) * Math.sin(phi);
-    camera.position.z = radius * Math.cos(theta);
+    camera.position.set(
+      radius * Math.sin(theta) * Math.cos(phi),
+      radius * Math.sin(theta) * Math.sin(phi),
+      radius * Math.cos(theta));
     camera.position.add(focus);
     camera.lookAt(focus);
   }
@@ -67353,23 +67450,23 @@ core.Graphics3D = function (args, env) {
     var light;
 
     if (l.type === "Ambient") {
-      light = new AmbientLight(color.getHex());
+      light = new AmbientLight(color);
     } else if (l.type === "Directional") {
-      light = new DirectionalLight(color.getHex(), 1);
+      light = new DirectionalLight(color, 1);
     } else if (l.type === "Spot") {
-      light = new SpotLight(color.getHex());
-      light.position.set(l.position[0], l.position[1], l.position[2]);
-      light.target.position.set(l.target[0], l.target[1], l.target[2]);
+      light = new SpotLight(color);
+      light.position.fromArray(l.position);
+      light.target.position.fromArray(l.target);
       light.target.updateMatrixWorld(); // This fixes bug in THREE.js
       light.angle = l.angle;
     } else if (l.type === "Point") {
-      light = new PointLight(color.getHex());
-      light.position.set(l.position[0], l.position[1], l.position[2]);
+      light = new PointLight(color);
+      light.position.fromArray(l.position);
 
       // Add visible light sphere
-      var lightsphere = new Mesh(
+      const lightsphere = new Mesh(
         new SphereGeometry(0.007 * radius, 16, 8),
-        new MeshBasicMaterial({ color: color.getHex() }),
+        new MeshBasicMaterial({ color }),
       );
       lightsphere.position = light.position;
       scene.add(lightsphere);
@@ -67404,27 +67501,27 @@ core.Graphics3D = function (args, env) {
   }
 
   function positionLights() {
-    for (var i = 0; i < lights.length; i++) {
+    for (let i = 0; i < lights.length; i++) {
       if (lights[i] instanceof DirectionalLight) {
-        lights[i].position.x =
+        lights[i].position.set(
           initLightPos[i].radius *
           Math.sin(theta + initLightPos[i].theta) *
-          Math.cos(phi + initLightPos[i].phi);
-        lights[i].position.y =
+          Math.cos(phi + initLightPos[i].phi),
           initLightPos[i].radius *
           Math.sin(theta + initLightPos[i].theta) *
-          Math.sin(phi + initLightPos[i].phi);
-        lights[i].position.z =
-          initLightPos[i].radius * Math.cos(theta + initLightPos[i].theta);
+          Math.sin(phi + initLightPos[i].phi),
+          initLightPos[i].radius *
+          Math.cos(theta + initLightPos[i].theta),
+        );
         lights[i].position.add(focus);
       }
     }
   }
 
-  var lights = new Array(data.lighting.length);
-  var initLightPos = new Array(data.lighting.length);
+  const lights = new Array(data.lighting.length);
+  const initLightPos = new Array(data.lighting.length);
 
-  for (var i = 0; i < data.lighting.length; i++) {
+  for (let i = 0; i < data.lighting.length; i++) {
     initLightPos[i] = getInitLightPos(data.lighting[i]);
 
     lights[i] = addLight(data.lighting[i]);
@@ -67442,7 +67539,7 @@ core.Graphics3D = function (args, env) {
   );
   boundbox.position = center;
 
-  var geo = new EdgesGeometry(
+  const geo = new EdgesGeometry(
     new BoxGeometry(
       bbox.max.x - bbox.min.x,
       bbox.max.y - bbox.min.y,
@@ -67521,18 +67618,16 @@ core.Graphics3D = function (args, env) {
         ),
       );
       axesmesh[i] = new Line(axesgeom[i], axesmat);
-      axesmesh[i].geometry.dynamic = true;
       scene.add(axesmesh[i]);
     }
   }
 
   function boxEdgeLength(i, j) {
-    var edge =
-      toCanvasCoords(boundbox.geometry.vertices[axesindicies[i][j][0]])
-        .clone()
-        .sub(toCanvasCoords(boundbox.geometry.vertices[axesindicies[i][j][1]]));
-    edge.setZ(0);
-    return edge.length();
+    return toCanvasCoords(boundbox.geometry.vertices[axesindicies[i][j][0]])
+      .clone()
+      .sub(toCanvasCoords(boundbox.geometry.vertices[axesindicies[i][j][1]]))
+      .setZ(0)
+      .length();
   }
 
   function positionAxes() {
@@ -67542,7 +67637,7 @@ core.Graphics3D = function (args, env) {
     var farj = null;
     var farl = 0.0;
 
-    var tmpv = new Vector3();
+    const tmpv = new Vector3();
     for (var j = 0; j < 8; j++) {
       tmpv.addVectors(boundbox.geometry.vertices[j], boundbox.position);
       tmpv.sub(camera.position);
@@ -67573,15 +67668,15 @@ core.Graphics3D = function (args, env) {
             }
           }
         }
-        axesmesh[i].geometry.vertices[0].addVectors(
+        axesmesh[i].vertices[0].addVectors(
           boundbox.geometry.vertices[axesindicies[i][maxj][0]],
           boundbox.position,
         );
-        axesmesh[i].geometry.vertices[1].addVectors(
+        axesmesh[i].vertices[1].addVectors(
           boundbox.geometry.vertices[axesindicies[i][maxj][1]],
           boundbox.position,
         );
-        axesmesh[i].geometry.verticesNeedUpdate = true;
+        axesmesh[i].verticesNeedUpdate = true;
       }
     }
     update_axes();
@@ -67593,11 +67688,11 @@ core.Graphics3D = function (args, env) {
     linewidth: 1.2,
   });
   /**
-   * @type {THREE.Line[][]}
+   * @type {THREE.Line<THREE.Geometry>[][]}
    */
-  var ticks = new Array(3);
+  const ticks = new Array(3);
   /**
-   * @type {THREE.Line[][]}
+   * @type {THREE.Line<THREE.Geometry>[][]}
    */
   var ticks_small = new Array(3);
   var ticklength = 0.005 * radius;
@@ -67728,6 +67823,10 @@ core.Graphics3D = function (args, env) {
   update_axes();
 
   // Axes numbering using divs
+
+  /**
+   * @type {HTMLDivElement[][]}
+   */
   var ticknums = new Array(3);
   for (var i = 0; i < 3; i++) {
     if (hasaxes[i]) {
@@ -67766,9 +67865,9 @@ core.Graphics3D = function (args, env) {
   }
 
   function positionticknums() {
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (hasaxes[i]) {
-        for (var j = 0; j < ticknums[i].length; j++) {
+        for (let j = 0; j < ticknums[i].length; j++) {
           /**
            * @type {THREE.Vector3}}
            */
@@ -67786,8 +67885,8 @@ core.Graphics3D = function (args, env) {
           tickpos.x -= 10;
           tickpos.y += 8;
 
-          ticknums[i][j].style.left = tickpos.x.toString() + "px";
-          ticknums[i][j].style.top = tickpos.y.toString() + "px";
+          ticknums[i][j].style.left = `${tickpos.x.toString()}px`;
+          ticknums[i][j].style.top = `${tickpos.y.toString()}px`;
           if (
             tickpos.x < 5 ||
             tickpos.x > 395 ||
@@ -67804,228 +67903,26 @@ core.Graphics3D = function (args, env) {
   }
 
   scene.add(group);
-  //loader = new THREE.JSONLoader();
-
-  //loader.load( JSON.parse(str));
-  //loader.onLoadComplete=function(mesh){scene.add( mesh )}
-
-  // Plot the primatives
-  /*for (var indx = 0; indx < data.elements.length; indx++) {
-      var type = data.elements[indx].type;
-      switch(type) {
-        case "point":
-          scene.add(drawPoint(data.elements[indx]));
-          break;
-        case "line":
-          scene.add(drawLine(data.elements[indx]));
-          break;
-        case "polygon":
-          scene.add(drawPolygon(data.elements[indx]));
-          break;
-        case "sphere":
-          scene.add(drawSphere(data.elements[indx]));
-          break;
-        case "cube":
-          scene.add(drawCube(data.elements[indx]));
-          break;
-        default:
-          alert("Error: Unknown type passed to drawGraphics3D");
-      }
-    }*/
-
-  // Renderer (set preserveDrawingBuffer to deal with issue
-  // of weird canvas content after switching windows)
-
-  renderer = new WebGLRenderer({
+  const renderer = new WebGLRenderer({
     antialias: true,
     preserveDrawingBuffer: true,
   });
-
+  new OrbitControls(camera, renderer.domElement);
   renderer.setSize(400, 400);
   renderer.setClearColor(0xffffff);
   container.appendChild(renderer.domElement);
   renderer.domElement.style = "margin:auto";
-
   function render() {
     positionLights();
     renderer.render(scene, camera);
   }
 
-  function ScaleInView() {
-    var tmp_fov = 0.0;
-    //var proj2d = new THREE.Vector3();
-
-    /*for (var i=0; i<boundbox.geometry.vertices.length; i++) {
-          proj2d = proj2d.addVectors(boundbox.geometry.vertices[i], boundbox.position);
-          proj2d = toScreenCoords(proj2d);
-
-          angle = 114.59 * Math.max(
-             Math.abs(Math.atan(proj2d.x/proj2d.z) / camera.aspect),
-             Math.abs(Math.atan(proj2d.y/proj2d.z))
-          );
-          tmp_fov = Math.max(tmp_fov, angle);
-        }*/
-    //console.log(bbox);
-    var height = bbox.min.clone().sub(bbox.max).length();
-    var dist = center.clone().sub(camera.position).length();
-    tmp_fov = 2 * Math.atan(height / (2 * dist)) * (180 / Math.PI);
-
-    camera.fov = tmp_fov + 5;
-    camera.updateProjectionMatrix();
-  }
-
-  /**
-   *
-   * @param {MouseEvent} event
-   * @description Mouse Interactions
-   */
-  function onDocumentMouseDown(event) {
-    event.preventDefault();
-
-    isMouseDown = true;
-    isShiftDown = false;
-    isCtrlDown = false;
-
-    onMouseDownTheta = theta;
-    onMouseDownPhi = phi;
-
-    onMouseDownPosition.x = event.clientX;
-    onMouseDownPosition.y = event.clientY;
-
-    onMouseDownFocus = new Vector3().copy(focus);
-  }
-  /**
-   *
-   * @param {MouseEvent} event
-   */
-  function onDocumentMouseMove(event) {
-    event.preventDefault();
-
-    if (isMouseDown) {
-      positionticknums();
-
-      if (event.shiftKey) {
-        // console.log("Pan");
-        if (!isShiftDown) {
-          isShiftDown = true;
-          onMouseDownPosition.x = event.clientX;
-          onMouseDownPosition.y = event.clientY;
-          autoRescale = false;
-          container.style.cursor = "move";
-        }
-        var camz = new Vector3().sub(focus, camera.position);
-        camz.normalize();
-
-        var camx = new Vector3(
-          -radius *
-          Math.cos(theta) *
-          Math.sin(phi) *
-          (theta < 0.5 * Math.PI ? 1 : -1),
-          radius *
-          Math.cos(theta) *
-          Math.cos(phi) *
-          (theta < 0.5 * Math.PI ? 1 : -1),
-          0,
-        );
-        camx.normalize();
-
-        var camy = new Vector3();
-        camy.cross(camz, camx);
-
-        focus.x =
-          onMouseDownFocus.x +
-          (radius / 400) *
-          (camx.x * (onMouseDownPosition.x - event.clientX) +
-            camy.x * (onMouseDownPosition.y - event.clientY));
-        focus.y =
-          onMouseDownFocus.y +
-          (radius / 400) *
-          (camx.y * (onMouseDownPosition.x - event.clientX) +
-            camy.y * (onMouseDownPosition.y - event.clientY));
-        focus.z =
-          onMouseDownFocus.z +
-          (radius / 400) *
-          (camx.z * (onMouseDownPosition.x - event.clientX) +
-            camy.z * (onMouseDownPosition.y - event.clientY));
-
-        update_camera_position();
-      } else if (event.ctrlKey) {
-        // console.log("Zoom");
-        if (!isCtrlDown) {
-          isCtrlDown = true;
-          onCtrlDownFov = camera.fov;
-          onMouseDownPosition.x = event.clientX;
-          onMouseDownPosition.y = event.clientY;
-          autoRescale = false;
-          container.style.cursor = "crosshair";
-        }
-        camera.fov =
-          onCtrlDownFov +
-          20 * Math.atan((event.clientY - onMouseDownPosition.y) / 50);
-
-        camera.fov = Math.max(1, Math.min(camera.fov, 150));
-        //console.log("fov"+camera.fov);
-        camera.updateProjectionMatrix();
-        //console.log(JSON.stringify(camera));
-      } else {
-        // console.log("Spin");
-        if (isCtrlDown || isShiftDown) {
-          onMouseDownPosition.x = event.clientX;
-          onMouseDownPosition.y = event.clientY;
-          isShiftDown = false;
-          isCtrlDown = false;
-          container.style.cursor = "pointer";
-        }
-
-        phi =
-          (2 * Math.PI * (onMouseDownPosition.x - event.clientX)) / 400 +
-          onMouseDownPhi;
-        phi = (phi + 2 * Math.PI) % (2 * Math.PI);
-        theta =
-          (2 * Math.PI * (onMouseDownPosition.y - event.clientY)) / 400 +
-          onMouseDownTheta;
-        var epsilon = 1e-12; // Prevents spinnging from getting stuck
-        theta = Math.max(Math.min(Math.PI - epsilon, theta), epsilon);
-
-        update_camera_position();
-      }
-      render();
-    } else {
-      container.style.cursor = "pointer";
-    }
-  }
-  /**
-   *
-   * @param {MouseEvent} event
-   */
-  function onDocumentMouseUp(event) {
-    event.preventDefault();
-
-    isMouseDown = false;
-    container.style.cursor = "pointer";
-
-    if (autoRescale) {
-      ScaleInView();
-      render();
-    }
-    positionAxes();
+  function animate() {
+    requestAnimationFrame(animate);
     render();
-    positionticknums();
   }
-
-  // Bind Mouse events
-  container.addEventListener("mousemove", onDocumentMouseMove, false);
-  container.addEventListener("mousedown", onDocumentMouseDown, false);
-  container.addEventListener("mouseup", onDocumentMouseUp, false);
-  container.addEventListener("touchmove", onDocumentMouseMove, false);
-  onMouseDownPosition = new Vector2();
-  var autoRescale = true;
-
   update_camera_position();
   positionAxes();
-  render(); // Rendering twice updates camera.matrixWorldInverse so that ScaleInView works properly
-  ScaleInView();
-  render();
+  animate();
   positionticknums();
-  /*** the part of a code from http://mathics.github.io.  ***/
 };

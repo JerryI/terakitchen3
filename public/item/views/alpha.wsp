@@ -30,7 +30,7 @@
                     fieldState<?wspuid?> = true;
 
                     
-                    loadField('ExportString[If[KeyExistsQ[data, "alpha-with-fp"],  DropHalf/@Join[Transpose[data["alpha"]], {data["alpha-with-fp"]}], DropHalf/@Transpose[data["alpha"]] ], "JSON"]', function(resp) {
+                    loadField('ExportString[If[KeyExistsQ[data, "alpha-with-fp"],  Join[Transpose[data["alpha"][[attributes["usable-range"] ]] ], {data["alpha-with-fp"][[attributes["usable-range"] ]]}], Transpose[data["alpha"][[attributes["usable-range"] ]] ] ], "JSON"]', function(resp) {
         
                         var raw = JSON.parse(resp);
 

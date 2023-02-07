@@ -1,0 +1,233 @@
+
+<div class="d-flex align-items-center">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <a class="btn-outline-id" href="item/index.wsp?id=<?wsp id ?>"><?wsp id ?></a>
+      <h1 class="fw-light">Material parameters</h1>
+
+          <p class="lead text-muted">Please set the necessary parameters</p>
+    
+          <div id="plot"></div>
+
+          <form action="wpost.wsp" method="post" id="dialog">
+            <div class="form-group">
+                <button type="button" class="btn btn-secondary" id="updatePreview">Update preview</button>
+            </div>
+
+            <p id="textField" class="lead text-muted">Range settings</p>
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="locut">Low-frequecy</label>
+                  <input class="form-control form-control-sm" step=any type="number" name="locut" id="locut" value="<?wsp locut ?>">
+                  <small class="form-text text-muted">Use cm<sup>-1</sup> units</small>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="hicut">High-frequecy</label>
+                  <input class="form-control form-control-sm" step=any type="number" name="hicut" id="hicut" value="<?wsp hicut ?>">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="thickness">Thickness</label>
+                  <input type="number" step=0.01 class="form-control form-control-sm" name="thickness" id="thickness" value="<?wsp thickness ?>">
+                  <small class="form-text text-muted">Use mm units</small>
+                </div> 
+                <div class="form-group col-md-3">
+                  <label for="scale">Scaling</label>
+                  <input type="number" step=any class="form-control form-control-sm" name="scale" id="scale" value="<?wsp scale ?>">
+                </div>                                
+            </div>
+
+            <p id="textField" class="lead text-muted">Phase controlling panel</p>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="pthresh">Phase threshold</label>
+                  <input type="number" step=any class="form-control form-control-sm" name="pthresh" id="pthresh"  value="<?wsp pthresh ?>">
+                  <small class="form-text text-muted">A parameter of the phase-unwrapping algorithm</small>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="phcorr">Phase shift</label>
+                  <input type="number" step=1 min=-3 max=3 class="form-control form-control-sm" name="phcorr" id="phcorr" value="<?wsp phcorr ?>">
+                  <small class="form-text text-muted">In multples of 2Pi</small>
+                </div>  
+                
+            </div> 
+
+            <p id="textField" class="lead text-muted">Intrinsic parameters of the algorithm</p>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="drycycles">Dry cycles</label>
+                  <input type="number" step=1 class="form-control form-control-sm" name="drycycles" id="drycycles" value="<?wsp drycycles ?>">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="wetcycles">Wet cycles</label>
+                  <input type="number" step=1 class="form-control form-control-sm" name="wetcycles" id="wetcycles" value="<?wsp wetcycles ?>">
+                </div>                               
+            </div> 
+            
+            <div id="placeholder">
+              <?wsp If[corrections, LoadPage["services/nk3-gpu/views/parts/thickness.wsp"], " "] ?>
+            </div>
+
+            <p id="textField" class="lead text-muted">Misc</p>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="corrections" name="corrections" <?wsp " " ?> <?wsp If[corrections, "checked", ""] ?> >
+                  <label class="form-check-label" for="corrections">
+                    Thickness and scaling correction
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="applyfp" name="applyfp" <?wsp " " ?> <?wsp If[applyfp, "checked", ""] ?>>
+                  <label class="form-check-label" for="applyfp">
+                    Apply Fabry-Perot subtraction procedure
+                  </label>
+                </div>
+              </div>              
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="applyforall" name="applyforall" <?wsp " " ?> <?wsp If[applyforall, "checked", ""] ?>>
+                  <label class="form-check-label" for="applyforall">
+                    Apply to all
+                  </label>
+                </div>
+              </div>              
+
+
+            
+        </form>      
+
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+        <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+  
+        <p class="lead text-muted">Control panel</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+
+    core.LoadPartPage = function(args, env) {
+        document.getElementById('placeholder').innerHTML = "";
+        setInnerHTML(document.getElementById('placeholder'), interpretate(args[0]));
+    };
+
+    core.UpdateGraph = function(args, env) {
+        let freqs = interpretate(args[0]);
+        let n     = interpretate(args[1]);
+        let k     = interpretate(args[2]);
+        let kr    = interpretate(args[3]);
+
+        Plotly.deleteTraces('plot', [0,1,2]);
+        Plotly.addTraces('plot', [{x: freqs , y: kr, name: 'k (raw)', line: { opacity: 0.5 }}, {x: freqs, y: k, name: 'k' }]);
+        Plotly.addTraces('plot', [{x: freqs , y: n, name: 'n',  yaxis: 'y2'}]);
+    }
+
+    {
+        let checkbox = document.getElementById("corrections");
+
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            let q = `
+                  PageEmitt["<?wsp $uid ?>"][{"getThicknessPanel"}]
+                `;
+            socket.send(q);    
+          } else {
+            document.getElementById('placeholder').innerHTML = "";
+          }
+        });
+
+        document.getElementById('updatePreview').addEventListener('click', function() {
+          const inputs = document.getElementById("dialog").elements;
+          var preset = [];
+          // Iterate over the form controls
+          for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].nodeName === "INPUT") {
+              // Update text input
+              if(inputs[i].id !== "") {
+                switch(inputs[i].type) {
+                  case 'checkbox':
+                    preset.push({id: inputs[i].id, value: inputs[i].checked, type: "bool"});
+                    break;
+                  
+                  case 'number':
+                    preset.push({id: inputs[i].id, value: inputs[i].value, type: "number"});
+                    break;
+                  
+                  case 'text':
+                    preset.push({id: inputs[i].id, value: inputs[i].value, type: "text"});
+                    break;  
+
+                  default:
+                    console.log("unknown type: ", inputs[i].type);                 
+                } 
+              }
+
+            }
+          }      
+          
+      
+          var fixed = JSON.stringify(preset).replaceAll('\\\"', '\\\\\"').replaceAll('\"', '\\"');
+          let q = `
+                  PageEmitt["<?wsp $uid ?>"][{"update", "${fixed}"}]
+                `;
+            socket.send(q);
+        });
+
+        let freqs = <?wsp ExportString[freqs, "JSON"] ?>;
+        let kappa = {
+            x: freqs,
+            y: <?wsp ExportString[kappa, "JSON"] ?>,
+            mode: 'lines',
+            name: 'k',
+        }; 
+        let rkappa = {
+            x: freqs,
+            y: <?wsp ExportString[rkappa, "JSON"] ?>,
+            mode: 'lines',
+            name: 'k (raw)',
+            line: { opacity: 0.5 }
+        };        
+
+        let n = {
+            x: freqs,
+            y: <?wsp ExportString[refractive, "JSON"] ?>,
+            mode: 'lines',
+            name: 'n',
+            yaxis: 'y2'
+        };        
+        
+
+        let layout = {
+            xaxis: {
+                title: 'wavenumber, cm<sup>-1</sup>',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'Im',
+                showgrid: true,
+                zeroline: true,
+            },
+            yaxis2: {
+                title: 'Re',
+                titlefont: {color: 'rgb(148, 103, 189)'},
+
+                tickfont: {color: 'rgb(148, 103, 189)'},
+
+                overlaying: 'y',
+                side: 'right'
+
+            }            
+        };
+
+        Plotly.newPlot('plot', [rkappa, kappa, n], layout);
+    }
+  </script>
+
+  <?wsp LoadPage["services/nk3-gpu/views/post.wsp"] ?>
