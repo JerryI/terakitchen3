@@ -66,7 +66,7 @@ ProcessTransmission[data_, dataset_, OptionsPattern[]] := Module[{dest, src, set
     src  = CUDAMemoryLoad[Join[data["transmission"]//Flatten, {data["n0"], data["thickness"], 1.0, 0Pi}], "Float[4]"];
     set = CUDAMemoryLoad[dataset,  "Float[3]"];
 
-    results = Partition[ Partition[CUDAMemoryGet[autorun[src, dest, OptionValue["drypasses"], OptionValue["wetpasses"], set, Length[dataset]*1024]//First],8], 1025];
+    results = Partition[ Partition[CUDAMemoryGet[autorun[src, dest, If[applyfp, OptionValue["drypasses"], -1], If[applyfp, OptionValue["wetpasses"], -1], set, Length[dataset]*1024]//First],8], 1025];
 
     CUDAMemoryUnload/@ {dest, src, set};
     
@@ -77,13 +77,12 @@ ProcessTransmission[data_, dataset_, OptionsPattern[]] := Module[{dest, src, set
     <| "2d-map" -> (Join[Take[Transpose[dataset],2], {dt}]), "results" -> results |>
 ];
 
-
 UploadNK[samid_] := Module[{data, raw, set},
     data = Join[Pack[samid]["data"]["results"][[PackSupplimentary[samid]["number"], ;;-2, {2,3}  ]], Table[{Pack[samid]["n0"], 0.0}, {i, Pack[samid]["original length"]-1024}] ];
     set  = Pack[samid]["dataset"][[ PackSupplimentary[samid]["number"] ]];
     raw  = Join[ProcessTransmission[Pack[samid], { set }, "drypasses"->-1, "wetpasses"->-1]["results"][[1, ;;-2, {2,3} ]], Table[{Pack[samid]["n0"], 0.0}, {i, Pack[samid]["original length"]-1024}] ];
 
-    With[{uid = samid, rawk = raw[[All,2]], accuracy = Pack[samid]["accuracy"], range = Sequence[Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]] ], thickness = set[[1]], scale = set[[2]], nk = data},
+    With[{fpmod = applyfp, uid = samid, rawk = raw[[All,2]], accuracy = Pack[samid]["accuracy"], range = Sequence[Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]] ], thickness = set[[1]], scale = set[[2]], nk = data},
       CEval[
         collection[uid, "attributes", "usable-range"] = range;
         collection[uid, "attributes", "thickness-accuracy"] = accuracy;
@@ -93,10 +92,17 @@ UploadNK[samid_] := Module[{data, raw, set},
 
         collection[uid, "data"]["nk"] = nk;
 
-        collection[uid, "data"]["alpha-with-fp"] = With[{}, 
+        If[fpmod,
+            collection[uid, "data"]["alpha-with-fp"] := With[{}, 
                                         ((#[[2]] 4 \[Pi]  10^12 #[[1]])/(33.356 2.9979 10^10)) & /@ 
-                                            Transpose[{collection[uid]["data"]["freqs"], rawk}]
+                                            Transpose[{collection[uid]["data"]["freqs"], collection[uid]["data"]["k-with-fp"]}]
                                         ];
+
+            collection[uid, "data"]["k-with-fp"] = rawk;
+        ,
+            collection[uid, "data"]["k-with-fp"] = .;
+            collection[uid, "data"]["alpha-with-fp"] = .;
+        ];
 
         collection[uid]["data"]["alpha"] := With[{id = uid}, 
                                         {#[[1]], (#[[2]] 4 \[Pi]  10^12 #[[1]])/(33.356 2.9979 10^10)} & /@ 
@@ -113,6 +119,68 @@ UploadNK[samid_] := Module[{data, raw, set},
       ];        
     ];
 ];
+
+ProcessNextSilently[samid_] := Module[{pack,content, dataset, data},
+    pack = GetTransmission[samid];
+    pack["trust region"] = GetRegion[pack, {locut, hicut}];
+    pack = UnwarpPhase[pack][pthresh];
+
+    Pack[samid]["accuracy"] = PackGlobal["accuracy"];
+
+    dataset = Table[Join[Take[PackGlobal["set"], 2], {2Pi (phcorr + i)}], {i, -1, 1, 1}];
+    data = ProcessTransmission[pack, dataset, "drypasses"->drycycles, "wetpasses"->wetcycles];
+
+    pack["dataset"] = dataset;
+    pack["data"] = data;
+    
+    Pack[samid] = pack;
+
+    Clear[data];
+    Clear[pack];
+
+    openDialogWindow["Phase"][samid, Function[number,
+            If[!NumberQ[number], PageDelete[$uid]; $Die];
+
+            PackSupplimentary[samid]["number"] = number;
+            UploadNK[samid];
+
+            samples = Drop[samples, 1];
+            If[Length[samples] === 0, PageDelete[$uid]; $Die];
+
+            ProcessNextSilently[samples//First];
+        ]
+    ];
+
+];
+
+(*AskPhaseCorrection[samid_] := Module[{graphs, content, nid = CreateUUID[]},
+    graphs = Pack[samid]["data", "results"][[All, Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]], 2]];
+    If[(graphs//Length) =!= 3, PushNotification["services/nk3-gpu/functions", "<span class=\"badge badge-danger\">internal error</span> at <i>AskPhaseCorrection</i>. The number of graphs is not 3"]; Return[$Failed, Module] ];
+
+    content = With[{id = nid, pid = $uid, svg = ExportString[Show[ListLinePlot[graphs, PlotStyle->{Red,Green,Blue}, AspectRatio->0.9, Axes->False], ImageSize->300], "SVG"]},
+        CEval[temp[nid] = True];
+
+        Hold[
+            Module[{stack = {}},
+                If[!KeyExistsQ[temp, nid], settings["notifications", nid] = .; Return["outdated", Module]; ];
+                
+                AppendTo[stack, "<div>"];
+                AppendTo[stack, "<p>Choose the correct one (refractive index)</p>"];
+                AppendTo[stack, svg];
+
+                AppendTo[stack, StringTemplate["<button type=\"button\" id=\"red-``\" class=\"btn btn-info btn-sm\">Red</button>"][nid] ];
+                AppendTo[stack, StringTemplate["<button type=\"button\" id=\"green-``\" class=\"btn btn-info btn-sm\">Green</button>"][nid] ];
+                AppendTo[stack, StringTemplate["<button type=\"button\" id=\"blue-``\" class=\"btn btn-info btn-sm\">Blue</button>"][nid] ];
+                AppendTo[stack, "</div>"];
+
+                AppendTo[stack, "<script>"];
+                AppendTo[stack, StringTemplate["document.getElementById('red-``')"][nid, pid] ];
+
+                StringJoin[stack]
+            ]
+        ]
+    ];
+]; *)
 
 ValidateVariables[vars_] := Module[{},
     Do[

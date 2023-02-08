@@ -5,12 +5,15 @@ openDialogWindow["Check the parameters"][samid_] := Module[{pack,content, datase
 
     dataset = { {ThicknessNormalise["cm"][pack["thickness"] ], pack["scale"], 2Pi phcorr} };
     result["raw"]       = ProcessTransmission[pack, dataset, "drypasses"->0, "wetpasses"->0]["results"]//First;
-    result["processed"] = ProcessTransmission[pack, dataset, "drypasses"->drycycles, "wetpasses"->wetcycles]["results"]//First;
+    pack["data"]        = ProcessTransmission[pack, dataset, "drypasses"->Round[drycycles], "wetpasses"->Round[wetcycles] ];
+    result["processed"] = pack["data"]["results"]//First;
 
     result["raw"]       = result["raw"][[pack["trust region"][[1]] ;; pack["trust region"][[2]]]];
     result["processed"] = result["processed"][[pack["trust region"][[1]] ;; pack["trust region"][[2]]]];
 
     pack["raw"]         = result["raw"];
+    pack["dataset"]     = dataset;
+    PackSupplimentary[samid]["number"] = 1;
     
 
     content = Block[{
@@ -54,12 +57,16 @@ openDialogWindow["Check the parameters"][samid_] := Module[{pack,content, datase
                 dataset = { {pack["thickness"], pack["scale"], 2Pi phcorr} };
                 
                 result["raw"]       = ProcessTransmission[pack, dataset, "drypasses"->-1, "wetpasses"->-1]["results"]//First;
-                result["processed"] = ProcessTransmission[pack, dataset, "drypasses"->Round[drycycles], "wetpasses"->Round[wetcycles] ]["results"]//First;
+
+                pack["data"]        = ProcessTransmission[pack, dataset, "drypasses"->Round[drycycles], "wetpasses"->Round[wetcycles] ];
+                result["processed"] = pack["data"]["results"]//First;
+
                 result["raw"]       = result["raw"][[pack["trust region"][[1]] ;; pack["trust region"][[2]]]];
                 result["processed"] = result["processed"][[pack["trust region"][[1]] ;; pack["trust region"][[2]]]];
                 WebSocketSend[cli, UpdateGraph[ result["processed"][[All, 1]],result["processed"][[All, 2]],result["processed"][[All, 3]],result["raw"][[All, 3]]  ] ];
 
                 pack["raw"]         = result["raw"];
+                pack["dataset"]     = dataset;
 
                 Pack[samid] = pack;
                 Clear[pack];
@@ -74,6 +81,7 @@ openDialogWindow["Check the parameters"][samid_] := Module[{pack,content, datase
     EventBind["submit", Function[{cli, data}, 
     Module[{types},
         If[data["action"] != "Ok", PageDelete[$uid]; $Die];
+        PagePlaceholder[$uid];
 
         types = <|
                     "locut"     -> "number",
@@ -103,8 +111,31 @@ openDialogWindow["Check the parameters"][samid_] := Module[{pack,content, datase
         ApplyVariables[data, types];
 
 
-        If[!corrections, PageDelete[$uid]; $Die];
-        PagePlaceholder[$uid];
+        If[!corrections, 
+            UploadNK[samid];
+
+            If[Length@samples === 0, PageDelete[$uid]; $Die];
+
+            If[applyforall, 
+                PackGlobal["set"] = Pack[samid]["dataset"][[ PackSupplimentary[samid]["number"] ]];
+                PackGlobal["accuracy"] = Pack[samid]["accuracy"];
+
+                PackGlobal["trust region"] = Pack[samid]["trust region"];
+
+                ProcessNextSilently[samples//First];
+                Return[Null, Module];
+            ];
+
+            
+            Unset[PackSupplimentary[samid]["number"] ];
+            Unset[Pack[samid] ];
+
+            openDialogWindow["Check the parameters"][samples//First];
+            samples = Drop[samples, 1];
+
+            Return[Null, Module];
+        ];
+        
 
         openDialogWindow["Visor"][samid];
     ]
@@ -180,26 +211,70 @@ openDialogWindow["Visor"][samid_] := Module[{pack, content, dataset, data, opt, 
         If[data["action"] != "Ok", PageDelete[$uid]; $Die];
         PagePlaceholder[$uid];
 
-        If[applyforall, 
-
-            Return[Null, Module];
-        ];
-
         UploadNK[samid];
-
-        Unset[PackSupplimentary[samid]["graph"]  ];
-        Unset[PackSupplimentary[samid]["number"] ];
-        Unset[Pack[samid] ];
 
         If[Length@samples === 0, PageDelete[$uid]; $Die];
 
+        If[applyforall, 
+            PackGlobal["set"] = Pack[samid]["dataset"][[ PackSupplimentary[samid]["number"] ]];
+            PackGlobal["accuracy"] = Pack[samid]["accuracy"];
+
+            PackGlobal["trust region"] = Pack[samid]["trust region"];
+
+            ProcessNextSilently[samples//First];
+            Return[Null, Module];
+        ];
+
+        
+        Unset[PackSupplimentary[samid]["number"] ];
+        Unset[Pack[samid] ];
+
         openDialogWindow["Check the parameters"][samples//First];
+        samples = Drop[samples, 1];
     ]
     ] ];
 
     pack["data"] = data; 
     Pack[samid] = pack;
     Clear[pack];
+];
+
+openDialogWindow["Phase"][samid_, callback_] := Module[{graphs},
+    graphs = Pack[samid]["data", "results"][[All, Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]], 2]];
+    freqs  = Pack[samid]["data", "results"][[1, Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]], 1]];
+
+    If[(graphs//Length) =!= 3, PushNotification["services/nk3-gpu/windows", "<span class=\"badge badge-danger\">internal error</span> at <i>AskPhaseCorrection</i>. The number of graphs is not 3"]; Return[$Failed, Module] ];
+    
+    content = Block[{
+                        graph1 = graphs[[1]],
+                        graph2 = graphs[[2]],
+                        graph3 = graphs[[3]],
+                        xaxis  = freqs
+                    },
+
+                LoadPage["services/nk3-gpu/views/phase.wsp", {id = samid}] 
+    ];
+
+    WebSocketPublish[LoadDynamicPage[content], $uid];
+    EventBind["event", Function[{cli, data}, Null ] ];
+
+    CreatePage[
+        content,
+        "id"           -> $uid,
+        "postHandler"  -> ProcessEventEmitt[$id],
+        "eventHandler" -> ProcessEventEmitt[$id, "event"]
+    ];
+
+    EventBind["submit", Function[{cli, data}, 
+    Module[{types},
+        If[data["action"] != "Continue", PushNotification["services/nk3-gpu", "Interrupted"];PageDelete[$uid]; $Die];
+        PagePlaceholder[$uid];
+
+        callback[data["option"]//ToExpression];
+    ]
+    ] ];    
+
+
 ];
 
 

@@ -1,0 +1,82 @@
+
+<div class="d-flex align-items-center">
+    <div class="col-lg-10 col-md-8 mx-left">
+      <a class="btn-outline-id" href="item/index.wsp?id=<?wsp id ?>"><?wsp id ?></a>
+      <h1 class="fw-light">Material parameters</h1>
+      <p class="lead text-muted">Choose the correct refractive index curve</p>
+          <div id="spectrum"></div>
+
+          <form action="wpost.wsp" method="post" id="dialog">
+            <input type="hidden" name="id" value="<?wsp $uid ?>">
+
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option1" name="option"  value="1" class="custom-control-input">
+            <label class="custom-control-label" for="option1">n[1] blue</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option2" name="option"  value="2" class="custom-control-input" checked>
+                <label class="custom-control-label" for="option2">n[2] orange</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option3" name="option"  value="3" class="custom-control-input">
+                <label class="custom-control-label" for="option3">n[3] green</label>
+            </div>
+            
+        </form>      
+
+        <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
+        <input type="submit" name="action" class="btn btn-primary my-2" value="Continue" form="dialog" >
+  
+        <p class="lead text-muted">Control panel</p>
+              
+    </div>
+  </div>
+
+
+  <script>
+    
+
+    {   
+        let vfreqs = <?wsp ExportString[xaxis, "JSON"] ?>;
+
+        let mat = [
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph1, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[1]'
+            },
+
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph2, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[2]'
+            },
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph3, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[3]'
+            }            
+        ];
+
+        let mlayout = {
+            xaxis: {
+                title: 'wavenumber, cm<sup>-1</sup>',
+                showgrid: true,
+                zeroline: true
+            },
+            yaxis: {
+                title: 'Im',
+                showgrid: true,
+                zeroline: true,
+            }          
+        };        
+
+        Plotly.newPlot('spectrum', mat, mlayout);
+    }
+  </script>
+
+  <?wsp LoadPage["services/nk3-gpu/views/post.wsp"] ?>

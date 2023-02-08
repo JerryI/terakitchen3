@@ -10,7 +10,7 @@
 
           <form action="wpost.wsp" method="post" id="dialog">
             <div class="form-group">
-                <button type="button" class="btn btn-secondary" id="updatePreview">Update preview</button>
+                <button type="button" class="btn btn-secondary" id="updatePreview"><span>Update preview</span></button>
             </div>
 
             <p id="textField" class="lead text-muted">Range settings</p>
@@ -126,6 +126,8 @@
         Plotly.deleteTraces('plot', [0,1,2]);
         Plotly.addTraces('plot', [{x: freqs , y: kr, name: 'k (raw)', line: { opacity: 0.5 }}, {x: freqs, y: k, name: 'k' }]);
         Plotly.addTraces('plot', [{x: freqs , y: n, name: 'n',  yaxis: 'y2'}]);
+        const spinner = document.getElementById('loading');
+        spinner.remove();
     }
 
     {
@@ -143,6 +145,9 @@
         });
 
         document.getElementById('updatePreview').addEventListener('click', function() {
+          const button = document.getElementById('updatePreview');
+          button.insertAdjacentHTML("afterbegin",'<span id="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"> </span><span> </span>');
+
           const inputs = document.getElementById("dialog").elements;
           var preset = [];
           // Iterate over the form controls

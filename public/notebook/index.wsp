@@ -3,9 +3,9 @@
 <?wsp LoadPage["assets/header.wsp"] ?>
   
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<link href="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/styles.css" rel="stylesheet">
-<script src="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/bundle.js"></script>
-<script src="http://<?wsp  $env["storagehost"] ?>/assets/notebooks/ext.js"></script>
+<link href="/assets/notebooks/styles.css" rel="stylesheet">
+<script src="/assets/notebooks/bundle.js"></script>
+<script src="/assets/notebooks/ext.js"></script>
 
   <div class="container" style="margin-top:1em">
   
