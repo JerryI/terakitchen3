@@ -50,10 +50,13 @@ storage["set",id_,field_, data_]:=With[{},
   If[!KeyExistsQ[collection[id, "data"], field],
     console["log", "storage >> `` doesnt exist. Creating...", field];
     With[{uid = CreateUUID[]},
-      storage[uid]["data"]=data;
+      storage[uid]["data"]=data//Compress;
+      (*Put Compress and Uncompress to save up the space*)
+      (*before you need to reload all data you have in files*)
       storage[uid]["id"]=uid;
       storage[uid]["date"]=SGlobalDate;
       storage[uid]["archived"]=False;
+      storage[uid]["compressed"]=True;
 
       collection[id]["data"][field]:=storage["get", uid];
     ]
@@ -63,7 +66,8 @@ storage["set",id_,field_, data_]:=With[{},
       console["log", "storage >> `` is rewritting... `` ", s, field];
       storage[s]["date"]=SGlobalDate;
       storage[s]["archived"]=False;
-      storage[s]["data"]=data;
+      storage[s]["data"]=data//Compress;
+      storage[s]["compressed"]=True;
     ]
   ];
   data
@@ -90,7 +94,7 @@ storage["remove",id_,field_]:=With[{},
   Null
 ];
 
-storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; storage[uid]["data"]);
+storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; If[storage[uid]["compressed"]//TrueQ, storage[uid]["data"]//Uncompress, storage[uid]["data"] ]);
 
 CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
     If[now - #["date"] > Quantity[5, "Days"],
@@ -98,12 +102,12 @@ CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
      cnt = cnt + 1;
      Print["archived " <> #["id"]];
      With[{url = 
-        Export[storage["url"] <> #["id"] <> ".mx", #["data"]], str = "restored "<>#["id"]}, 
+        Export[storage["url"] <> #["id"] <> ".mx", #["data"] ], str = "restored "<>#["id"]}, 
         #["data"] := (
-        Print[str];
-        #["archived"] = False;
-        #["date"] = now;
-        #["data"] = Import[url]
+          Print[str];
+          #["archived"] = False;
+          #["date"] = now;
+          #["data"] = Import[url]//Uncompress
         )];
      #["archived"] = True;
      ]]; #["id"]) & /@ 
