@@ -3,6 +3,7 @@ Import["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/
 $host = CEval[$ev]["addr"];
 $uid = CreateUUID[];
 
+$data["list"] = CheckLocked[ $data["list"] ];
 manualsamples = CQuery["$manual" :> Exist -> Equal -> True, $data["list"] ];
 
 samples = CQuery["type" -> Equal -> "sample", $data["list"]];

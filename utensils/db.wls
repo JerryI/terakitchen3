@@ -51,8 +51,7 @@ storage["set",id_,field_, data_]:=With[{},
     console["log", "storage >> `` doesnt exist. Creating...", field];
     With[{uid = CreateUUID[]},
       storage[uid]["data"]=data//Compress;
-      (*Put Compress and Uncompress to save up the space*)
-      (*before you need to reload all data you have in files*)
+
       storage[uid]["id"]=uid;
       storage[uid]["date"]=SGlobalDate;
       storage[uid]["archived"]=False;
@@ -94,15 +93,36 @@ storage["remove",id_,field_]:=With[{},
   Null
 ];
 
-storage["get", uid_]:=(storage[uid]["date"]=SGlobalDate; If[storage[uid]["compressed"]//TrueQ, storage[uid]["data"]//Uncompress, storage[uid]["data"] ]);
+storage["get", uid_]:=(
+  storage[uid]["date"]=SGlobalDate; 
+  (*fix some ruined data*)
+
+  If[Head[storage[uid]["data"]//Evaluate ] === Uncompress,
+    storage[uid]["data"] = storage[uid]["data"][[1]]//Compress;
+    storage[uid]["compressed"] = True;
+    PushNotification["utensils/db/storage", "autofix wrong field "<>uid];
+  ];
+
+  If[storage[uid]["compressed"]//TrueQ, 
+    If[!StringQ[storage[uid]["data"]],
+      storage[uid]["data"] = storage[uid]["data"]//Compress;
+    ];
+    storage[uid]["data"]//Uncompress, 
+
+    storage[uid]["compressed"] = True;
+    
+    storage[uid]["data"] = storage[uid]["data"] // Compress;
+    storage[uid]["data"]//Uncompress
+  ]
+);
 
 CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
     If[now - #["date"] > Quantity[5, "Days"],
-     console["log", "archived ``", #["id"]];
+     console["log", "archived ``", #["id"] ];
      cnt = cnt + 1;
-     Print["archived " <> #["id"]];
+     Print["archived " <> #["id"] ];
      With[{url = 
-        Export[storage["url"] <> #["id"] <> ".mx", #["data"] ], str = "restored "<>#["id"]}, 
+        Export[storage["url"] <> #["id"] <> ".mx", If[#["compressed"]//TrueQ, #["data"], #["compressed"]=True; Compress[#["data"] ] ] ], str = "restored "<>#["id"]}, 
         #["data"] := (
           Print[str];
           #["archived"] = False;
@@ -110,7 +130,7 @@ CArchive := Module[{cnt = 0, now = Now}, (If[! #["archived"],
           #["data"] = Import[url]//Uncompress
         )];
      #["archived"] = True;
-     ]]; #["id"]) & /@ 
+     ] ]; #["id"]) & /@ 
  DeleteDuplicates@(Extract[#, {1}, Extract[#, {1, 0}] &] & /@ 
     SubValues[storage]);
 

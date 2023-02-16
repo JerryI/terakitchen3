@@ -16,6 +16,7 @@ socket.onmessage = function(event) {
 socket.onclose = function(event) {
   console.log(event);
   console.log('Connection lost. Please, update the page to see new changes.');
+  location.reload();
 };
 
 

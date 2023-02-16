@@ -78,7 +78,7 @@ __device__  void subtractFP (
     _dest[5] = abs;
     _dest[6] = arg;
 
-    if (one.y * abs > 1.0f) {
+    if (one.y * abs > 1.1f) {
         _dest[3] = 1.0f;
         _dest[4] = 0.0f;
     } else {
@@ -139,12 +139,11 @@ __device__ void solveNK (
         np = n; kp = k;
     }
 
-    if (!isfinite(n))
+    if (!isfinite(n) || !isfinite(k) || n < 0.0f) {
         n = n0;
-    
-    if (!isfinite(k))
         k = 0.0f;
-    
+    }
+
     _dest[1] = n;
     _dest[2] = k;
 }

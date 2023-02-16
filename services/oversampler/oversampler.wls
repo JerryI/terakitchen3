@@ -1,3 +1,4 @@
+$data["list"] = CheckLocked[ $data["list"] ];
 input = $data["list"];
 
 If[Length[input] == 0, PushNotification["services/oversampler","nothing to do..."]; $Die];

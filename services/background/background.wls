@@ -2,7 +2,7 @@ cutoff = 0.2;
 iterator = 1; 
 globalpoints = {};
 
-
+$data["list"] = CheckLocked[ $data["list"] ];
 If[Length[$data["list"]] == 0, PushNotification["services/background","nothing to do..."]; $Die];
 
 $uid = CreateUUID[];

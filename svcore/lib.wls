@@ -16,6 +16,13 @@ storage["get", id_] := JTPClientEvaluate[kitchen, storage["get", id]];
 
 Protect[storage];
 
+CheckLocked[list_] := Module[{free, locked},
+  free   = CQuery["locked":>Exist->Equal->False, list];
+  locked = Complement[list, free];
+  PushNotification["svcore/lib", StringTemplate["<a class=\"badge badge-info\" href=\"item/index.wsp?id=``\">``</a> was locked by a user. Please, remove the tag <i>locked</i> to make any changes."][#,#] ] &/@ locked;
+  free
+];
+
 PushNotification[x_,y_] := JTPClientEvaluate[kitchen, PushNotification[x,y]];
 
 LoopBack[obj_] := JTPClientEvaluate[kitchen, obj];

@@ -1,3 +1,4 @@
+$data["list"] = CheckLocked[ $data["list"] ];
 input = $data["list"];
 extrapolatePhase = "no";
 phaseCorr = 0;
@@ -155,7 +156,7 @@ store[i_] := (
                                         {#[[1]], #[[2]]} & /@ 
                                             Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 2]]}]
                                         ];
-                        collection[uid]["data"]["rough-alpha"] := With[{id = uid}, 
+                        collection[uid]["data"]["alpha"] := With[{id = uid}, 
                                         With[{d = GetThickness["cm"][id]},
                                             {#[[1]], -Log[#[[2]]]/d} & /@ 
                                                 Transpose[{collection[id]["data"]["freqs"], collection[id]["data"]["transmission"][[All, 1]]}]

@@ -118,6 +118,8 @@ UploadNK[samid_] := Module[{data, raw, set},
                                         ];
       ];        
     ];
+
+    PushNotification["services/nk3-gpu/functions", StringTemplate["sample <a class=\"badge badge-info\" href=\"item/index.wsp?id=``\">``</a> was updated"][samid, samid] ];
 ];
 
 ProcessNextSilently[samid_] := Module[{pack,content, dataset, data},

@@ -1,3 +1,4 @@
+$data["list"] = CheckLocked[ $data["list"] ];
 input = $data["list"];
 extrapolatePhase = "no";
 phaseCorr = 0;

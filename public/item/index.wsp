@@ -65,7 +65,7 @@
                   <span>Experiment </span>
                   <a href="/experiment/index.wsp?id=<?wspsession[ToString[item]][ToString[experiment]]?>"><?wspsession["item"]["experiment"]?></a>
                   <span> </span>
-                  <?wsp  If[ session["item"]["type"] == "sample", ?>
+                  <?wsp  If[ session["item"]["type"] === "sample" && Not[MissingQ[session["item"]["ref"]]], ?>
                
                     <span >Reference </span>
                     <a href="/item/index.wsp?id=<?wspsession[ToString[item]][ToString[ref]]?>"><?wspsession["item"]["ref"]?></a>
