@@ -14,13 +14,21 @@
             <label class="custom-control-label" for="option1">n[1] blue</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="option2" name="option"  value="2" class="custom-control-input" checked>
+                <input type="radio" id="option2" name="option"  value="2" class="custom-control-input">
                 <label class="custom-control-label" for="option2">n[2] orange</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="option3" name="option"  value="3" class="custom-control-input">
+                <input type="radio" id="option3" name="option"  value="3" class="custom-control-input" checked>
                 <label class="custom-control-label" for="option3">n[3] green</label>
             </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option3" name="option"  value="4" class="custom-control-input">
+                <label class="custom-control-label" for="option3">n[4] some other color</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option3" name="option"  value="5" class="custom-control-input">
+                <label class="custom-control-label" for="option3">n[5] some other color</label>
+            </div>                        
             
         </form>      
 
@@ -59,6 +67,20 @@
                 y: <?wsp ExportString[graph3, "JSON"] ?>, 
                 type: 'line',
                 name: 'n[3]'
+            },
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph4, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[4]'
+            },
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph5, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[5]'
             }            
         ];
 

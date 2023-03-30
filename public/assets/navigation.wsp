@@ -107,7 +107,7 @@
       <li class="mb-1" id="processPlace">
         <?wsp Table[ ?>
 
-        <?wsp LoadPage["assets/processtoast.wsp", {id = i, state = ""}] ?>
+          <?wsp LoadPage["assets/processtoast.wsp", {id = i, state = ""}] ?>
         
         <?wsp  , {i, settings["processes"]//Keys}] ?>
       </li>
@@ -115,7 +115,7 @@
       <li class="mb-1" id="toastPlace">
         <?wsp Table[ ?>
 
-        <?wsp LoadPage["assets/singletoast.wsp", {id = i, state = ""}] ?>
+          <?wsp LoadPage["assets/singletoast.wsp", {id = i, state = ""}] ?>
         
         <?wsp  , {i, Select[settings["notifications"]//Keys, !TrueQ[settings["notifications"][#]["hide"]]&]//Reverse}] ?>
 

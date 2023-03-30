@@ -41,7 +41,9 @@ WebSocketPublish[exp_, chan_] := JTPClientEvaluate[kitchen, Tinyweb`WebSocketPub
 
 logs = {};
 
-console["log", message_, args___] := (logs = {logs, StringTemplate[message][args]});
+
+
+console["log", message_, args___] := (StringTemplate[message][args] >>> "svcore.txt";);
 
 $loop = <||>;
 LoopSubmit[task_] := With[{uid = CreateUUID[]}, 
@@ -71,7 +73,8 @@ DefineOutputStreamMethod[
      With[{out = bytes /. {most___, 10} :> FromCharacterCode[{most}]},
        With[{ }, 
        If[out === "", {0, state},
-        
+        ByteArrayToString[out // ByteArray] >>> "svcore.txt"
+
         PushNotification["svcore", "<span style=\"color:red\">"<>ByteArrayToString[out // ByteArray]<>"</span>"];
         {Length@bytes, state}]]]]}
 ];

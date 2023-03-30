@@ -24,9 +24,10 @@ Module[{refs, sm},
   , {key, Complement[sm//Keys, {"type", "data", "date", "filename", "experiment", "id"}]}];
 
   refs = CQuery[query :> And, $data["list"]];
-  console["log", "found "<>First[refs]<>""];
+  
 
-  sm["ref"] = If[Length[refs] == 0, "noref", First[refs]];
+  sm["ref"] = If[Length[refs] == 0, "noref", console["log", "found "<>First[refs]<>""]; First[refs] ];
+  
 
   With[{uid = sm["id"], ref = sm["ref"]},
     CEval[
