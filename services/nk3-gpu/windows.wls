@@ -243,7 +243,7 @@ openDialogWindow["Phase"][samid_, callback_] := Module[{graphs},
     graphs = Pack[samid]["data", "results"][[All, Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]], 2]];
     freqs  = Pack[samid]["data", "results"][[1, Pack[samid]["trust region"][[1]] ;; Pack[samid]["trust region"][[2]], 1]];
 
-    If[(graphs//Length) =!= 5, PushNotification["services/nk3-gpu/windows", "<span class=\"badge badge-danger\">internal error</span> at <i>AskPhaseCorrection</i>. The number of graphs is not 5"]; Return[$Failed, Module] ];
+    If[(graphs//Length) =!= 9, PushNotification["services/nk3-gpu/windows", "<span class=\"badge badge-danger\">internal error</span> at <i>AskPhaseCorrection</i>. The number of graphs is not 5"]; Return[$Failed, Module] ];
     
     content = Block[{
                         graph1 = graphs[[1]],
@@ -251,6 +251,10 @@ openDialogWindow["Phase"][samid_, callback_] := Module[{graphs},
                         graph3 = graphs[[3]],
                         graph4 = graphs[[4]],
                         graph5 = graphs[[5]],
+                        graph6 = graphs[[6]],
+                        graph7 = graphs[[7]],
+                        graph8 = graphs[[8]],
+                        graph9 = graphs[[9]],                    
                         xaxis  = freqs
                     },
 

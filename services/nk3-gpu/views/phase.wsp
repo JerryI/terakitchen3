@@ -22,13 +22,30 @@
                 <label class="custom-control-label" for="option3">n[3] green</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="option3" name="option"  value="4" class="custom-control-input">
-                <label class="custom-control-label" for="option3">n[4] some other color</label>
+                <input type="radio" id="option4" name="option"  value="4" class="custom-control-input">
+                <label class="custom-control-label" for="option4">n[4] red</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="option3" name="option"  value="5" class="custom-control-input">
-                <label class="custom-control-label" for="option3">n[5] some other color</label>
-            </div>                        
+                <input type="radio" id="option5" name="option"  value="5" class="custom-control-input">
+                <label class="custom-control-label" for="option5">n[5] purple</label>
+            </div>   
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option6" name="option"  value="6" class="custom-control-input">
+                <label class="custom-control-label" for="option6">n[6] other color</label>
+            </div>       
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option7" name="option"  value="7" class="custom-control-input">
+                <label class="custom-control-label" for="option7">n[7] other color</label>
+            </div> 
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option8" name="option"  value="8" class="custom-control-input">
+                <label class="custom-control-label" for="option8">n[8] other color</label>
+            </div>              
+
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option9" name="option"  value="9" class="custom-control-input">
+                <label class="custom-control-label" for="option9">n[9] other color</label>
+            </div>             
             
         </form>      
 
@@ -81,7 +98,41 @@
                 y: <?wsp ExportString[graph5, "JSON"] ?>, 
                 type: 'line',
                 name: 'n[5]'
-            }            
+            }   
+            ,
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph6, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[6]'
+            } 
+            ,
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph7, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[7]'
+            } 
+            ,
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph8, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[8]'
+            }    
+            
+            ,
+            
+            {
+                x: vfreqs, 
+                y: <?wsp ExportString[graph9, "JSON"] ?>, 
+                type: 'line',
+                name: 'n[9]'
+            }             
+
         ];
 
         let mlayout = {

@@ -56,7 +56,9 @@ EventBind["submit", Function[{cli, data}, ConnectRest[data]; PageDelete[$uid]; $
 PushNotification["services/ref", StringTemplate["We coundn't connect all samples and references. Please, try to do it manually for the remaining part <a class=\"btn btn-outline-info\" href=\"window.wsp?id=``\">Fix</a>"][$uid]];
 
 ConnectRest[input_] := Module[{data = input},
+  PushNotification["services/ref/debug", "action: "<>ToString[data, InputForm] ];
   If[data["action"] === "Ok",
+    
     
     data["action"] = .;
     data["id"] = .;
@@ -64,16 +66,19 @@ ConnectRest[input_] := Module[{data = input},
     console["log", "applied manual"];
 
     With[{id = #, ref = data[#]},
+      PushNotification["services/ref", "Connecting <br> <it>"<>ref<>"</it> to <it>"<>id<>"</it> as a reference"];
       CEval[collection[id, "ref"] = ref; collection[id, "type"] = "sample"; collection[id, "$manual"] = .; ];
     ]&/@Keys[data];
 
     itsref = CQuery[{"ref" -> Equal -> "itsref"} :> And, Join[samples, manualsamples] ]; 
 
     With[{id = #},
+      PushNotification["services/ref", "Setting <it>"<>id<>"</it> as a reference"];
       CEval[collection[id, "type"] = "ref"; collection[id, "ref"] = .; collection[id, "$manual"] = .;];
     ]&/@itsref;    
   , 
     console["log", "discarded manual"];
+    PushNotification["services/ref", "Cancelled"];
 
     With[{id = #},
       CEval[collection[id, "ref"] = .;];

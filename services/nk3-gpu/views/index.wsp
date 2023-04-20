@@ -32,7 +32,7 @@
                 </div> 
                 <div class="form-group col-md-3">
                   <label for="scale">Scaling</label>
-                  <input type="number" step=any class="form-control form-control-sm" name="scale" id="scale" value="<?wsp scale ?>">
+                  <input type="number" step=any class="form-control form-control-sm" name="scale" id="scale" value=<?wsp scale ?>>
                 </div>                                
             </div>
 
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="phcorr">Phase shift</label>
-                  <input type="number" step=1 min=-3 max=3 class="form-control form-control-sm" name="phcorr" id="phcorr" value="<?wsp phcorr ?>">
+                  <input type="number" value=0 step=1 min=-5 max=5 class="form-control form-control-sm" name="phcorr" id="phcorr" value="<?wsp phcorr ?>">
                   <small class="form-text text-muted">In multples of 2Pi</small>
                 </div>  
                 

@@ -129,7 +129,7 @@ ProcessNextSilently[samid_] := Module[{pack,content, dataset, data},
 
     Pack[samid]["accuracy"] = PackGlobal["accuracy"];
 
-    dataset = Table[Join[Take[PackGlobal["set"], 2], {2Pi (phcorr + i)}], {i, -2, 2, 1}];
+    dataset = Table[Join[Take[PackGlobal["set"], 2], {2Pi (phcorr + i)}], {i, -4, 4, 1}];
     data = ProcessTransmission[pack, dataset, "drypasses"->drycycles, "wetpasses"->wetcycles];
 
     pack["dataset"] = dataset;

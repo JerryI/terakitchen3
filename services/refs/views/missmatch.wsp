@@ -34,26 +34,51 @@
             
         </form>      
 
-          <input type="submit" name="action" class="btn btn-secondary my-2" value="Cancel" form="dialog" >
-          <input type="submit" name="action" class="btn btn-primary my-2" value="Ok" form="dialog" >
+        <button id="Cancel" class="btn btn-secondary my-2">Cancel</button>
+        <button id="Ok" class="btn btn-primary my-2">Ok</button>
   
     </div>
   </div>
 
   <script>
 
-    document.getElementById('dialog').addEventListener('submit', e => {
+{
+      document.getElementById('Ok').addEventListener('click', e => {
+        // Store reference to form to make later code easier to read
+        const form = document.getElementById('dialog');
+        console.log(form);
+        console.log(form.action);
 
-    // Store reference to form to make later code easier to read
-    const form = e.target;
+        let formData = new FormData(form);
+        formData.append("action", "Ok");
 
-    // Post data using the Fetch API
-    fetch(form.getAttribute("action"), {
-      method: form.method,
-      body: new FormData(form)
-    })
+        // Post data using the Fetch API
+        fetch(form.getAttribute("action"), {
+          method: form.method,
+          body: formData
+        })
 
-    // Prevent the default form submit
-    e.preventDefault();
-    });     
+        // Prevent the default form submit
+        e.preventDefault();
+      });
+
+      document.getElementById('Cancel').addEventListener('click', e => {
+        // Store reference to form to make later code easier to read
+        const form = document.getElementById('dialog');
+        console.log(form);
+        console.log(form.action);
+
+        let formData = new FormData(form);
+        formData.append("action", "Cancel");
+
+        // Post data using the Fetch API
+        fetch(form.getAttribute("action"), {
+          method: form.method,
+          body: formData
+        })
+
+        // Prevent the default form submit
+        e.preventDefault();
+      });      
+}    
   </script>
