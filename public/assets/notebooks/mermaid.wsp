@@ -1,0 +1,62 @@
+<div class="page-header">
+    <div class="column">
+<div id="mermaid-render">
+
+</div>
+ <br>
+<div class="d-flex justify-content-between align-items-left mb-3">
+
+  <textarea name="" id="mermaid-input" cols="30" rows="10">
+
+  </textarea>
+</div>
+
+</div>
+
+
+</div>
+
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: false });
+
+  // Example of using the render function
+  const drawDiagram = async function (val) {
+    const element = document.getElementById("mermaid-render");
+    const graphDefinition = val;
+    const { svg } = await mermaid.render('graphDiv', graphDefinition);
+    element.innerHTML = svg;
+  };
+
+  console.log(core.MermaidText);
+  if (core.MermaidText.trim().length == 0) {
+    core.MermaidText = atob("Zmxvd2NoYXJ0IExSCiAgICBTdGFydCAtLT4gU3RvcA==");
+  }
+  document.getElementById("mermaid-input").value = core.MermaidText;
+
+  const editor = CodeMirror.fromTextArea(document.getElementById("mermaid-input"), {
+       lineNumbers: false,
+       autoCloseTags: true,
+       setSize: (200,200),
+       indentWithTabs: true,
+       theme: "default",   
+       lineWrapping: true,         
+       extraKeys: {
+         "F11": function(cm) {
+           cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+         },
+         "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Shift-Enter": function(instance) { 
+            const new7 = instance.getValue();
+            socket.send('folders["<?wsp folder ?>", "mermaid"] = "'+new7+'"; ')
+            drawDiagram(new7);
+        },
+      }      
+  });  
+
+  await drawDiagram(editor.getValue());
+</script>
+

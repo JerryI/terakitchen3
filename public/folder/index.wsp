@@ -28,7 +28,7 @@
             <div class="container">
                 
                 <div class="page-header">
-                  <h1><?wsp session["folder", "name"] ?></h1>
+                  <h1 id="folder-name" contenteditable="true"><?wsp session["folder", "name"] ?></h1>
 
 
                   
@@ -161,6 +161,11 @@ function exportPromise(e) {
         },
       }      
     });
+
+
+    document.getElementById("folder-name").addEventListener("input", function(e) {
+      socket.send('folders["<?wsp session["Query", "id"] ?>", "name"] = "'+e.target.innerText.replaceAll('\"','\\"')+'"; ');
+    }, false);    
 
 </script>
 
