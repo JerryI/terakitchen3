@@ -3,12 +3,9 @@
 
 </div>
 
-<?wsp If[!KeyExistsQ[folders[folder], "mermaid"], ?> <button id="new-diagram-btn" onclick="newDiagram()" class="btn btn-sm btn-outline-secondary">New</button> <?wsp , "" ] ?>
-
+<?wsp If[!KeyExistsQ[folders[folder], "mermaid"], folders[folder, "mermaid"] = ""; ]; "" ?>
 
 <script>
-
-
     function loadMermaidEditor() {
         WSPHttpQuery('folders["<?wsp folder ?>", "mermaid"]', function(text) {
           core.MermaidText = text;
@@ -20,13 +17,5 @@
         }, 'String')
     }
 
-    function newDiagram() {
-      const id = '<?wsp folder ?>';
-      WSPHttpQuery(`With[{ex = "${id}", uid = CreateUUID[]},  folders[ex, "mermaid"] = ""]`, loadMermaidEditor, 'String');
-    }
-
-    <?wsp If[KeyExistsQ[folders[folder], "mermaid"], ?>
-      loadMermaidEditor();
-    <?wsp , ""] ?>
-
+    loadMermaidEditor();
 </script>

@@ -84,7 +84,7 @@
 
         let data = {
             z: <?wsp ExportString[map[[3]], "JSON"] ?>, 
-            x: <?wsp ExportString[map[[1]], "JSON"] ?>, 
+            x: <?wsp ExportString[10.0 map[[1]], "JSON"] ?>, //convert to mm
             y: <?wsp ExportString[map[[2]], "JSON"] ?>, 
             type: 'contour'
         };       

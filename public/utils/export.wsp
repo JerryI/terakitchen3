@@ -82,6 +82,16 @@
             "item",
                 link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>exportitem[q["id"], "public/trashcan"];
             ,
+            "folder",
+                With[{uid = folders[q["id"], "name"]}, 
+                    DeleteDirectory["public/trashcan/"<>uid, DeleteContents->True];
+                    CreateDirectory["public/trashcan/"<>uid];
+
+                    exportitem[#, "public/trashcan/"<>uid]& /@ CQuery[{True, Infinity, q["id"]}];
+
+                    link = "http://"<>  $env["storagehost"] <>"/trashcan/"<>(CreateArchive["public/trashcan/"<>uid,"public/trashcan/", OverwriteTarget -> True] // FileNameTake);
+                ];
+            ,            
             "query",
                 With[{uid = StringTake[Hash[q["query"], "SHA256", "HexString"],5]}, 
                     DeleteDirectory["public/trashcan/"<>uid, DeleteContents->True];

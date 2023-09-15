@@ -3864,3 +3864,2983 @@ should be a rank 1\n     tensor of machine-size real numbers."
 "Part::take: Cannot take positions 0 through 0 in {0. + Arg[Drop[0., 0.]]}."
 "Export::jsonstrictencoding: Expression Power cannot be exported as JSON."
 "Export::jsonstrictencoding: Expression Take cannot be exported as JSON."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-c401..."
+"found FeZnMoO-5b46"
+"looking for FeZnMoO-4f45..."
+"found FeZnMoO-afe9"
+"looking for FeZnMoO-8392..."
+"found FeZnMoO-ad29"
+"looking for FeZnMoO-55a6..."
+"found FeZnMoO-3b3b"
+"looking for FeZnMoO-fe0f..."
+"found FeZnMoO-799f"
+"fourier for FeZnMoO-c401"
+"FeZnMoO-c401"
+"fourier for FeZnMoO-5b46"
+"FeZnMoO-5b46"
+"fourier for FeZnMoO-4f45"
+"FeZnMoO-4f45"
+"fourier for FeZnMoO-afe9"
+"FeZnMoO-afe9"
+"fourier for FeZnMoO-8392"
+"FeZnMoO-8392"
+"fourier for FeZnMoO-ad29"
+"FeZnMoO-ad29"
+"fourier for FeZnMoO-55a6"
+"FeZnMoO-55a6"
+"fourier for FeZnMoO-3b3b"
+"FeZnMoO-3b3b"
+"fourier for FeZnMoO-fe0f"
+"FeZnMoO-fe0f"
+"fourier for FeZnMoO-799f"
+"FeZnMoO-799f"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-cddd..."
+"found FeZnMoO-1d70"
+"looking for FeZnMoO-daff..."
+"found FeZnMoO-713c"
+"looking for FeZnMoO-177c..."
+"found FeZnMoO-83b0"
+"looking for FeZnMoO-f04b..."
+"found FeZnMoO-c706"
+"looking for FeZnMoO-a6c8..."
+"found FeZnMoO-f093"
+"fourier for FeZnMoO-cddd"
+"FeZnMoO-cddd"
+"fourier for FeZnMoO-1d70"
+"FeZnMoO-1d70"
+"fourier for FeZnMoO-daff"
+"FeZnMoO-daff"
+"fourier for FeZnMoO-713c"
+"FeZnMoO-713c"
+"fourier for FeZnMoO-177c"
+"FeZnMoO-177c"
+"fourier for FeZnMoO-83b0"
+"FeZnMoO-83b0"
+"fourier for FeZnMoO-f04b"
+"FeZnMoO-f04b"
+"fourier for FeZnMoO-c706"
+"FeZnMoO-c706"
+"fourier for FeZnMoO-a6c8"
+"FeZnMoO-a6c8"
+"fourier for FeZnMoO-f093"
+"FeZnMoO-f093"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-4fcc..."
+"found FeZnMoO-0b1a"
+"looking for FeZnMoO-1dfb..."
+"found FeZnMoO-0eb1"
+"looking for FeZnMoO-e8f9..."
+"found FeZnMoO-fdfb"
+"looking for FeZnMoO-bae2..."
+"found FeZnMoO-0f6c"
+"looking for FeZnMoO-c329..."
+"found FeZnMoO-6c05"
+"looking for FeZnMoO-59a3..."
+"found FeZnMoO-0b01"
+"fourier for FeZnMoO-4fcc"
+"FeZnMoO-4fcc"
+"fourier for FeZnMoO-0b1a"
+"FeZnMoO-0b1a"
+"fourier for FeZnMoO-1dfb"
+"FeZnMoO-1dfb"
+"fourier for FeZnMoO-0eb1"
+"FeZnMoO-0eb1"
+"fourier for FeZnMoO-e8f9"
+"FeZnMoO-e8f9"
+"fourier for FeZnMoO-fdfb"
+"FeZnMoO-fdfb"
+"fourier for FeZnMoO-bae2"
+"FeZnMoO-bae2"
+"fourier for FeZnMoO-0f6c"
+"FeZnMoO-0f6c"
+"fourier for FeZnMoO-c329"
+"FeZnMoO-c329"
+"fourier for FeZnMoO-6c05"
+"FeZnMoO-6c05"
+"fourier for FeZnMoO-59a3"
+"FeZnMoO-59a3"
+"fourier for FeZnMoO-0b01"
+"FeZnMoO-0b01"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-2970..."
+"found FeZnMoO-fcf1"
+"looking for FeZnMoO-c2f4..."
+"found FeZnMoO-bc9e"
+"looking for FeZnMoO-c227..."
+"found FeZnMoO-03a9"
+"looking for FeZnMoO-1e36..."
+"looking for FeZnMoO-69c2..."
+"looking for FeZnMoO-460e..."
+"looking for FeZnMoO-2cb8..."
+"looking for FeZnMoO-5327..."
+"looking for FeZnMoO-db15..."
+"applied manual"
+"fourier for FeZnMoO-2970"
+"FeZnMoO-2970"
+"fourier for FeZnMoO-fcf1"
+"FeZnMoO-fcf1"
+"fourier for FeZnMoO-c2f4"
+"FeZnMoO-c2f4"
+"fourier for FeZnMoO-bc9e"
+"FeZnMoO-bc9e"
+"fourier for FeZnMoO-c227"
+"FeZnMoO-c227"
+"fourier for FeZnMoO-03a9"
+"FeZnMoO-03a9"
+"fourier for FeZnMoO-1e36"
+"FeZnMoO-1e36"
+"fourier for FeZnMoO-69c2"
+"FeZnMoO-69c2"
+"fourier for FeZnMoO-460e"
+"FeZnMoO-460e"
+"fourier for FeZnMoO-2cb8"
+"FeZnMoO-2cb8"
+"fourier for FeZnMoO-5327"
+"FeZnMoO-5327"
+"fourier for FeZnMoO-db15"
+"FeZnMoO-db15"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-2508..."
+"found FeZnMoO-26ef"
+"looking for FeZnMoO-0bf6..."
+"found FeZnMoO-37be"
+"looking for FeZnMoO-6850..."
+"found FeZnMoO-b1c7"
+"looking for FeZnMoO-c582..."
+"looking for FeZnMoO-edf2..."
+"looking for FeZnMoO-ff45..."
+"looking for FeZnMoO-6a13..."
+"looking for FeZnMoO-7ba5..."
+"looking for FeZnMoO-af31..."
+"looking for FeZnMoO-c019..."
+"looking for FeZnMoO-f61a..."
+"applied manual"
+"fourier for FeZnMoO-2508"
+"FeZnMoO-2508"
+"fourier for FeZnMoO-26ef"
+"FeZnMoO-26ef"
+"fourier for FeZnMoO-0bf6"
+"FeZnMoO-0bf6"
+"fourier for FeZnMoO-37be"
+"FeZnMoO-37be"
+"fourier for FeZnMoO-6850"
+"FeZnMoO-6850"
+"fourier for FeZnMoO-b1c7"
+"FeZnMoO-b1c7"
+"fourier for FeZnMoO-c582"
+"FeZnMoO-c582"
+"fourier for FeZnMoO-edf2"
+"FeZnMoO-edf2"
+"fourier for FeZnMoO-ff45"
+"FeZnMoO-ff45"
+"fourier for FeZnMoO-6a13"
+"FeZnMoO-6a13"
+"fourier for FeZnMoO-7ba5"
+"FeZnMoO-7ba5"
+"fourier for FeZnMoO-af31"
+"FeZnMoO-af31"
+"fourier for FeZnMoO-c019"
+"FeZnMoO-c019"
+"fourier for FeZnMoO-f61a"
+"FeZnMoO-f61a"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-c36d..."
+"found FeZnMoO-839f"
+"looking for FeZnMoO-9686..."
+"found FeZnMoO-839f"
+"looking for FeZnMoO-244b..."
+"found FeZnMoO-9483"
+"looking for FeZnMoO-af8a..."
+"found FeZnMoO-b662"
+"looking for FeZnMoO-070a..."
+"looking for FeZnMoO-9538..."
+"looking for FeZnMoO-5fe3..."
+"looking for FeZnMoO-308d..."
+"looking for FeZnMoO-50af..."
+"looking for FeZnMoO-798d..."
+"applied manual"
+"fourier for FeZnMoO-c36d"
+"FeZnMoO-c36d"
+"fourier for FeZnMoO-9686"
+"FeZnMoO-9686"
+"fourier for FeZnMoO-839f"
+"FeZnMoO-839f"
+"fourier for FeZnMoO-28cb"
+"FeZnMoO-28cb"
+"fourier for FeZnMoO-244b"
+"FeZnMoO-244b"
+"fourier for FeZnMoO-9483"
+"FeZnMoO-9483"
+"fourier for FeZnMoO-af8a"
+"FeZnMoO-af8a"
+"fourier for FeZnMoO-b662"
+"FeZnMoO-b662"
+"fourier for FeZnMoO-070a"
+"FeZnMoO-070a"
+"fourier for FeZnMoO-9538"
+"FeZnMoO-9538"
+"fourier for FeZnMoO-5fe3"
+"FeZnMoO-5fe3"
+"fourier for FeZnMoO-308d"
+"FeZnMoO-308d"
+"fourier for FeZnMoO-50af"
+"FeZnMoO-50af"
+"fourier for FeZnMoO-798d"
+"FeZnMoO-798d"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"First::nofirst: {} has zero length and no first element."
+"First::nofirst: {} has zero length and no first element."
+"Part::partw: Part 1 of {} does not exist."
+"Part::pkspec1: The expression {}[[1]] cannot be used as a part \
+specification."
+"Part::partw: Part 1 of {} does not exist."
+"Part::partw: Part 2 of {} does not exist."
+"General::stop: Further output of Part::partw\n     will be suppressed during \
+this calculation."
+"Part::span: {}[[1]] ;; {}[[2]] is not a valid Span specification. A Span\n   \
+  specification should be 1, 2, or 3 machine-sized integers separated by\n    \
+ ;;. (Any of the integers can be omitted or replaced with All.)"
+"Part::pkspec1: The expression {}[[1]] cannot be used as a part \
+specification."
+"Part::pkspec1: The expression {}[[2]] cannot be used as a part \
+specification."
+"General::stop: Further output of Part::pkspec1\n     will be suppressed \
+during this calculation."
+"Fourier::fftl: Argument {3140.05, -0.001122}[[{}[[2]]]]\n     is not a \
+non-empty list or rectangular array of numeric quantities."
+"Drop::seqs: Sequence specification (+n, -n, {+n}, {-n}, {m, n}, or {m, n, \
+s})\n     expected at position 2 in Drop[Fourier[{3140.05, \
+-0.001122}[[{}[[2]]]]], \n       1\n     -(-)].\n       2"
+"Set::partw: Part 3 of Drop[0., 0.] does not exist."
+"Drop::normal: Nonatomic expression expected at position 1 in Drop[0., 0.]."
+"PeakDetect::arg: \n   The argument Abs[Drop[0., 0.]]\n     at position 1 is \
+not a consistent list of real values."
+"Transpose::nmtx: \n   The first two levels of {{0.}, \n     Abs[Drop[0., 0.] \
+PeakDetect[Abs[Drop[0., 0.]]]]} cannot be transposed."
+"Transpose::nmtx: \n   The first two levels of {{0.}, \n     Abs[Drop[0., 0.] \
+PeakDetect[Abs[Drop[0., 0.]]]]} cannot be transposed."
+"Transpose::nmtx: \n   The first two levels of {{0.}, \n     Abs[Drop[0., 0.] \
+PeakDetect[Abs[Drop[0., 0.]]]]} cannot be transposed."
+"General::stop: Further output of Transpose::nmtx\n     will be suppressed \
+during this calculation."
+"Take::take: Cannot take positions 1 through 2 in \n    Transpose[{{0.}, \
+Abs[Drop[0., 0.] PeakDetect[Abs[Drop[0., 0.]]]]}]."
+"CompiledFunction::cfta: \n   Argument {0. + Arg[Drop[0., 0.]]} at position 1 \
+should be a rank 1\n     tensor of machine-size real numbers."
+"Part::take: Cannot take positions 0 through 0 in {0. + Arg[Drop[0., 0.]]}."
+"Export::jsonstrictencoding: Expression Power cannot be exported as JSON."
+"Export::jsonstrictencoding: Expression Take cannot be exported as JSON."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Symbol::string: String expected at position 1 in Symbol[init[symbol]]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 10"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"custom thickness: 0.769556 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 10"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-27e5..."
+"found FeZnMoO-286c"
+"looking for FeZnMoO-9624..."
+"found FeZnMoO-286c"
+"looking for FeZnMoO-3f5d..."
+"found FeZnMoO-70f6"
+"looking for FeZnMoO-d64f..."
+"found FeZnMoO-3337"
+"looking for FeZnMoO-ba1d..."
+"looking for FeZnMoO-1d58..."
+"looking for FeZnMoO-e97a..."
+"looking for FeZnMoO-9b27..."
+"looking for FeZnMoO-65d3..."
+"looking for FeZnMoO-8fdc..."
+"applied manual"
+"fourier for FeZnMoO-27e5"
+"FeZnMoO-27e5"
+"fourier for FeZnMoO-9624"
+"FeZnMoO-9624"
+"fourier for FeZnMoO-286c"
+"FeZnMoO-286c"
+"fourier for FeZnMoO-2eab"
+"FeZnMoO-2eab"
+"fourier for FeZnMoO-3f5d"
+"FeZnMoO-3f5d"
+"fourier for FeZnMoO-70f6"
+"FeZnMoO-70f6"
+"fourier for FeZnMoO-d64f"
+"FeZnMoO-d64f"
+"fourier for FeZnMoO-3337"
+"FeZnMoO-3337"
+"fourier for FeZnMoO-ba1d"
+"FeZnMoO-ba1d"
+"fourier for FeZnMoO-1d58"
+"FeZnMoO-1d58"
+"fourier for FeZnMoO-e97a"
+"FeZnMoO-e97a"
+"fourier for FeZnMoO-9b27"
+"FeZnMoO-9b27"
+"fourier for FeZnMoO-65d3"
+"FeZnMoO-65d3"
+"fourier for FeZnMoO-8fdc"
+"FeZnMoO-8fdc"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 10"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"Symbol::string: String expected at position 1 in Symbol[init[symbol]]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-9d38..."
+"found FeZnMoO-4896"
+"looking for FeZnMoO-10ba..."
+"found FeZnMoO-dd09"
+"looking for FeZnMoO-3b1c..."
+"found FeZnMoO-4a23"
+"looking for FeZnMoO-86c2..."
+"looking for FeZnMoO-0ad6..."
+"looking for FeZnMoO-4b15..."
+"looking for FeZnMoO-d0ba..."
+"looking for FeZnMoO-2990..."
+"looking for FeZnMoO-2ce9..."
+"applied manual"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-4bee..."
+"found FeZnMoO-b91d"
+"looking for FeZnMoO-9b0e..."
+"found FeZnMoO-b91d"
+"looking for FeZnMoO-80fc..."
+"found FeZnMoO-af22"
+"looking for FeZnMoO-a1f9..."
+"found FeZnMoO-cc72"
+"looking for FeZnMoO-d5e3..."
+"looking for FeZnMoO-6ed5..."
+"looking for FeZnMoO-4155..."
+"looking for FeZnMoO-2c22..."
+"looking for FeZnMoO-7437..."
+"looking for FeZnMoO-aca2..."
+"applied manual"
+"fourier for FeZnMoO-4bee"
+"FeZnMoO-4bee"
+"fourier for FeZnMoO-9b0e"
+"FeZnMoO-9b0e"
+"fourier for FeZnMoO-b91d"
+"FeZnMoO-b91d"
+"fourier for FeZnMoO-af2f"
+"FeZnMoO-af2f"
+"fourier for FeZnMoO-80fc"
+"FeZnMoO-80fc"
+"fourier for FeZnMoO-af22"
+"FeZnMoO-af22"
+"fourier for FeZnMoO-a1f9"
+"FeZnMoO-a1f9"
+"fourier for FeZnMoO-cc72"
+"FeZnMoO-cc72"
+"fourier for FeZnMoO-d5e3"
+"FeZnMoO-d5e3"
+"fourier for FeZnMoO-6ed5"
+"FeZnMoO-6ed5"
+"fourier for FeZnMoO-4155"
+"FeZnMoO-4155"
+"fourier for FeZnMoO-2c22"
+"FeZnMoO-2c22"
+"fourier for FeZnMoO-7437"
+"FeZnMoO-7437"
+"fourier for FeZnMoO-aca2"
+"FeZnMoO-aca2"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"fourier for FeZnMoO-9d38"
+"FeZnMoO-9d38"
+"fourier for FeZnMoO-4896"
+"FeZnMoO-4896"
+"fourier for FeZnMoO-10ba"
+"FeZnMoO-10ba"
+"fourier for FeZnMoO-dd09"
+"FeZnMoO-dd09"
+"fourier for FeZnMoO-3b1c"
+"FeZnMoO-3b1c"
+"fourier for FeZnMoO-4a23"
+"FeZnMoO-4a23"
+"fourier for FeZnMoO-86c2"
+"FeZnMoO-86c2"
+"fourier for FeZnMoO-0ad6"
+"FeZnMoO-0ad6"
+"fourier for FeZnMoO-4b15"
+"FeZnMoO-4b15"
+"fourier for FeZnMoO-d0ba"
+"FeZnMoO-d0ba"
+"fourier for FeZnMoO-2990"
+"FeZnMoO-2990"
+"fourier for FeZnMoO-2ce9"
+"FeZnMoO-2ce9"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"BinaryDeserialize::corrupt: \n   Serialized data ByteArray[<347>]\n     is \
+corrupt and does not represent an expression."
+"Uncompress::string: String expected at position 1 in Uncompress[$Failed]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 10"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"custom thickness: 0.77 mm "
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 9"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"custom thickness: 0.78848 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 7"
+"T calculations: Null  cm - thickness"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"custom thickness: 1.74705 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.584283 mm"
+"custom thickness: 0.584283 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.584283 mm"
+"custom thickness: 0.584283 mm"
+"Symbol::string: String expected at position 1 in Symbol[init[symbol]]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"First::nofirst: {} has zero length and no first element."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"BinaryDeserialize::corrupt: \n   Serialized data ByteArray[<343>]\n     is \
+corrupt and does not represent an expression."
+"Uncompress::string: String expected at position 1 in Uncompress[$Failed]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"BinaryDeserialize::corrupt: \n   Serialized data ByteArray[<343>]\n     is \
+corrupt and does not represent an expression."
+"Uncompress::string: String expected at position 1 in Uncompress[$Failed]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 9"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 9"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 6"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"custom thickness: 0.77462 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 7"
+"T calculations: 0.09105  cm - thickness"
+"custom thickness: 0.92092 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Symbol::string: String expected at position 1 in Symbol[init[symbol]]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Symbol::string: String expected at position 1 in Symbol[init[symbol]]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"applied manual"
+"fourier for FeMoO-36a2"
+"FeMoO-36a2"
+"fourier for FeMoO-7f48"
+"FeMoO-7f48"
+"fourier for FeMoO-6830"
+"FeMoO-6830"
+"fourier for FeMoO-64df"
+"FeMoO-64df"
+"fourier for FeMoO-81bd"
+"FeMoO-81bd"
+"fourier for FeMoO-aa9f"
+"FeMoO-aa9f"
+"fourier for FeMoO-a5d2"
+"FeMoO-a5d2"
+"fourier for FeMoO-d942"
+"FeMoO-d942"
+"fourier for FeMoO-7e03"
+"FeMoO-7e03"
+"fourier for FeMoO-d02d"
+"FeMoO-d02d"
+"fourier for FeMoO-24fc"
+"FeMoO-24fc"
+"fourier for FeMoO-03d5"
+"FeMoO-03d5"
+"fourier for FeMoO-6b5d"
+"FeMoO-6b5d"
+"fourier for FeMoO-aba9"
+"FeMoO-aba9"
+"fourier for FeMoO-bcf6"
+"FeMoO-bcf6"
+"fourier for FeMoO-cc90"
+"FeMoO-cc90"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"BinaryDeserialize::corrupt: \n   Serialized data ByteArray[<371>]\n     is \
+corrupt and does not represent an expression."
+"Uncompress::string: String expected at position 1 in Uncompress[$Failed]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeMoO-9d43..."
+"found FeMoO-dfe4"
+"looking for FeMoO-1919..."
+"found FeMoO-3eb8"
+"looking for FeMoO-474c..."
+"found FeMoO-617c"
+"looking for FeMoO-15db..."
+"found FeMoO-41f7"
+"looking for FeMoO-e6aa..."
+"found FeMoO-ec61"
+"looking for FeMoO-50ec..."
+"found FeMoO-04fc"
+"looking for FeMoO-b656..."
+"found FeMoO-1505"
+"looking for FeMoO-1877..."
+"found FeMoO-9c01"
+"looking for FeMoO-e922..."
+"found FeMoO-dfe4"
+"fourier for FeMoO-dfe4"
+"FeMoO-dfe4"
+"fourier for FeMoO-9d43"
+"FeMoO-9d43"
+"fourier for FeMoO-3eb8"
+"FeMoO-3eb8"
+"fourier for FeMoO-1919"
+"FeMoO-1919"
+"fourier for FeMoO-617c"
+"FeMoO-617c"
+"fourier for FeMoO-474c"
+"FeMoO-474c"
+"fourier for FeMoO-41f7"
+"FeMoO-41f7"
+"fourier for FeMoO-15db"
+"FeMoO-15db"
+"fourier for FeMoO-ec61"
+"FeMoO-ec61"
+"fourier for FeMoO-e6aa"
+"FeMoO-e6aa"
+"fourier for FeMoO-04fc"
+"FeMoO-04fc"
+"fourier for FeMoO-50ec"
+"FeMoO-50ec"
+"fourier for FeMoO-1505"
+"FeMoO-1505"
+"fourier for FeMoO-b656"
+"FeMoO-b656"
+"fourier for FeMoO-9c01"
+"FeMoO-9c01"
+"fourier for FeMoO-1877"
+"FeMoO-1877"
+"fourier for FeMoO-6ddb"
+"FeMoO-6ddb"
+"fourier for FeMoO-e922"
+"FeMoO-e922"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 1"
+"fourier for FeMoO-fc2d"
+"FeMoO-fc2d"
+"fourier for FeMoO-d1ba"
+"FeMoO-d1ba"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"First::nofirst: {} has zero length and no first element."
+"Part::partd: Part specification \n    \
+GetTransmission[First[{}]][transmission][[All,1]]\n     is longer than depth \
+of object."
+"First::nofirst: {} has zero length and no first element."
+"Part::partd: Part specification \n    \
+GetTransmission[First[{}]][transmission][[All,1]]\n     is longer than depth \
+of object."
+"First::nofirst: {} has zero length and no first element."
+"General::stop: Further output of First::nofirst\n     will be suppressed \
+during this calculation."
+"CompiledFunction::cfta: \n   Argument GetTransmission[First[{}]][raw phase \
+difference] at position 1\n     should be a rank 1 tensor of machine-size \
+real numbers."
+"Part::partw: Part 2 of GetTransmission[First[{}]][raw phase difference]\n    \
+ does not exist."
+"Part::partw: Part 3 of GetTransmission[First[{}]][raw phase difference]\n    \
+ does not exist."
+"Part::partw: Part 2 of GetTransmission[First[{}]][raw phase difference]\n    \
+ does not exist."
+"General::stop: Further output of Part::partw\n     will be suppressed during \
+this calculation."
+"Part::take: Cannot take positions 256 through 1023 in \n    \
+GetTransmission[First[{}]][raw phase difference]."
+"Set::partd: Part specification transmission$16966[[All,3]]\n     is longer \
+than depth of object."
+"ToExpression::notstrbox: \n   GetTransmission[First[{}]][thickness]\n     is \
+not a string or a box. ToExpression can only interpret strings or\n     boxes \
+as Wolfram Language input."
+"Join::heads: Heads GetTransmission[First[{}]] and List at positions 1 and \
+2\n     are expected to be the same."
+"CUDAMemoryLoad::inputlst: \n   Input \
+Join[GetTransmission[First[{}]][transmission], \n     \
+{GetTransmission[First[{}]][n0], GetTransmission[First[{}]][thickness], \n    \
+  1., 0}] is not valid a List or Image."
+"CUDAMemoryLoad::unpkd: \n   Input {{$Failed, \
+GetTransmission[First[{}]][scale], 0.}}\n     is not a valid input array."
+"CUDAFunction::invcallarg: \n   Argument \
+CUDAMemoryLoad[Join[GetTransmission[First[{}]][transmission], \n      \
+{GetTransmission[First[{}]][n0], GetTransmission[First[{}]][thickness], \n    \
+   1., 0}], Float[4]] is not a valid value for argument type \n    {Float[4], \
+Input}."
+"CUDAMemoryGet::gethdfld: \n   CUDALink was not able to get memory handle \
+with head CUDAMemoryLoad,\n     required head is CUDAMemory."
+"CUDAMemoryGet::argt: \n   CUDAMemoryGet called with 0 arguments; 1 or 2 \
+arguments are expected."
+"CUDAMemoryGet::argt: \n   CUDAMemoryGet called with 0 arguments; 1 or 2 \
+arguments are expected."
+"CUDAMemoryUnload::unlmem: \n   Unable to unload memory \
+{CUDAMemoryLoad[Join[GetTransmission[First[{}]][\n        transmission], \
+{GetTransmission[First[{}]][n0], \n        \
+GetTransmission[First[{}]][thickness], 1., 0}], Float[4]]}. Make sure\n     \
+it is a valid CUDALink memory."
+"CUDAMemoryUnload::unlmem: \n   Unable to unload memory \
+{CUDAMemoryLoad[{{$Failed, \n        GetTransmission[First[{}]][scale], 0.}}, \
+Float[3]]}. Make sure it is a\n     valid CUDALink memory."
+"Join::heads: Heads GetTransmission[First[{}]] and List at positions 1 and \
+2\n     are expected to be the same."
+"CUDAMemoryLoad::inputlst: \n   Input \
+Join[GetTransmission[First[{}]][transmission], \n     \
+{GetTransmission[First[{}]][n0], GetTransmission[First[{}]][thickness], \n    \
+  1., 0}] is not valid a List or Image."
+"CUDAMemoryLoad::unpkd: \n   Input {{$Failed, \
+GetTransmission[First[{}]][scale], 0.}}\n     is not a valid input array."
+"CUDAFunction::invcallarg: \n   Argument \
+CUDAMemoryLoad[Join[GetTransmission[First[{}]][transmission], \n      \
+{GetTransmission[First[{}]][n0], GetTransmission[First[{}]][thickness], \n    \
+   1., 0}], Float[4]] is not a valid value for argument type \n    {Float[4], \
+Input}."
+"CUDAMemoryGet::gethdfld: \n   CUDALink was not able to get memory handle \
+with head CUDAMemoryLoad,\n     required head is CUDAMemory."
+"CUDAMemoryGet::argt: \n   CUDAMemoryGet called with 0 arguments; 1 or 2 \
+arguments are expected."
+"General::stop: Further output of CUDAMemoryGet::argt\n     will be \
+suppressed during this calculation."
+"CUDAMemoryUnload::unlmem: \n   Unable to unload memory \
+{CUDAMemoryLoad[Join[GetTransmission[First[{}]][\n        transmission], \
+{GetTransmission[First[{}]][n0], \n        \
+GetTransmission[First[{}]][thickness], 1., 0}], Float[4]]}. Make sure\n     \
+it is a valid CUDALink memory."
+"General::stop: Further output of CUDAMemoryUnload::unlmem\n     will be \
+suppressed during this calculation."
+"Part::take: Cannot take positions 70 through 442 in First[CUDAMemoryGet[]]."
+"Part::take: Cannot take positions 70 through 442 in First[CUDAMemoryGet[]]."
+"General::stop: Further output of Part::take\n     will be suppressed during \
+this calculation."
+"ToExpression::notstrbox: \n   GetTransmission[First[{}]][thickness]\n     is \
+not a string or a box. ToExpression can only interpret strings or\n     boxes \
+as Wolfram Language input."
+"Export::jsonstrictencoding: Expression Part cannot be exported as JSON."
+"Export::jsonstrictencoding: Expression Part cannot be exported as JSON."
+"Export::jsonstrictencoding: Expression Part cannot be exported as JSON."
+"General::stop: Further output of Export::jsonstrictencoding\n     will be \
+suppressed during this calculation."
+"Drop::drop: Cannot drop positions 1 through 1 in {}."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"Return::nofunc: Function Null not found enclosing Return[$Failed, Null]."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"applied manual"
+"fourier for FeZnMoO-54d6"
+"FeZnMoO-54d6"
+"fourier for FeZnMoO-f5ef"
+"FeZnMoO-f5ef"
+"fourier for FeZnMoO-353c"
+"FeZnMoO-353c"
+"fourier for FeZnMoO-5357"
+"FeZnMoO-5357"
+"fourier for FeZnMoO-fbac"
+"FeZnMoO-fbac"
+"fourier for FeZnMoO-f003"
+"FeZnMoO-f003"
+"fourier for FeZnMoO-7762"
+"FeZnMoO-7762"
+"fourier for FeZnMoO-f143"
+"FeZnMoO-f143"
+"fourier for FeZnMoO-feb0"
+"FeZnMoO-feb0"
+"fourier for FeZnMoO-fb28"
+"FeZnMoO-fb28"
+"fourier for FeZnMoO-8430"
+"FeZnMoO-8430"
+"fourier for FeZnMoO-4cfb"
+"FeZnMoO-4cfb"
+"fourier for FeZnMoO-9efb"
+"FeZnMoO-9efb"
+"fourier for FeZnMoO-95bd"
+"FeZnMoO-95bd"
+"fourier for FeZnMoO-bff5"
+"FeZnMoO-bff5"
+"fourier for FeZnMoO-952f"
+"FeZnMoO-952f"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-ed6f..."
+"found FeZnMoO-ebc7"
+"looking for FeZnMoO-f303..."
+"found FeZnMoO-ebc7"
+"looking for FeZnMoO-b1aa..."
+"found FeZnMoO-2304"
+"looking for FeZnMoO-3810..."
+"found FeZnMoO-2761"
+"looking for FeZnMoO-f2a0..."
+"found FeZnMoO-0cdc"
+"looking for FeZnMoO-be63..."
+"looking for FeZnMoO-2c97..."
+"looking for FeZnMoO-0e3a..."
+"looking for FeZnMoO-f18b..."
+"applied manual"
+"fourier for FeZnMoO-ed6f"
+"FeZnMoO-ed6f"
+"fourier for FeZnMoO-f303"
+"FeZnMoO-f303"
+"fourier for FeZnMoO-ebc7"
+"FeZnMoO-ebc7"
+"fourier for FeZnMoO-276e"
+"FeZnMoO-276e"
+"fourier for FeZnMoO-b1aa"
+"FeZnMoO-b1aa"
+"fourier for FeZnMoO-2304"
+"FeZnMoO-2304"
+"fourier for FeZnMoO-3810"
+"FeZnMoO-3810"
+"fourier for FeZnMoO-2761"
+"FeZnMoO-2761"
+"fourier for FeZnMoO-f2a0"
+"FeZnMoO-f2a0"
+"fourier for FeZnMoO-0cdc"
+"FeZnMoO-0cdc"
+"fourier for FeZnMoO-be63"
+"FeZnMoO-be63"
+"fourier for FeZnMoO-2c97"
+"FeZnMoO-2c97"
+"fourier for FeZnMoO-0e3a"
+"FeZnMoO-0e3a"
+"fourier for FeZnMoO-f18b"
+"FeZnMoO-f18b"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"fourier for FeZnMoO-54d6"
+"FeZnMoO-54d6"
+"fourier for FeZnMoO-f5ef"
+"FeZnMoO-f5ef"
+"fourier for FeZnMoO-353c"
+"FeZnMoO-353c"
+"fourier for FeZnMoO-5357"
+"FeZnMoO-5357"
+"fourier for FeZnMoO-fbac"
+"FeZnMoO-fbac"
+"fourier for FeZnMoO-f003"
+"FeZnMoO-f003"
+"fourier for FeZnMoO-7762"
+"FeZnMoO-7762"
+"fourier for FeZnMoO-f143"
+"FeZnMoO-f143"
+"fourier for FeZnMoO-feb0"
+"FeZnMoO-feb0"
+"fourier for FeZnMoO-fb28"
+"FeZnMoO-fb28"
+"fourier for FeZnMoO-8430"
+"FeZnMoO-8430"
+"fourier for FeZnMoO-4cfb"
+"FeZnMoO-4cfb"
+"fourier for FeZnMoO-9efb"
+"FeZnMoO-9efb"
+"fourier for FeZnMoO-95bd"
+"FeZnMoO-95bd"
+"fourier for FeZnMoO-bff5"
+"FeZnMoO-bff5"
+"fourier for FeZnMoO-952f"
+"FeZnMoO-952f"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"fourier for FeZnMoO-ed6f"
+"FeZnMoO-ed6f"
+"fourier for FeZnMoO-f303"
+"FeZnMoO-f303"
+"fourier for FeZnMoO-ebc7"
+"FeZnMoO-ebc7"
+"fourier for FeZnMoO-276e"
+"FeZnMoO-276e"
+"fourier for FeZnMoO-b1aa"
+"FeZnMoO-b1aa"
+"fourier for FeZnMoO-2304"
+"FeZnMoO-2304"
+"fourier for FeZnMoO-3810"
+"FeZnMoO-3810"
+"fourier for FeZnMoO-2761"
+"FeZnMoO-2761"
+"fourier for FeZnMoO-f2a0"
+"FeZnMoO-f2a0"
+"fourier for FeZnMoO-0cdc"
+"FeZnMoO-0cdc"
+"fourier for FeZnMoO-be63"
+"FeZnMoO-be63"
+"fourier for FeZnMoO-2c97"
+"FeZnMoO-2c97"
+"fourier for FeZnMoO-0e3a"
+"FeZnMoO-0e3a"
+"fourier for FeZnMoO-f18b"
+"FeZnMoO-f18b"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"fourier for FeZnMoO-ed6f"
+"FeZnMoO-ed6f"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-396e..."
+"found FeZnMoO-e0f5"
+"looking for FeZnMoO-8449..."
+"found FeZnMoO-e0f5"
+"looking for FeZnMoO-4379..."
+"found FeZnMoO-4c56"
+"looking for FeZnMoO-0f40..."
+"found FeZnMoO-5379"
+"looking for FeZnMoO-ef2b..."
+"found FeZnMoO-1d0d"
+"looking for FeZnMoO-e5bf..."
+"looking for FeZnMoO-da76..."
+"looking for FeZnMoO-4238..."
+"looking for FeZnMoO-5a58..."
+"applied manual"
+"fourier for FeZnMoO-396e"
+"FeZnMoO-396e"
+"fourier for FeZnMoO-8449"
+"FeZnMoO-8449"
+"fourier for FeZnMoO-e0f5"
+"FeZnMoO-e0f5"
+"fourier for FeZnMoO-4379"
+"FeZnMoO-4379"
+"fourier for FeZnMoO-4c56"
+"FeZnMoO-4c56"
+"fourier for FeZnMoO-0f40"
+"FeZnMoO-0f40"
+"fourier for FeZnMoO-5379"
+"FeZnMoO-5379"
+"fourier for FeZnMoO-ef2b"
+"FeZnMoO-ef2b"
+"fourier for FeZnMoO-1d0d"
+"FeZnMoO-1d0d"
+"fourier for FeZnMoO-e5bf"
+"FeZnMoO-e5bf"
+"fourier for FeZnMoO-da76"
+"FeZnMoO-da76"
+"fourier for FeZnMoO-4238"
+"FeZnMoO-4238"
+"fourier for FeZnMoO-5a58"
+"FeZnMoO-5a58"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"First::nofirst: {} has zero length and no first element."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-05d1..."
+"found FeZnMoO-9eac"
+"looking for FeZnMoO-c2e5..."
+"found FeZnMoO-2934"
+"looking for FeZnMoO-f408..."
+"found FeZnMoO-c4fb"
+"looking for FeZnMoO-227c..."
+"found FeZnMoO-d9e5"
+"looking for FeZnMoO-1bc0..."
+"looking for FeZnMoO-67b0..."
+"applied manual"
+"fourier for FeZnMoO-05d1"
+"FeZnMoO-05d1"
+"fourier for FeZnMoO-9eac"
+"FeZnMoO-9eac"
+"fourier for FeZnMoO-c2e5"
+"FeZnMoO-c2e5"
+"fourier for FeZnMoO-2934"
+"FeZnMoO-2934"
+"fourier for FeZnMoO-f408"
+"FeZnMoO-f408"
+"fourier for FeZnMoO-c4fb"
+"FeZnMoO-c4fb"
+"fourier for FeZnMoO-227c"
+"FeZnMoO-227c"
+"fourier for FeZnMoO-d9e5"
+"FeZnMoO-d9e5"
+"fourier for FeZnMoO-1bc0"
+"FeZnMoO-1bc0"
+"fourier for FeZnMoO-67b0"
+"FeZnMoO-67b0"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-b649..."
+"found FeZnMoO-faa7"
+"looking for FeZnMoO-a60f..."
+"found FeZnMoO-dfa0"
+"looking for FeZnMoO-423b..."
+"found FeZnMoO-1f9c"
+"looking for FeZnMoO-652c..."
+"found FeZnMoO-ffeb"
+"looking for FeZnMoO-5511..."
+"found FeZnMoO-0505"
+"looking for FeZnMoO-e4a5..."
+"looking for FeZnMoO-d558..."
+"looking for FeZnMoO-f6d2..."
+"applied manual"
+"fourier for FeZnMoO-b649"
+"FeZnMoO-b649"
+"fourier for FeZnMoO-faa7"
+"FeZnMoO-faa7"
+"fourier for FeZnMoO-a60f"
+"FeZnMoO-a60f"
+"fourier for FeZnMoO-dfa0"
+"FeZnMoO-dfa0"
+"fourier for FeZnMoO-423b"
+"FeZnMoO-423b"
+"fourier for FeZnMoO-1f9c"
+"FeZnMoO-1f9c"
+"fourier for FeZnMoO-652c"
+"FeZnMoO-652c"
+"fourier for FeZnMoO-ffeb"
+"FeZnMoO-ffeb"
+"fourier for FeZnMoO-5511"
+"FeZnMoO-5511"
+"fourier for FeZnMoO-0505"
+"FeZnMoO-0505"
+"fourier for FeZnMoO-e4a5"
+"FeZnMoO-e4a5"
+"fourier for FeZnMoO-d558"
+"FeZnMoO-d558"
+"fourier for FeZnMoO-f6d2"
+"FeZnMoO-f6d2"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-5136..."
+"found FeZnMoO-c172"
+"looking for FeZnMoO-3515..."
+"found FeZnMoO-e039"
+"looking for FeZnMoO-925a..."
+"found FeZnMoO-6a13"
+"looking for FeZnMoO-4338..."
+"found FeZnMoO-17ae"
+"looking for FeZnMoO-895b..."
+"found FeZnMoO-735d"
+"looking for FeZnMoO-4b9c..."
+"looking for FeZnMoO-2d7f..."
+"looking for FeZnMoO-edc6..."
+"applied manual"
+"fourier for FeZnMoO-5136"
+"FeZnMoO-5136"
+"fourier for FeZnMoO-c172"
+"FeZnMoO-c172"
+"fourier for FeZnMoO-3515"
+"FeZnMoO-3515"
+"fourier for FeZnMoO-e039"
+"FeZnMoO-e039"
+"fourier for FeZnMoO-925a"
+"FeZnMoO-925a"
+"fourier for FeZnMoO-6a13"
+"FeZnMoO-6a13"
+"fourier for FeZnMoO-4338"
+"FeZnMoO-4338"
+"fourier for FeZnMoO-17ae"
+"FeZnMoO-17ae"
+"fourier for FeZnMoO-895b"
+"FeZnMoO-895b"
+"fourier for FeZnMoO-735d"
+"FeZnMoO-735d"
+"fourier for FeZnMoO-4b9c"
+"FeZnMoO-4b9c"
+"fourier for FeZnMoO-2d7f"
+"FeZnMoO-2d7f"
+"fourier for FeZnMoO-edc6"
+"FeZnMoO-edc6"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-aa18..."
+"found FeZnMoO-3d30"
+"looking for FeZnMoO-1abb..."
+"found FeZnMoO-bac9"
+"looking for FeZnMoO-abbb..."
+"found FeZnMoO-cca5"
+"looking for FeZnMoO-6e8a..."
+"found FeZnMoO-4f01"
+"looking for FeZnMoO-5ab7..."
+"found FeZnMoO-d9af"
+"looking for FeZnMoO-0eb0..."
+"looking for FeZnMoO-9c0a..."
+"looking for FeZnMoO-3513..."
+"applied manual"
+"fourier for FeZnMoO-aa18"
+"FeZnMoO-aa18"
+"fourier for FeZnMoO-3d30"
+"FeZnMoO-3d30"
+"fourier for FeZnMoO-1abb"
+"FeZnMoO-1abb"
+"fourier for FeZnMoO-bac9"
+"FeZnMoO-bac9"
+"fourier for FeZnMoO-abbb"
+"FeZnMoO-abbb"
+"fourier for FeZnMoO-cca5"
+"FeZnMoO-cca5"
+"fourier for FeZnMoO-6e8a"
+"FeZnMoO-6e8a"
+"fourier for FeZnMoO-4f01"
+"FeZnMoO-4f01"
+"fourier for FeZnMoO-5ab7"
+"FeZnMoO-5ab7"
+"fourier for FeZnMoO-d9af"
+"FeZnMoO-d9af"
+"fourier for FeZnMoO-0eb0"
+"FeZnMoO-0eb0"
+"fourier for FeZnMoO-9c0a"
+"FeZnMoO-9c0a"
+"fourier for FeZnMoO-3513"
+"FeZnMoO-3513"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-5ce9..."
+"found FeZnMoO-93cb"
+"looking for FeZnMoO-7d5b..."
+"looking for FeZnMoO-c6cd..."
+"looking for FeZnMoO-47d5..."
+"looking for FeZnMoO-af52..."
+"found FeZnMoO-2cc8"
+"looking for FeZnMoO-e46e..."
+"found FeZnMoO-0a24"
+"looking for FeZnMoO-27a7..."
+"found FeZnMoO-9aea"
+"looking for FeZnMoO-5b70..."
+"found FeZnMoO-2f10"
+"applied manual"
+"fourier for FeZnMoO-2f10"
+"FeZnMoO-2f10"
+"fourier for FeZnMoO-5ce9"
+"FeZnMoO-5ce9"
+"fourier for FeZnMoO-93cb"
+"FeZnMoO-93cb"
+"fourier for FeZnMoO-7d5b"
+"FeZnMoO-7d5b"
+"fourier for FeZnMoO-c6cd"
+"FeZnMoO-c6cd"
+"fourier for FeZnMoO-47d5"
+"FeZnMoO-47d5"
+"fourier for FeZnMoO-af52"
+"FeZnMoO-af52"
+"fourier for FeZnMoO-2cc8"
+"FeZnMoO-2cc8"
+"fourier for FeZnMoO-e46e"
+"FeZnMoO-e46e"
+"fourier for FeZnMoO-0a24"
+"FeZnMoO-0a24"
+"fourier for FeZnMoO-27a7"
+"FeZnMoO-27a7"
+"fourier for FeZnMoO-9aea"
+"FeZnMoO-9aea"
+"fourier for FeZnMoO-5b70"
+"FeZnMoO-5b70"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 8"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 8"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 8"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"custom thickness: 0.7931 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"number: 8"
+"T calculations: 0.05605  cm - thickness"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"custom thickness: 0.77 mm"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-44f7..."
+"found FeZnMoO-2ae7"
+"looking for FeZnMoO-7240..."
+"found FeZnMoO-6dc3"
+"fourier for FeZnMoO-44f7"
+"FeZnMoO-44f7"
+"fourier for FeZnMoO-2ae7"
+"FeZnMoO-2ae7"
+"fourier for FeZnMoO-7240"
+"FeZnMoO-7240"
+"fourier for FeZnMoO-6dc3"
+"FeZnMoO-6dc3"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"looking for FeZnMoO-df04..."
+"found FeZnMoO-c76e"
+"looking for FeZnMoO-76df..."
+"found FeZnMoO-7688"
+"looking for FeZnMoO-dbf9..."
+"found FeZnMoO-3986"
+"looking for FeZnMoO-14c4..."
+"found FeZnMoO-4819"
+"looking for FeZnMoO-a44f..."
+"found FeZnMoO-7ad9"
+"looking for FeZnMoO-6d34..."
+"found FeZnMoO-585f"
+"looking for FeZnMoO-e165..."
+"found FeZnMoO-ae15"
+"fourier for FeZnMoO-df04"
+"FeZnMoO-df04"
+"fourier for FeZnMoO-c76e"
+"FeZnMoO-c76e"
+"fourier for FeZnMoO-76df"
+"FeZnMoO-76df"
+"fourier for FeZnMoO-7688"
+"FeZnMoO-7688"
+"fourier for FeZnMoO-dbf9"
+"FeZnMoO-dbf9"
+"fourier for FeZnMoO-3986"
+"FeZnMoO-3986"
+"fourier for FeZnMoO-14c4"
+"FeZnMoO-14c4"
+"fourier for FeZnMoO-4819"
+"FeZnMoO-4819"
+"fourier for FeZnMoO-a44f"
+"FeZnMoO-a44f"
+"fourier for FeZnMoO-7ad9"
+"FeZnMoO-7ad9"
+"fourier for FeZnMoO-6d34"
+"FeZnMoO-6d34"
+"fourier for FeZnMoO-585f"
+"FeZnMoO-585f"
+"fourier for FeZnMoO-e165"
+"FeZnMoO-e165"
+"fourier for FeZnMoO-ae15"
+"FeZnMoO-ae15"
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"expr::shdw: Symbol expr appears in multiple contexts {WSP`, JTP`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"date::shdw: Symbol date appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."
+"interval::shdw: \n   Symbol interval appears in multiple contexts {WSP`, \
+Global`}\n    ; definitions in context WSP`\n     may shadow or be shadowed \
+by other definitions."
+"x::shdw: Symbol x appears in multiple contexts {WSP`, Global`}\n    ; \
+definitions in context WSP`\n     may shadow or be shadowed by other \
+definitions."

@@ -107,7 +107,7 @@
 function exportPromise(e) {
   console.log("export");
   console.log(e);
-  WSPGet('utils/export.wsp', 'command=query&query=<?wsp session["q"]//StringUnfix ?>&fields='+e, window.open);
+  WSPGet('utils/export.wsp', 'command=folder&id=<?wsp session["Query", "id"] ?>&fields='+e, window.open);
 
 }
   function removeFolder() {

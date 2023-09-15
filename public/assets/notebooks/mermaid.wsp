@@ -51,7 +51,7 @@
         },
         "Shift-Enter": function(instance) { 
             const new7 = instance.getValue();
-            socket.send('folders["<?wsp folder ?>", "mermaid"] = "'+new7+'"; ')
+            socket.send('folders["<?wsp folder ?>", "mermaid"] = "'+new7.replaceAll('\\\"', '\\\\\"').replaceAll('\"', '\\"')+'"; ')
             drawDiagram(new7);
         },
       }      
